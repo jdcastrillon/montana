@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Usuarios"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Modificar Usuario"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel>
+                    <h:form id="formUsuarionuevo">
+                        <br></br>          
+                        <img id="ajaxloader" src="../../resources/ajaxloader.gif" style="display: none;" />
+                        <p:messages for="datos" showDetail="true" closable="true" />
+                        <b:panelGrid colSpans="2,8,2" id="PanelInsumoNuevo"  >
+                            <h:outputText value="Documento:" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.objpersona.documento}" tooltip="Ingrese Documento" id="documento" required="true"
+                                         required-message="Ingrese Documento"/>
+                            <h:message for="documento" style="color: red"></h:message> 
+
+                            <h:outputText value="Nombres:" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.objpersona.nombre}" tooltip="Ingrese Nombres" id="nombre" required="true"
+                                         required-message="Ingrese Nombres" >                
+                            </b:inputText>
+                            <h:message for="nombre" style="color: red"></h:message> 
+
+                            <h:outputText value="Apellidos:" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.objpersona.apellido}" 
+                                         tooltip="Ingrese Apellidos" id="apellido" required="true"
+                                         required-message="Ingrese Apellidos" >                
+                            </b:inputText>
+                            <h:message for="apellido" style="color: red"></h:message> 
+
+                            <h:outputText value="Fecha de nacimiento:" />
+                            <b:datepicker id="nacimiento" mode="toggle-icon" showWeek="true"
+                                          firstDay="1" value="#{usuariosBeans.selectionUsuario.objpersona.fechaNacimiento}" required="true"
+                                          colMd="0"  />                            
+                            <h:message for="nacimiento" style="color: red"></h:message> 
+
+                            <h:outputText value="Telefono:" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.objpersona.telefono1}" 
+                                         tooltip="Ingrese Apellidos" id="tel" required="false"
+                                         required-message="Ingrese Apellidos" >                
+                            </b:inputText>
+                            <h:message for="tel" style="color: red"></h:message> 
+
+                            <h:outputText value="Celular:" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.objpersona.telefono2}" 
+                                         tooltip="Ingrese Apellidos" id="cel" required="false"
+                                         required-message="Ingrese Apellidos" >                
+                            </b:inputText>
+                            <h:message for="cel" style="color: red"></h:message> 
+
+
+                            <h:outputText value="Tipo Documento:" />
+                            <b:selectOneMenu value="#{usuariosBeans.selectionUsuario.objpersona.idTipoDoc}" colMd="0" required="true" id="tipodoc"> 
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{tipoDocumentoBeans.listTipoDocumento}" 
+                                               var="tipodoc" itemLabel="#{tipodoc.descripcion}" 
+                                               itemValue="#{tipodoc.idTipoDoc}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="tipodoc" style="color: red"></h:message>
+
+                            <h:outputText value="Rol" />
+                            <b:selectOneMenu value="#{usuariosBeans.selectionUsuario.objrolxuser.idRol}" colMd="0" 
+                                             required="true" id="rol"> 
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="0"></f:selectItem>                         
+                                <f:selectItems value="#{rolesBeans.listRoles}" 
+                                               var="rol" itemLabel="#{rol.descripcion}" 
+                                               itemValue="#{rol.idRol}"></f:selectItems>
+                                <f:ajax event="change" execute="@this" render="lbluser user lblpass pass" ></f:ajax>
+                            </b:selectOneMenu>     
+                            <h:message for="rol" style="color: red"></h:message>
+
+
+                            <h:outputText id="lbluser" value="Usuario" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.usuario}" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}"
+                                         tooltip="Ingrese Usuario" id="user" required="false"
+                                         required-message="Ingrese Usuario" >                
+                            </b:inputText>
+                            <h:message for="user" style="color: red" ></h:message> 
+
+                            <h:outputText value="Contraseña" id="lblpass" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}"/>
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.clave}" 
+                                         tooltip="Ingrese Usuario" id="pass" required="false"
+                                         required-message="Ingrese Usuario" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}">                
+                            </b:inputText>
+                            <h:message for="pass" style="color: red"></h:message> 
+
+                        </b:panelGrid>
+                        <br/> 
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{insumoBeans.home()}" />                              
+                            </b:column>
+                            <b:column medium-screen="3" >                                
+                                <b:commandButton value="Guardar" tiny-screen="half" large-screen="two-thirds" action="#{usuariosBeans.editarUsuario()}"></b:commandButton>
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

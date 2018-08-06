@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Pedidos"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Crear Pedidos"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+
+            <center>
+                <b:panel>
+
+                    <h:form>              
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:contextMenu>
+                            <p:menuitem value="Eliminar" actionListener="#{pedidoBeans.liberarpedido()}" icon="ui-icon-disk" update="formUsuarionuevo:detallePedido,formUsuarionuevo:rf,formUsuarionuevo:mp,formUsuarionuevo:hr,
+                                        formUsuarionuevo:t1,formUsuarionuevo:t2,formUsuarionuevo:t3,formUsuarionuevo:t4,formUsuarionuevo:t5,formUsuarionuevo:t6,formUsuarionuevo:t7,formUsuarionuevo:t8,formUsuarionuevo:t9,
+                                        formUsuarionuevo:t10,formUsuarionuevo:t11,formUsuarionuevo:total,formUsuarionuevo:desc"/>
+                        </p:contextMenu>
+                    </h:form>                                    
+
+
+
+
+                    <h:form id="formUsuarionuevo" onkeypress="if (event.keyCode == 13)
+                                event.returnValue = false;">
+                        <b:modal id="modalpedidosP" title="Pedidos Pendientes" styleClass="modalPedidos">
+                            <p:dataScroller value="#{pedidoBeans.listPedidosPendientes}" var="car" chunkSize="10" >
+                                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                    <p:outputPanel>
+
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputText value="Id Pedido:" />
+                                            <h:outputText value="#{car.idPedido}" style="font-weight: bold"/>
+
+                                            <h:outputText value="cliente : " />
+                                            <h:outputText value="#{car.objetoCliente.objpersona.documento} " style="font-weight: bold"/>
+
+                                            <h:outputText value="Fecha Registro:" />
+                                            <h:outputText value="#{car.fechaRegistro}" style="font-weight: bold"/>                                            
+                                        </h:panelGrid>
+
+                                        <table jsf:id="detallePedido" class="tbl">
+                                            <thead clas="bgcolor">
+                                                <tr class="bgcolor tblHeader">
+                                                    <th class="tblHeader" colspan="6">--</th>                                                                     
+                                                </tr>
+                                            </thead>
+                                            <tbody>                                                   
+                                                <tr class="tblHeader">                                                    
+                                                    <td class="tblHeader">MP</td>
+                                                    <td class="tblHeader">HR</td>
+                                                    <td class="tblHeader">REFERENCIA</td>                                  
+                                                    <td class="tblHeader">TALLA</td>
+                                                    <td class="tblHeader">CANTIDAD</td>
+                                                    <td class="tblHeader">DESCRIPCION</td>
+                                                </tr>
+                                                <tr class="bgcolor2 tblHeader">
+                                                    <td class="tblHeader" colspan="3">Producto</td>                                                                                                                        
+                                                    <td class="tblHeader" colspan="3">Informacion</td>                                                                                                   
+                                                </tr>
+
+                                                <ui:repeat var="item" value="#{car.listdetallePedido}">
+                                                    <tr class="tblHeader">  
+                                                        <td class="tblHeader inputPedido"> 
+                                                            #{car.materiap}
+                                                        </td>
+                                                        <td class="tblHeader inputPedido2">#{objs.horma}</td>
+                                                        <td class="tblHeader" style="width: 112px;">
+                                                            #{car.referencia}
+
+                                                        </td>   
+
+                                                        <td class="tblHeader inputPedido">
+                                                            <h:outputText value="#{item.cantidad}" /> 
+
+                                                            <!-- <b:inputText id="talla{item.idTalla}" name="talla{item.idTalla}" rendered="{objs.control == 'chek'}" 
+                                                                          class="inputPedido" value="{pedidoBeans.gtalla}" >
+                                                                 <f:ajax event="blur" listener="{pedidoBeans.updateTallePedido(item.idTalla)}" render="@this" immediate="true"/>
+                                                             </b:inputText>-->
+
+                                                        </td>
+
+                                                        <td class="tblHeader inputPedido">#{item.cantidad}</td>
+                                                        <td class="tblHeader inputPedido">#{item.detalle}</td>
+                                                    </tr>
+                                                </ui:repeat>
+
+
+                                            </tbody>
+                                        </table>
+
+                                        <hr></hr>
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </p:dataScroller>
+
+                            <f:facet name="footer">
+                                <b:button value="Close" dismiss="modal" />
+                                <b:button value="Ok" look="primary" dismiss="modal" />
+                            </f:facet>
+                        </b:modal>
+                        <b:growl  id="growl" showDetail="true" placementFrom="bottom"
+                                  globalOnly="true" />
+                        <b:modal id="amodal" styleClass="modalPseudoClass">
+                            <h4>¿Confirma Guardar El Pedido Actual?</h4>
+                            <f:facet name="footer">
+                                <b:button value="Cerrar" dismiss="modal" id="closeModal" />
+                                <b:commandButton value="Confirmar" look="primary" id="GPedido">
+                                    <b:iconAwesome name="save" size="1x" />
+                                    <f:ajax event="click" listener="#{pedidoBeans.guardarPedido()}" render="growl Mensaje"/>
+                                </b:commandButton>
+                            </f:facet>
+                        </b:modal>                      
+
+                        <br></br>          
+                        <img id="ajaxloader" src="../../resources/ajaxloader.gif" style="display: none;" />
+                        <p:messages for="datos" showDetail="true" closable="true" />
+                        <b:panelGrid colSpans="1,3,4,4" id="PanelpedidoNuevo"  >
+                            <h:outputText value="Cliente" /> 
+                            <p:autoComplete id="documento" styleClass="micomplete" value="#{pedidoBeans.selectUser}"  pt:placeholder="Cliente"                                  
+                                            required="true"                                             
+                                            requiredMessage="Ingrese Cliente" completeMethod="#{pedidoBeans.completeClients}" >
+                                <p:ajax event="itemSelect" listener="#{pedidoBeans.listarPedidos()}" update="formUsuarionuevo:detallePedido,linkPedidos,modalpedidosP" ></p:ajax>
+                            </p:autoComplete>                            
+
+                            <h:outputText value="#{pedidoBeans.mensaje}" id="Mensaje" class="nota" /> 
+                            <b:button id="linkPedidos" look="link" value="Pedidos Pendiente # #{pedidoBeans.pedidos}" onclick="$('.modalPedidos').modal()"/>
+
+
+                        </b:panelGrid>
+                        <br/>
+
+                        <table class="tbl">
+                            <thead clas="bgcolor">
+                                <tr class="bgcolor tblHeader">
+                                    <th class="tblHeader" colspan="17">--</th>                                                                     
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tblHeader">
+                                    <td class="tblHeader"></td>                                    
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>                                   
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">61/2</td>
+                                    <td class="tblHeader">65/8</td>                                  
+                                    <td class="tblHeader">63/4</td>
+                                    <td class="tblHeader">67/8</td>
+                                    <td class="tblHeader">7</td>
+                                    <td class="tblHeader">71/8</td>
+                                    <td class="tblHeader">71/4</td>
+                                    <td class="tblHeader">73/8</td>
+                                    <td class="tblHeader">71/2</td>
+                                    <td class="tblHeader">75/8</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>                                  
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">S</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">M</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">L</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">XL</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader">XXL</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>                                  
+                                    <td class="tblHeader">2</td>
+                                    <td class="tblHeader">21/2</td>
+                                    <td class="tblHeader">3</td>
+                                    <td class="tblHeader">31/2</td>
+                                    <td class="tblHeader">4</td>
+                                    <td class="tblHeader">41/2</td>
+                                    <td class="tblHeader">5</td>
+                                    <td class="tblHeader">51/2</td>
+                                    <td class="tblHeader">6</td>
+                                    <td class="tblHeader">61/2</td>
+                                    <td class="tblHeader">7</td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                    <td class="tblHeader"></td>
+                                </tr>                       
+                                <tr class="tblHeader">
+                                    <td class="tblHeader">MP</td>
+                                    <td class="tblHeader">HR</td>
+                                    <td class="tblHeader">REFERENCIA</td>                                  
+                                    <td class="tblHeader">51</td>
+                                    <td class="tblHeader">52</td>
+                                    <td class="tblHeader">53</td>
+                                    <td class="tblHeader">54</td>
+                                    <td class="tblHeader">55</td>
+                                    <td class="tblHeader">56</td>
+                                    <td class="tblHeader">57</td>
+                                    <td class="tblHeader">58</td>
+                                    <td class="tblHeader">59</td>
+                                    <td class="tblHeader">60</td>
+                                    <td class="tblHeader">61</td>
+                                    <td class="tblHeader">color</td>
+                                    <td class="tblHeader">TOTAL</td>
+                                    <td class="tblHeader">DESCRIPCION</td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeader">
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.insumo}"
+                                                     tooltip="#{pedidoBeans.insumo}" id="mp" disabled="true"/>
+
+                                    </td>
+                                    <td class="tblHeader ancho">
+                                        <b:inputText  class="inputPedido2" value="#{pedidoBeans.horma}"
+                                                      tooltip="#{pedidoBeans.horma}" id="hr" disabled="true" />
+                                    </td>
+                                    <td class="tblHeader">                               
+                                        <p:autoComplete id="rf" styleClass="micomplete" value="#{pedidoBeans.selectProducto}"   pt:placeholder="Referencia"                                  
+                                                        required="true"                                             
+                                                        requiredMessage="Ingrese Cliente" completeMethod="#{pedidoBeans.completeProductos}" >
+                                            <f:ajax event="itemSelect" execute="@this" listener="#{pedidoBeans.setDatosProducto()}" render="mp hr t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11"  ></f:ajax>
+                                        </p:autoComplete>
+
+                                    </td>                                  
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla1}" id="t1"  disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(1)}"/>
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla2}" id="t2" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(2)}" />
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla3}" id="t3" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(3)}" />
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla4}" id="t4" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(4)}"/>
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla5}" id="t5" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(5)}"/>
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla6}" id="t6" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(6)}" />
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla7}" id="t7" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(7)}" />
+                                        </b:inputText>
+                                    </td>
+
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla8}" id="t8" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(8)}" />
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla9}" id="t9" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(9)}"/>
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla10}" id="t10" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(10)}" />
+                                        </b:inputText>
+                                    </td>
+
+                                    <td class="tblHeader">
+                                        <!--<input type="color" />-->
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.talla11}" id="t11" disabled="#{pedidoBeans.disabled}">
+                                            <f:ajax event="blur" render="@this total" listener="#{pedidoBeans.addDetallePedido(11)}"  />
+                                        </b:inputText>
+                                    </td>
+                                    <td class="tblHeader">           
+                                        <b:selectOneMenu value="#{pedidoBeans.nombrecolor}" style="white:15px"
+                                                         colMd="0" required="true" id="idcolor">                                            
+                                            <f:selectItem itemLabel="Seleccione" itemValue="0"></f:selectItem>
+                                            <f:selectItems value="#{pedidoBeans.listColores}" var="color" 
+                                                           itemLabel="#{color.silas}" itemValue="#{color.nombre}"  >                                                                                                  
+                                            </f:selectItems>                                                   
+                                            <f:ajax event="change" execute="@this" render="idcolor" ></f:ajax>
+
+
+
+                                        </b:selectOneMenu>     
+                                    </td>
+                                    <td class="tblHeader">
+                                        <b:inputText class="inputPedido" value="#{pedidoBeans.totalPedido}"
+                                                     tooltip="Total" id="total" disabled="true" >                                           
+                                        </b:inputText>
+                                    </td>
+                                    <td class="tblHeader">
+                                        <b:inputText class="inputDesc" value="#{pedidoBeans.observacionPedido}"
+                                                     tooltip="Ingrese Documento" id="desc"  >
+                                            <f:ajax event="blur" render="@this" listener="@this"/>
+                                        </b:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16"  style="text-align: left;">
+                                        <b:commandButton styleClass="iconS addPedido" look="primary" value="" tooltip="Seleccionar"  
+                                                         action="#{pedidoBeans.addPedido()}"
+                                                         immediate="true"
+                                                         id="addPedido"
+                                                         update="detallePedido rf mp hr t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 total desc growl idcolor">
+                                            <b:icon name="plus" />
+                                        </b:commandButton>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>                     
+
+                        <table jsf:id="detallePedido" class="tbl">
+                            <thead clas="bgcolor">
+                                <tr class="bgcolor tblHeader">
+                                    <th class="tblHeader" colspan="17">--</th>                                                                     
+                                </tr>
+                            </thead>
+                            <tbody>                                                   
+                                <tr class="tblHeader">
+                                    <td style="width: 10px;">--</td>
+                                    <td class="tblHeader">MP</td>
+                                    <td class="tblHeader">HR</td>
+                                    <td class="tblHeader">REFERENCIA</td>                                  
+                                    <td class="tblHeader">51</td>
+                                    <td class="tblHeader">52</td>
+                                    <td class="tblHeader">53</td>
+                                    <td class="tblHeader">54</td>
+                                    <td class="tblHeader">55</td>
+                                    <td class="tblHeader">56</td>
+                                    <td class="tblHeader">57</td>
+                                    <td class="tblHeader">58</td>
+                                    <td class="tblHeader">59</td>
+                                    <td class="tblHeader">60</td>
+                                    <td class="tblHeader">61</td>
+                                    <td class="tblHeader">TOTAL</td>
+                                    <td class="tblHeader">DESCRIPCION</td>
+                                </tr>
+                                <tr class="bgcolor2 tblHeader">
+                                    <td class="tblHeader" colspan="4">Producto</td>                                                                    
+                                    <td class="tblHeader" colspan="11">Tallas</td>                                   
+                                    <td class="tblHeader" colspan="2">Info</td>                                                                                                   
+                                </tr>
+                                <ui:repeat var="objs" value="#{pedidoBeans.listPedidos}">
+                                    <tr class="tblHeader">  
+                                        <td style="width: 10px;">
+                                            <p:selectBooleanCheckbox value="#{objs.selected}" disabled="#{objs.pedidoPasado}">
+                                                <p:ajax update="@form:detallePedido" listener="#{pedidoBeans.setSelectionPedido(objs)}" />
+                                            </p:selectBooleanCheckbox>
+                                        </td>
+                                        <td class="tblHeader inputPedido"> 
+                                            #{objs.materiap}
+                                        </td>
+                                        <td class="tblHeader inputPedido2">#{objs.horma}</td>
+                                        <td class="tblHeader" style="width: 112px;">
+                                            <b:badge value="Info." 
+                                                     style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"
+                                                     tooltip="Fecha Pedido: #{objs.fechaRegistroStr}  Color: #{objs.nombrecolor}" tooltip-position="left"
+                                                     />
+                                            #{objs.referencia}
+
+
+                                        </td>   
+                                        <ui:repeat var="item" value="#{objs.listdetallePedido}">
+                                            <td class="tblHeader inputPedido">
+                                                <h:outputText value="#{item.cantidad}" /> 
+
+                                                <!-- <b:inputText id="talla{item.idTalla}" name="talla{item.idTalla}" rendered="{objs.control == 'chek'}" 
+                                                              class="inputPedido" value="{pedidoBeans.gtalla}" >
+                                                     <f:ajax event="blur" listener="{pedidoBeans.updateTallePedido(item.idTalla)}" render="@this" immediate="true"/>
+                                                 </b:inputText>-->
+
+                                            </td>
+                                        </ui:repeat>
+                                        <td class="tblHeader inputPedido">#{objs.totalPedido}</td>
+                                        <td class="tblHeader inputPedido">#{objs.observacion}</td>
+                                    </tr>
+                                </ui:repeat>  
+
+                            </tbody>
+                        </table>
+
+                        <br/> 
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Menu"  offset-sm='4' tiny-screen="half" large-screen="two-thirds" action="#{turnosBeans.homeList()}" immediate="true" icon="tasks"/>                              
+                            </b:column>
+                            <b:column medium-screen="3" > 
+                                <b:button value="Guardar" look="primary"  tiny-screen="half" large-screen="two-thirds" onclick="$('.modalPseudoClass').modal()" icon="disk" ></b:button>                                
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

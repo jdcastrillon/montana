@@ -1,0 +1,363 @@
+#formUsuarionuevo\:fpedido_input, #formUsuarionuevo\:fdespacho_input{  
+    margin-top: 2px!important;
+    width: 300px!important;
+    margin-left: -55px!important;
+    margin-right: -10px!important;
+    /* margin-bottom: -8px!important; */
+    height: 26px!important;
+    border-radius: 3px!important;
+    text-align: center!important;
+}
+
+#formUsuarionuevo\:documentof_input, #formUsuarionuevo\:MP_input, #formUsuarionuevo\:HR_input, #formUsuarionuevo\:RF_input{  
+    margin-top: 2px!important;
+    width: 300px!important;
+    margin-left: -44px!important;
+    margin-right: -10px!important;
+    margin-bottom: 2px!important; 
+    height: 26px!important;
+    border-radius: 3px!important;
+    text-align: center!important;
+}
+
+
+#formUsuarionuevo\:estadop{
+    width: 183px;
+}
+
+.tblFilter{
+    border: 1px solid #a56a4e;
+    text-align: center;
+    width: 150px;
+} 
+
+
+.tblFilterInput{  
+    margin-top: 2px;
+    width: 300px;
+    margin-left: 3px;
+    margin-right: -10px;
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+    text-align: center;
+} 
+
+
+
+.tblFilterInputUpdate{  
+    margin-top: 2px;
+    width: 150px;
+    margin-left: 3px;
+    margin-right: -10px;
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+    text-align: center;
+} 
+
+.ancho{
+    width: 80px;
+}
+
+.tbl{
+    width: 100%;
+}
+
+.tblHeader{
+    border: 1px solid #a56a4e;
+    text-align: center;
+} 
+
+.tblHeader2{
+    border: 1px solid #a56a4e;
+    text-align: center;
+    width: 250px;
+} 
+
+.consultar{
+    height: 180px;
+    width: 230px; 
+    margin-left: 50px;
+    margin-right: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.despachar{
+    height: 180px;
+    width: 230px; 
+    margin-left: 20px;   
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tblHeaderF{
+    border: 1px solid #a56a4e;
+    padding-left: 10px;
+    text-align: left;
+    border-left: 1px solid #a56a4e;
+    width: 200px;
+} 
+
+
+.tblHeaderinputS{
+    /*    border: 1px solid #a56a4e;*/
+    padding-left: 10px;
+    text-align: left;
+    border-left: 1px solid #a56a4e;
+    width: 500px;
+} 
+
+.inputPedido{
+    margin-top: 2px;
+    width: 50px;
+    margin-left: 3px;
+    margin-right: -10px;
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.inputPedido2{
+    margin-top: 2px;
+    width: 70px;
+    margin-left: 4px;
+    margin-right: -10px;
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.inputPedidoT{
+    margin-top: 2px;
+    width: 30px;
+    margin-left: 4px;
+    /*margin-right: -10px;*/
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.inputDesc{
+    margin-top: 2px;
+    width: 100px;
+    margin-left: 5px;
+    margin-right: -19px;
+    margin-bottom: -8px;
+    height: 25px;
+    border-radius: 3px;
+}
+
+[id$=rf_input] {
+    margin-left: -26px;
+    margin-top: 5px;
+    width: 130px;
+    margin-right: -26px;
+    height: 20px;
+}
+
+.addPedido{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+
+.bgcolor{
+    background-color: #a56a4e;
+}
+
+.bgcolor2{
+    background-color: #b18773;
+    color: white;
+}
+
+.bgcolor th{
+    color: #a56a4e;
+}
+
+
+.separe{   
+    font-size: 12px;      
+    text-align: left; 
+    cursor: pointer;
+    margin-right: 2px!important;
+    color: white!important;
+}
+
+.ui-dialog{
+    /* margin-left: -65px!important;*/
+    margin-top: -10px;
+}
+
+.inputmio{    
+    margin-top: 8px!important;
+}
+
+.ui-chkbox {
+    margin-right: 12px!important;
+    margin-top: 2px!important;
+    height: 29px!important;  
+}
+
+.prime{   
+    margin-right: 8px;
+    height: 30px!important;   
+}
+
+.ui-button-text, .ui-c {
+    font-size: 11px!important;
+    /*        margin-top:  2px;*/
+    margin-bottom: 3px!important;
+    margin-left: -3px!important;
+}
+
+.bulb{
+    color: #3c8dbc;  
+    cursor: pointer;
+
+}
+
+/*.y{
+    color: yellow;     
+}*/
+
+.miIcon{
+    color: green;
+}
+
+.ui-inputfield{
+    width: 100%;
+    height: 32px;
+}
+
+.ui-button-icon{
+    color: #fff !important; 
+}
+
+.m{    
+    margin-right: 10px;
+}
+
+.micomplete{    
+    width: 100% !important;
+}
+
+.ui-autocomplete-input{
+    width: 100% !important;
+    margin-bottom: 10px;
+}
+
+
+
+.s{
+    width: 72px;
+    height: 34px;
+    font-size: 14px;
+    text-align: center;      
+}
+
+.iconS{      
+    font-size: 12px;   
+    height: 25px;
+    text-align: left; 
+    cursor: pointer;
+    margin-right: 5px;
+    color: white!important;
+}
+
+
+.iconS2{   
+    width: 39px;
+    font-size: 12px;   
+    height: 25px;
+    text-align: left; 
+    cursor: pointer;
+    color: white !important;
+    margin-right: 5px;
+}
+
+.iconSm{      
+    font-size: 12px;   
+    height: 30px;
+    text-align: left; 
+    cursor: pointer;
+    margin-right: 5px;
+    color: white!important;
+}
+
+
+.iconplus{      
+    font-size: 12px;   
+    height: 32px;
+    text-align: left; 
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+
+
+
+
+.miBtn{     
+    width: 55px;
+    top: -6px;
+    height: 34px;    
+    cursor: pointer;
+    color: white !important;
+    text-align: center;
+}
+
+
+
+.miBtn2{     
+    width: 55px;   
+    height: 34px;    
+    cursor: pointer;
+    color: white !important;
+    text-align: center;
+}
+
+.miPicker{
+    margin-bottom: 11px !important;    
+}
+
+.itemMenu{
+    margin-left: 7%;
+    margin-top:  10px;
+    color: #8aa4af !important;   
+}
+
+.itemMenu:hover{
+    color: white !important; 
+}
+
+.separated{
+    height: 5px;
+}
+
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight{
+    color: #ffffff!important; 
+    background-color: #a56a4e!important; 
+    text-decoration: none; 
+    background-color: #0088cc;
+    background-color: #0081c2;
+    background-position: 0px;
+    background-image: -moz-linear-gradient(top, #a56a4e, #a56a4e);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a56a4e), to(#a56a4e)); 
+    background-image: -webkit-linear-gradient(top, #a56a4e, #a56a4e); 
+    background-image: -o-linear-gradient(top, #a56a4e, #a56a4e);
+    background-image: linear-gradient(to bottom, #a56a4e, #a56a4e); 
+    /* background-repeat: repeat-x; */
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
+
+

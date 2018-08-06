@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Producto"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Crear Producto Paso 3"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel>                  
+                    <h:form id="formProductoNuevo">
+                        <b:modal id="amodal" title="Seleccione Insumos" styleClass="modalPseudoClass">
+                            <p:dataTable id="checkboxDT" var="insumo" value="#{productosBeans.listInsumos}" 
+                                         rows="5"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column headerText="#" style="width: 35px">
+                                    <p:selectBooleanCheckbox value="#{insumo.seleccion}" >
+                                        <p:ajax listener="#{productosBeans.pasarInsumosAtabla(insumo,2)}" />
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                <p:column headerText="Nombre Insumo">
+                                    <h:outputText value="#{insumo.nombreInsumo}" />
+                                </p:column>
+                                <p:column headerText="Cantidad Stock">
+                                    <h:outputText value="#{insumo.cantidad}" />
+                                </p:column>      
+                                <p:column headerText="Unidad">
+                                    <h:outputText value="#{insumo.unidad.siglas}" />
+                                </p:column>   
+                            </p:dataTable>
+
+                            <f:facet name="footer">                                
+                                <p:commandButton value="Aceptar" action="#{productosBeans.procesoUno(2)}"></p:commandButton>
+                            </f:facet>
+                        </b:modal>
+                        <!-- Modal de Hormas-->
+                        <b:modal id="ModalHormas" title="Lista Hormas" styleClass="modalhormas">
+                            <p:dataTable id="tacHormas" var="horma" value="#{productosBeans.listHormas}" 
+                                         rows="5"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column headerText="#">
+                                    <p:selectBooleanCheckbox value="#{horma.seleccion}" >
+                                        <p:ajax listener="#{productosBeans.pasarHormasAtabla(horma,2)}" />
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                <p:column headerText="Descripcion">
+                                    <h:outputText value="#{horma.descripcion}" />
+                                </p:column>      
+                            </p:dataTable>
+
+                            <f:facet name="footer">                                
+                                <p:commandButton value="Aceptar" action="#{productosBeans.procesoUno(2)}"></p:commandButton>
+                            </f:facet>
+                        </b:modal>
+
+                        <br></br>                            
+                        <p:messages for="datos" showDetail="true" closable="true" />
+                        <b:panelGrid colSpans="2,8,2" id="PanelProductoNuevo"  >
+                            <h:outputText value="Codigo :" />
+                            <b:inputText value="#{productosBeans.selectionProducto.idProducto}" id="N_codigo" required="true"
+                                         required-message="Ingrese codigo" disabled="true"/>
+                            <h:message for="N_codigo" style="color: red" ></h:message> 
+
+                            <h:outputText value="Nombre :" />
+                            <b:inputText value="#{productosBeans.selectionProducto.nombreProducto}" id="N_nombre" required="true"
+                                         required-message="Ingrese Cantidad" >                
+                            </b:inputText>
+
+                            <h:message for="N_cantidad" style="color: red"></h:message> 
+
+                            <h:outputText value="Cantidad :" />
+                            <b:inputText value="#{productosBeans.selectionProducto.cantidad}"  id="N_cantidad" required="true" disabled="true"
+                                         required-message="Ingrese Cantidad">                
+                            </b:inputText>
+
+                            <h:message for="N_cantidad" style="color: red"></h:message> 
+
+                            <h:outputText value="Categoria :" />
+                            <b:selectOneMenu value="#{productosBeans.selectionProducto.objCategoria.idCategoria}" 
+                                             colMd="0" required="true" id="N_Categoria"  disabled="true">                                 
+                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listCategoria}" 
+                                               var="categoria" itemLabel="#{categoria.descripcion}" 
+                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="nit" style="color: red"></h:message>  
+
+                            <h:outputText value="Talla :" />
+                            <b:selectOneMenu value="#{productosBeans.selectionProducto.idTalla}" 
+                                             colMd="0" required="true" id="N_idTalla" disabled="true">                                                                 
+                                <f:selectItem itemLabel="Seleccione una Talla" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listTallas}" 
+                                               var="talla" itemLabel="#{talla.talla1}" 
+                                               itemValue="#{talla.idTalla}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="nit" style="color: red"></h:message>   
+
+                            <h:outputText value="Color :" />                            
+                            <b:colorPicker value="#{productosBeans.selectionProducto.objColor.refcolor}" opacity="true"
+                                           format="rgb" label="Choose an RBB color" disabled="true" />
+                            <h:message for="nit" style="color: red"></h:message>   
+
+
+                        </b:panelGrid>
+                        <br></br>
+                        <b:row>
+                            <b:column medium-screen="10">
+                                <p:outputLabel>Lista de Insumos</p:outputLabel>
+                                <p:dataTable id="tacInsumo" var="insumo" value="#{productosBeans.selectionProducto.listInsumos}">
+                                    <p:column headerText="Nombre Insumo">
+                                        <h:outputText value="#{insumo.nombreInsumo}" />
+                                    </p:column>       
+                                    <p:column headerText="Unidad">
+                                        <h:outputText value="#{insumo.unidad.descripcion}" />
+                                    </p:column>   
+                                    <p:column headerText="Cantidad">
+                                        <center>
+                                            <h:inputText value="#{insumo.cantidadAUtilizar}"></h:inputText>                                         
+                                        </center>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </b:column>
+                            <b:column medium-screen="1"><br/>
+                                <b:button value="" icon="zoom-in" onclick="$('.modalPseudoClass').modal()" look="primary"/>
+                            </b:column>
+                        </b:row>
+                        <br></br>
+                        <b:row>
+                            <b:column medium-screen="10">
+                                <p:outputLabel>Lista de Hormas</p:outputLabel>
+                                <p:dataTable id="tacFinalHormas" var="horma" value="#{productosBeans.selectionProducto.listHormas}">
+                                    <p:column headerText="Descripcion">                                
+                                        <h:outputText value="#{horma.descripcion}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </b:column>
+                            <b:column medium-screen="1"><br/>
+                                <b:button value="" icon="zoom-in" onclick="$('.modalhormas').modal()" look="primary"/>
+                            </b:column>
+                        </b:row>
+                        <br></br>
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.home()}" />                              
+                            </b:column>
+                            <b:column medium-screen="3" >                                
+                                <b:commandButton value="Confirmar" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.editproducto()}"></b:commandButton>
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

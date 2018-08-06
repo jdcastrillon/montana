@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Usuarios"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Consultar Pedidos"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel> 
+
+                    <h:form id="formUsuarionuevo">
+
+                        <b:growl  id="growl" showDetail="true" placementFrom="bottom"
+                                  globalOnly="true" />    
+
+
+                        <b:modal id="amodal" styleClass="modalPseudoClass">
+                            <h4>¿Confirma Despachar El Pedido?</h4>
+                            <hr/>
+                            <h5>#{despachosBean.mensaje}</h5>
+                            <b:selectOneMenu rendered="#{despachosBean.showSelect}" id="estadop" h:name="estadop"
+                                             value="#{despachosBean.estadopedido}" colMd="0" required="true" > 
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{despachosBean.listVariables}" 
+                                               var="variable" itemLabel="#{variable.descripcion}" 
+                                               itemValue="#{variable.id_variables}"></f:selectItems>                                
+                            </b:selectOneMenu> 
+                            <f:facet name="footer">
+                                <b:button value="Cerrar" dismiss="modal" id="closeModal" />
+                                <b:commandButton value="Confirmar" look="primary" id="GPedido" oncomplete="$('.modalPseudoClass').modal('hide');">
+                                    <b:iconAwesome name="save" size="1x" />
+                                    <f:ajax event="click"  listener="#{despachosBean.guardarDespacho()}" render="growl fpedido idPedido documentof MP HR RF total fdespacho formUsuarionuevo:detallePedido"/>
+                                </b:commandButton>
+                            </f:facet>
+                        </b:modal>    
+
+
+                        <b:modal id="amodal2" styleClass="modalPseudoClass2">
+                            <h4>Modificar Cantidades del item seleccionado</h4>
+                            <hr/>
+                            <p:dataTable id="tallast" var="ob" value="#{despachosBean.selectionPedido.listdetallePedido}">
+                                <p:column headerText="Talla">
+                                    <h:outputText value="#{ob.noTalla}" />
+                                </p:column>
+
+                                <p:column headerText="Cantidad">
+                                    <h:outputText value="#{ob.cantidad}" rendered="#{ob.cantidad == 0}" />
+
+                                    <b:inputText class="tblFilterInputUpdate" rendered="#{ob.cantidad > 0}" 
+                                                 value="#{ob.cantidad}" id="idPedido">
+                                        <f:ajax event="blur" render="@this" 
+                                                listener="@this" />
+                                    </b:inputText>                                   
+
+                                </p:column>
+                            </p:dataTable>
+                            <f:facet name="footer">
+                                <b:commandButton value="Cerrar" look="primary"  id="closeModal2" update="@form:detallePedido" 
+                                                 oncomplete="$('.modalPseudoClass2').modal('hide');" />
+                            </f:facet>
+                        </b:modal>  
+
+                        <p:contextMenu>
+                            <p:menuitem value="Eliminar" actionListener="#{despachosBean.liberarpedido()}" icon="ui-icon-disk" immediate="true"
+                                        update="formUsuarionuevo:detallePedido" />
+                            <p:menuitem value="Modificar" onclick="$('.modalPseudoClass2').modal()" icon="ui-icon-pencil" 
+                                        update="@form:tallast"/>
+                        </p:contextMenu>
+
+
+                        <img id="ajaxloader" src="../../resources/ajaxloader.gif" style="display: none;" />                       
+                        <b:panelGrid colSpans="12" id="PanelpedidoNuevo"  >
+                            <table class="tbl">
+                                <tr>
+                                    <td class="tblFilterF"></td>
+                                    <td class=""></td>
+                                    <td class="tblHeaderinputS"  rowspan="11">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <b:commandButton styleClass="consultar" look="primary" value="Consultar" >   
+                                                        <f:ajax event="click" listener="#{despachosBean.listarPedidos()}" render="formUsuarionuevo:detallePedido" />
+                                                    </b:commandButton>
+                                                </td>
+                                                <td>  
+                                                    <b:commandButton styleClass="despachar" look="success" value="Confirmar Despachos"
+                                                                     oncomplete="$('.modalPseudoClass').modal()"> 
+                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho()}"/>
+                                                    </b:commandButton> 
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>                                    
+                                </tr>
+
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Fecha Pedido:</td>
+                                    <td class="tblHeader2">   
+                                        <p:calendar alt="Seleccione fecha"
+                                                    styleClass="tblFilterInput" value="#{despachosBean.fechaPedido}" 
+                                                    id="fpedido" navigator="true" pattern="dd/MM/yy" autocomplete="off" >
+                                            <f:ajax event="dateSelect" render="@this" listener="@this" />
+                                        </p:calendar>
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF"># Pedido:</td>
+                                    <td class="tblHeader2">
+                                        <b:inputText class="tblFilterInput" value="#{despachosBean.idPedido}" id="idPedido">
+                                            <f:ajax event="blur" render="@this" listener="@this" />
+                                        </b:inputText>
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Cliente:</td>
+                                    <td class="tblHeader">
+                                        <p:autoComplete id="documentof"  value="#{despachosBean.selectUser}"  pt:placeholder="Cliente"                                  
+                                                        required="true"                                             
+                                                        requiredMessage="Ingrese Cliente" completeMethod="#{despachosBean.completeClients}" >
+                                            <f:ajax event="itemSelect" listener="@this" render="@this"  ></f:ajax>
+                                        </p:autoComplete>                                        
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Materia Prima:</td>
+                                    <td class="tblHeader">
+                                        <p:autoComplete id="MP"  value="#{despachosBean.selectMP}"  pt:placeholder="Materia Prima"                                  
+                                                        required="true"                                             
+                                                        requiredMessage="Ingrese Cliente" completeMethod="#{despachosBean.completeMP}" >
+                                            <f:ajax event="itemSelect" listener="@this" render="@this"  ></f:ajax>
+                                        </p:autoComplete>  
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Horma:</td>
+                                    <td class="tblHeader">
+                                        <p:autoComplete id="HR"  value="#{despachosBean.selectHR}"  pt:placeholder="Horma"                                  
+                                                        required="true"                                             
+                                                        requiredMessage="Ingrese Cliente" completeMethod="#{despachosBean.completeHR}" >
+                                            <f:ajax event="itemSelect" listener="@this" render="@this"  ></f:ajax>
+                                        </p:autoComplete>  
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Referencia:</td>
+                                    <td class="tblHeader">
+                                        <p:autoComplete id="RF"  value="#{despachosBean.selectProducto}"  pt:placeholder="Referencia"                                  
+                                                        required="true"                                             
+                                                        completeMethod="#{despachosBean.completeProductos}" >
+                                            <f:ajax event="itemSelect" listener="@this" render="@this"  ></f:ajax>
+                                        </p:autoComplete>  
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Total:</td>
+                                    <td class="tblHeader">
+                                        <b:inputText class="tblFilterInput" value="#{despachosBean.total}" id="total">
+                                            <f:ajax event="blur" render="@this" listener="@this" />
+                                        </b:inputText>
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Fecha despacho:</td>
+                                    <td class="tblHeader">
+                                        <p:calendar alt="Seleccione fecha"
+                                                    styleClass="tblFilterInput" value="#{despachosBean.fdespacho}" 
+                                                    id="fdespacho" navigator="true" pattern="dd/MM/yy" autocomplete="off" >
+                                            <f:ajax event="dateSelect" render="@this" listener="@this" />
+                                        </p:calendar>
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">% De Cumplimiento:</td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Tiempo Transcurrido:</td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+
+                            </table>
+                        </b:panelGrid>
+
+                        <br/>   
+
+                        <table jsf:id="detallePedidoC" class="tbl">
+                            <thead clas="bgcolor">
+                                <tr class="bgcolor tblHeader">
+                                    <th class="tblHeader" colspan="17">--</th>                                                                     
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                        <p:dataTable id="detallePedido" var="objs" value="#{despachosBean.listPedidos}" 
+                                     selectionMode="single" selection="#{despachosBean.selectionPedido}" 
+                                     rowKey="#{objs.idProducto}"
+                                     styleClass="tbl">                            
+                            <p:ajax event="rowSelect" listener="#{despachosBean.onRowSelect}" update="@this" />
+                            <p:ajax event="rowUnselect" listener="#{despachosBean.onRowUnselect}" update="@this" />
+
+                            <p:column headerText="MP" styleClass="tblHeader" width="70">
+                                <h:outputText value="#{objs.materiap}" />
+                            </p:column>     
+                            <p:column headerText="HR" styleClass="tblHeader" width="70">
+                                <h:outputText value="#{objs.horma}" />
+                            </p:column>    
+                            <p:column headerText="REFERENCIA" styleClass="tblHeader" width="250">
+                                <b:badge value="Info." 
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"
+                                         tooltip="Fecha Pedido: #{objs.fechaRegistroStr} 
+                                         Cliente: #{objs.clienteStr} 
+                                         #Pedido: #{objs.idPedido}" tooltip-position="left"
+                                         />
+                                <h:outputText value="#{objs.referencia}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="51" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(0).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="52" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(1).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="53" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(2).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="54" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(3).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="55" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(4).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="56" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(5).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="57" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(6).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="58" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(7).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="59" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(8).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="60" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(9).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader"  headerText="61" width="55">
+                                <h:outputText value="#{objs.listdetallePedido.get(10).cantidad}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="TOTAL" width="100">
+                                <h:outputText value="#{objs.totalPedido}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="OBSERVACION" width="100">
+                                <h:outputText value="#{objs.observacion}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <br/> 
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="5">
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds" action="#{usuariosBeans.listarUsuariosLink()}" />                              
+                            </b:column>                           
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+
+        <ui:define name="titleapp">
+            <h:outputText value="Listado de Hormas">aa</h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Usario"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Listado de Cajas"></h:outputText>
+        </ui:define>
+        <ui:define name="body">  
+
+            <b:panel> 
+                <h:form id="form">            
+
+                    <b:growl id="growl" globalOnly="true" placementFrom="bottom"
+                             show-detail="true" show-summary="false" allowDismiss="true"
+                             delay="5000" escape="true" />
+
+
+                    <p:dataTable id="tacHormas" var="caja" value="#{cajaProductos.listcajas}" rows="14"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 selection="#{cajaProductos.selectionCaja}" rowKey="#{caja.idCaja}">
+                        <p:column headerText="Codigo">
+                            <h:outputText value="#{caja.idCaja}" />
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{caja.nombreCaja}" />
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{caja.cantidad}"  style="width: 100px"/>
+                        </p:column>
+                        <p:column headerText="Opciones" style="width:140px;text-align: center">
+                            <b:row>
+                                <b:column medium-screen="3">
+                                    <b:commandButton value="" icon="edit"  action="#{cajaProductos.objSeleccion(caja,1)}"></b:commandButton>
+                                </b:column>
+                                <b:column medium-screen="3" >                                
+                                    <b:column medium-screen="3" >                                                                    
+                                        <b:commandButton value="" icon="remove"  action="#{cajaProductos.objSeleccion(caja,2)}"></b:commandButton>
+                                    </b:column>
+                                </b:column>                                
+                            </b:row>
+
+                        </p:column>
+                    </p:dataTable>
+                    <br/>              
+                    <b:commandButton value="Nueva Caja" action="#{cajaProductos.prepareCreate()}"></b:commandButton>
+                </h:form>              
+
+            </b:panel>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

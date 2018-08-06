@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Producto"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Crear Caja Paso 2"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel>
+                    <h:form id="formPro">   
+                        <b:growl id="growl" globalOnly="true" placementFrom="bottom"
+                                 show-detail="true" show-summary="false" allowDismiss="true"
+                                 delay="5000" escape="true" />
+
+                        <b:modal id="amodal" title="Seleccione Insumos" styleClass="modalPseudoClass">
+                            <p:dataTable id="checkboxDT" var="producto" value="#{cajaProductos.listProductos}" 
+                                         rows="5"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column headerText="#" style="width: 35px">
+                                    <p:selectBooleanCheckbox value="#{producto.seleccion}" >
+                                        <p:ajax listener="#{cajaProductos.pasarProductosAtabla(producto, 1)}" />
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                <p:column headerText="Nombre Producto">
+                                    <h:outputText value="#{producto.nombreProducto}" />
+                                </p:column>
+                                <p:column headerText="Cantidad Stock">
+                                    <h:outputText value="#{producto.cantidad}" />
+                                </p:column>     
+                                <p:column headerText="Talla">
+                                    <h:outputText value="#{producto.objTallas.talla1}" />
+                                </p:column>   
+                                <p:column headerText="Color">
+                                    <h:outputText value="#{producto.objColor.refcolor}" />
+                                </p:column>   
+                            </p:dataTable>
+
+                            <f:facet name="footer">                                
+                                <p:commandButton value="Aceptar" action="#{cajaProductos.procesoUno(1)}"></p:commandButton>
+                            </f:facet>
+                        </b:modal>
+                        <b:row>
+                            <b:column medium-screen="10">
+                                <p:outputLabel>Lista de Productos</p:outputLabel>
+                                <p:dataTable id="tacInsumo" var="producto" value="#{cajaProductos.selected.listProductos}">
+                                    <p:column headerText="Nombre Producto">
+                                        <h:outputText value="#{producto.nombreProducto}" />
+                                    </p:column>
+                                    <p:column headerText="Cantidad Stock">
+                                        <h:outputText value="#{producto.cantidad}" />
+                                    </p:column>     
+                                    <p:column headerText="Talla">
+                                        <h:outputText value="#{producto.objTallas.talla1}" />
+                                    </p:column>   
+                                    <p:column headerText="Color">                                        
+                                        <b:colorPicker value="#{producto.objColor.refcolor}" opacity="false"   disabled="true" />
+                                    </p:column>   
+                                    <p:column headerText="Cantidad">
+                                        <h:inputText value="#{producto.cantidadCaja}" style="width: 100px"/>
+                                    </p:column>   
+                                    <p:column headerText="Opciones">                                        
+                                        <b:commandButton value="" icon="remove" look="ranger" actionListener="#{cajaProductos.pasarProductosAtabla(producto,3)}"></b:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </b:column>
+                            <b:column medium-screen="1"><br/>
+                                <b:button value="" look="primary"  onclick="$('.modalPseudoClass').modal()" icon="zoom-in" />
+                            </b:column>
+                        </b:row>
+                        <br></br><br></br><br></br>
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Anterior"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.procesoInicial()}" />                              
+                            </b:column>
+                            <b:column medium-screen="3" >                                
+                                <b:commandButton value="Siguiente" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{cajaProductos.procesoDos()}" update=":formPro:growl"></b:commandButton>
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Crear Producto"></h:outputText>
+        </ui:define>
+        <ui:define name="user">   
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Crear Producto Paso 1"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel>                  
+                    <h:form id="formProductoNuevo">
+                        <br></br>                            
+                        <p:messages for="datos" showDetail="true" closable="true" />
+                        <b:panelGrid colSpans="2,8,2" id="PanelProductoNuevo"  >
+                            <h:outputText value="Codigo :" />
+                            <b:inputText value="#{productosBeans.selected.idProducto}" id="N_codigo" required="true" disabled="true"
+                                         required-message="Ingrese codigo"/>
+                            <h:message for="N_codigo" style="color: red"></h:message> 
+
+                            <h:outputText value="Nombre :" />
+                            <b:inputText value="#{productosBeans.selected.nombreProducto}" id="N_nombre" required="true"
+                                         required-message="Ingrese Cantidad" >                
+                            </b:inputText>
+
+                            <h:message for="N_cantidad" style="color: red"></h:message> 
+
+                            <h:outputText value="Cantidad :" />
+                            <b:inputText value="#{productosBeans.selected.cantidad}"  id="N_cantidad" required="true"
+                                         required-message="Ingrese Cantidad" >                
+                            </b:inputText>
+
+                            <h:message for="N_cantidad" style="color: red"></h:message> 
+
+                            <h:outputText value="Categoria :" />
+                            <b:selectOneMenu value="#{productosBeans.selected.idCategoria}" 
+                                             colMd="0" required="true" id="N_Categoria">                                 
+                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listCategoria}" 
+                                               var="categoria" itemLabel="#{categoria.descripcion}" 
+                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="nit" style="color: red"></h:message>  
+
+                            <h:outputText value="Talla :" />
+                            <b:selectOneMenu value="#{productosBeans.selected.idTalla}" 
+                                             colMd="0" required="true" id="N_idTalla">                                 
+                                <f:selectItem itemLabel="Seleccione una Talla" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listTallas}" 
+                                               var="talla" itemLabel="#{talla.talla1}" 
+                                               itemValue="#{talla.idTalla}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="nit" style="color: red"></h:message>   
+
+                            <h:outputText value="Color :" />                            
+                            <b:colorPicker value="#{productosBeans.selected.color}" opacity="false" format="hex"   />
+                            <h:message for="nit" style="color: red"></h:message>   
+
+                        </b:panelGrid>
+                        <br></br>
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.home()}" />                              
+                            </b:column>
+                            <b:column medium-screen="3" >                                
+                                <b:commandButton value="Siguiente" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.procesoUno(1)}"></b:commandButton>
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <ui:composition template="../../Templets/templetAdmon.xhtml">
+        <ui:define name="titleapp">
+            <h:outputText value="Borrar Insumo"></h:outputText>
+        </ui:define>
+        <ui:define name="user">
+            <h:outputText value="Juan"></h:outputText>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="Borrar Insumo"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <center>
+                <b:panel>
+                    <h:form id="formInsumoNuevo">
+                        <b:modal id="amodal" styleClass="modalPseudoClass">
+                            <h4>¿Desea Borrar el Inusmo?</h4>
+                            <f:facet name="footer">
+                                <b:button value="Close" dismiss="modal" />
+                                <b:commandButton value="Ok" look="primary" id="InsumoDelete" actionListener="#{insumoBeans.deleteInsumo()}"></b:commandButton>
+                            </f:facet>
+                        </b:modal>
+
+
+                        <br></br>                            
+                        <p:messages for="datos" showDetail="true" closable="true" />
+                        <b:panelGrid colSpans="2,8,2" id="PanelInsumoNuevo"  >
+                            <h:outputText value="Nombre :" />
+                            <b:inputText value="#{insumoBeans.selectionInsumo.nombreInsumo}" id="N_nombre" disabled="true"/>
+                            <h:message for="nit" style="color: red"></h:message> 
+
+                            <h:outputText value="Cantidad :" />
+                            <b:inputText value="#{insumoBeans.selectionInsumo.cantidad}"  id="N_cantidad" disabled="true">                
+                            </b:inputText>
+
+                            <h:message for="N_cantidad" style="color: red"></h:message> 
+
+                            <h:outputText value="Unidad :" />
+                            <b:selectOneMenu value="#{insumoBeans.selectionInsumo.unidad}" colMd="0" id="N_Unidad" disabled="true"> 
+                                <f:selectItem  value="#{insumoBeans.selectionInsumo.unidad}" 
+                                               itemLabel="#{insumoBeans.selectionInsumo.unidad.descripcion}"
+                                               itemValue="#{insumoBeans.selectionInsumo.unidad}"></f:selectItem>
+                                <f:selectItems value="#{insumoBeans.listUnidad}" 
+                                               var="unidad" itemLabel="#{unidad.descripcion}" 
+                                               itemValue="#{unidad}"></f:selectItems>
+
+                            </b:selectOneMenu>     
+                            <h:message for="nit" style="color: red"></h:message>   
+                        </b:panelGrid>
+                        <br/> 
+
+                        <b:row>
+                            <b:column medium-screen="3"/>
+                            <b:column medium-screen="3">
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{insumoBeans.home()}" />                              
+                            </b:column>
+                            <b:column medium-screen="3" >                                
+                                <b:column medium-screen="3" >                                                                    
+                                    <b:button value="Aceptar"  onclick="$('.modalPseudoClass').modal()"></b:button>
+                                </b:column>
+                            </b:column>
+                            <b:column medium-screen="3"/>
+                        </b:row>
+                    </h:form>  
+                </b:panel>
+            </center>
+        </ui:define>
+    </ui:composition>
+</html>
