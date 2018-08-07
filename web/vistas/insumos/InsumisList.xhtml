@@ -32,7 +32,7 @@
                     <p:dataTable id="tacInsumo" var="insumo" value="#{insumoBeans.listInsumos}" rows="14"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15"
+                                 rowsPerPageTemplate="5,10,15"  selectionMode="single"
                                  selection="#{insumoBeans.selectionInsumo}" rowKey="#{insumo.nombreInsumo}">
                         <p:column headerText="Nombre Insumo">
                             <h:outputText value="#{insumo.nombreInsumo}" />
@@ -42,12 +42,12 @@
                         </p:column>
 
                         <p:column headerText="Opciones">
-                            <b:commandButton value="" icon="edit"  action="#{insumoBeans.objSeleccion(insumo,1)}"></b:commandButton>
-                            <b:commandButton value="" icon="edit"  action="#{insumoBeans.objSeleccion(insumo,2)}"></b:commandButton>
+                            <b:commandButton value="" icon="pencil" styleClass="iconS" look="primary" action="#{insumoBeans.objSeleccion(insumo,1)}"></b:commandButton>
+                            <b:commandButton value="" styleClass="iconS2" look="danger" action="#{insumoBeans.objSeleccion(insumo,2)}"><b:iconAwesome name="eraser" /></b:commandButton>
                         </p:column>
                     </p:dataTable>
                     <br/>              
-                    <b:commandButton value="Nuevo Insumo" action="#{insumoBeans.prepareCreate()}"></b:commandButton>
+                    <b:commandButton icon="floppy-disk" look="primary" value="Nuevo Insumo" action="#{insumoBeans.prepareCreate()}"></b:commandButton>
                 </h:form>              
 
             </b:panel>

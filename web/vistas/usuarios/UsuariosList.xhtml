@@ -37,13 +37,22 @@
                         <p:column headerText="Usuario">
                             <h:outputText value="#{user.nickName}" />
                         </p:column>
+                        <p:column headerText="Documento">
+                            <h:outputText value="#{user.objpersona.documento}" />
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{user.objpersona.nombreCompleto}" />
+                        </p:column>
+                        <p:column headerText="NickName">
+                            <h:outputText value="#{user.nickName}" />
+                        </p:column>
                         <p:column headerText="Opciones">
                             <b:commandButton styleClass="iconS" look="primary" value="" tooltip="Modificar"  action="#{usuariosBeans.objSeleccion(user.usuario, user.idPersona, 1)}"><b:icon name="pencil" /></b:commandButton>
                             <b:commandButton styleClass="iconS2" look="danger" value="" tooltip="Eliminar" action="#{usuariosBeans.objSeleccion(user.usuario, user.idPersona, 2)}" ><b:iconAwesome name="eraser" /></b:commandButton>
                         </p:column>
                     </p:dataTable>
                     <br/>              
-                    <b:commandButton class="btn btn-primary btn-sm" value="Nuevo usuario" action="#{usuariosBeans.prepareCreate()}"></b:commandButton>
+                    <b:commandButton icon="floppy-disk" look="primary"  value="Nuevo usuario" action="#{usuariosBeans.prepareCreate()}"></b:commandButton>
                 </h:form>              
 
             </b:panel>

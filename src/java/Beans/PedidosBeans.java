@@ -6,6 +6,7 @@
 package Beans;
 
 import Pojos.Mcolor;
+import Pojos.cajas;
 import Pojos.pedido;
 import Pojos.pedido_detalle;
 import Pojos.persona;
@@ -42,11 +43,13 @@ public class PedidosBeans implements Serializable {
     private List<usuario> listUsersClientes = new ArrayList();
     private List<producto> listProductos = new ArrayList();
     private List<Mcolor> listColores = new ArrayList();
+    private List<cajas> ListCajas = new ArrayList();
     private pedido objPedido;
     private producto referencia;
     private pedido selectionPedido;
     private Mcolor colores;
     private usuario selectionCliente;
+    private cajas MisCajas;
     private String horma;
     private String insumo;
     private int idProducto;
@@ -86,6 +89,7 @@ public class PedidosBeans implements Serializable {
         growl.setLife(5000);
         listPedidos.clear();
         listColores.clear();
+        ListCajas.clear();
         System.out.println("***************************");
         try {
             getObjPedido();
@@ -134,9 +138,12 @@ public class PedidosBeans implements Serializable {
         listProductos.clear();
         producto p = new producto();
         getColores();
+        getMisCajas();
         listProductos = p.ListSingle();
         listColores = colores.List();
+        ListCajas=MisCajas.List();
         System.out.println("Relleno los colores : " + listColores.size());
+        System.out.println("Cajas : " + ListCajas.size());
     }
 
     public String nuevoTurno() {
@@ -855,6 +862,25 @@ public class PedidosBeans implements Serializable {
 
     public void setListPedidosPendientes(List<pedido> listPedidosPendientes) {
         this.listPedidosPendientes = listPedidosPendientes;
+    }
+
+    public cajas getMisCajas() {
+        if(MisCajas==null){
+            MisCajas=new cajas();
+        }
+        return MisCajas;
+    }
+
+    public void setMisCajas(cajas MisCajas) {
+        this.MisCajas = MisCajas;
+    }
+
+    public List<cajas> getListCajas() {
+        return ListCajas;
+    }
+
+    public void setListCajas(List<cajas> ListCajas) {
+        this.ListCajas = ListCajas;
     }
     
 

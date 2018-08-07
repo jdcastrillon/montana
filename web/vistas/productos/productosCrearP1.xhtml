@@ -37,23 +37,8 @@
 
                             <h:message for="N_cantidad" style="color: red"></h:message> 
 
-                            <h:outputText value="Cantidad :" />
-                            <b:inputText value="#{productosBeans.selected.cantidad}"  id="N_cantidad" required="true"
-                                         required-message="Ingrese Cantidad" >                
-                            </b:inputText>
 
-                            <h:message for="N_cantidad" style="color: red"></h:message> 
 
-                            <h:outputText value="Categoria :" />
-                            <b:selectOneMenu value="#{productosBeans.selected.idCategoria}" 
-                                             colMd="0" required="true" id="N_Categoria">                                 
-                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
-                                <f:selectItems value="#{productosBeans.listCategoria}" 
-                                               var="categoria" itemLabel="#{categoria.descripcion}" 
-                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
-
-                            </b:selectOneMenu>     
-                            <h:message for="nit" style="color: red"></h:message>  
 
                             <h:outputText value="Talla :" />
                             <b:selectOneMenu value="#{productosBeans.selected.idTalla}" 
@@ -68,6 +53,17 @@
 
                             <h:outputText value="Color :" />                            
                             <b:colorPicker value="#{productosBeans.selected.color}" opacity="false" format="hex"   />
+                            <b:selectOneMenu value="#{pedidoBeans.nombrecolor}" style="white:15px"
+                                             colMd="0" required="true" id="idcolor">                                            
+                                <f:selectItem itemLabel="Seleccione" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{pedidoBeans.listColores}" var="color" 
+                                               itemLabel="#{color.silas}" itemValue="#{color.nombre}"  >                                                                                                  
+                                </f:selectItems>                                                   
+                                <f:ajax event="change" execute="@this" render="idcolor" ></f:ajax>
+
+
+
+                            </b:selectOneMenu>     
                             <h:message for="nit" style="color: red"></h:message>   
 
                         </b:panelGrid>

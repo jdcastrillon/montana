@@ -147,9 +147,9 @@ public class CajaProductos implements Serializable {
     }
 
     public void procesoDos() throws IOException {
-        if (ValidacionCantidades(1) == false) {
+//        if (ValidacionCantidades(1) == false) {  //Valida las cantidades de los productos 
             FacesContext.getCurrentInstance().getExternalContext().redirect("CajasCrearP3.xhtml");
-        }
+//        }
     }
 
     public String nuevoproducto() {

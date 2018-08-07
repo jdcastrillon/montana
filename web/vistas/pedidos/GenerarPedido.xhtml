@@ -37,6 +37,26 @@
 
                     <h:form id="formUsuarionuevo" onkeypress="if (event.keyCode == 13)
                                 event.returnValue = false;">
+                        <b:modal id="modalCajas" title="Lista de Cajas" styleClass="modalCajas">
+
+                            <p:dataGrid var="caja" value="#{pedidoBeans.listCajas}" columns="3" layout="grid">
+               
+                                <p:panel header="#{caja.nombreCaja} (#{caja.cantidad})" style="text-align:center">
+                                    <h:panelGrid columns="1" style="width:100%">                                        
+                                        <ui:repeat var="productos" value="#{caja.listProductos}">
+                                            #{productos.nombreProducto}<br></br>
+                                        </ui:repeat>
+                                    </h:panelGrid>
+                                </p:panel>
+
+                            </p:dataGrid>
+
+                            <f:facet name="footer">                                
+                                <b:button value="Ok" look="primary" dismiss="modal" />
+                            </f:facet>
+                        </b:modal>
+
+
                         <b:modal id="modalpedidosP" title="Pedidos Pendientes" styleClass="modalPedidos">
                             <p:dataScroller value="#{pedidoBeans.listPedidosPendientes}" var="car" chunkSize="10" >
                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
@@ -129,7 +149,7 @@
                         <br></br>          
                         <img id="ajaxloader" src="../../resources/ajaxloader.gif" style="display: none;" />
                         <p:messages for="datos" showDetail="true" closable="true" />
-                        <b:panelGrid colSpans="1,3,4,4" id="PanelpedidoNuevo"  >
+                        <b:panelGrid colSpans="1,3,4,3,1" id="PanelpedidoNuevo"  >
                             <h:outputText value="Cliente" /> 
                             <p:autoComplete id="documento" styleClass="micomplete" value="#{pedidoBeans.selectUser}"  pt:placeholder="Cliente"                                  
                                             required="true"                                             
@@ -139,6 +159,7 @@
 
                             <h:outputText value="#{pedidoBeans.mensaje}" id="Mensaje" class="nota" /> 
                             <b:button id="linkPedidos" look="link" value="Pedidos Pendiente # #{pedidoBeans.pedidos}" onclick="$('.modalPedidos').modal()"/>
+                            <b:button id="cajas"  icon="folder-close" value="" style="background-color: #F1C40F;color: #ffffff;" onclick="$('.modalCajas').modal()"/>
 
 
                         </b:panelGrid>

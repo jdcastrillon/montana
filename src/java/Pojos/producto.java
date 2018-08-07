@@ -443,7 +443,7 @@ public class producto extends Persistencia implements Serializable {
     public java.util.List<producto> List() {
         ArrayList<producto> listproducto = new ArrayList();
 
-        String prepareQuery = "select A.*,b.refcolor,c.descripcion from producto A , mcolores b,categoria c\n"
+        String prepareQuery = "select A.*,b.nombre,c.descripcion from producto A , mcolores b,categoria c\n"
                 + "where A.idColor=b.idColor and A.idCategoria=c.idCategoria and A.estado='A'";
 
         String prepareQueryInsumos = "select A.idInsumo,A.NombreInsumo,A.idUnidad,C.Descripcion,B.cantidad from insumos A , insumoproducto B , unidad C\n"

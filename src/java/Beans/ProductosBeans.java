@@ -6,6 +6,7 @@
 package Beans;
 
 import Pojos.MTallas;
+import Pojos.Mcolor;
 import Pojos.categoria;
 import Pojos.hormas;
 import Pojos.insumos;
@@ -38,6 +39,7 @@ public class ProductosBeans implements Serializable {
     private List<categoria> listCategoria = new ArrayList();
     private List<hormas> listHormas = new ArrayList();
     private List<MTallas> ListTallas = new ArrayList();
+    private List<Mcolor> listColores = new ArrayList();
 
     private producto objProducto;
     private insumos objInsumo;

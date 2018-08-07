@@ -226,10 +226,16 @@ public class usuario extends Persistencia implements Serializable {
             ResultSet rs = usuario.super.getConecion().query(prepareQuery);
             while (rs.next()) {
                 usuario tabla = new usuario();
+                persona p=new persona();
                 tabla.setUsuario(rs.getString(1));
                 tabla.setIdPersona(rs.getInt(2));
                 tabla.setNickName(rs.getString(3));
                 tabla.setClave(rs.getString(4));
+                
+                p.setDocumento(rs.getString(9));
+                p.setNombreCompleto(rs.getString(8));
+                tabla.setObjpersona(p);
+                
                 listusuario.add(tabla);
             }
         } catch (SQLException ex) {
