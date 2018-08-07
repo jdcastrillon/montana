@@ -215,21 +215,21 @@ public class turno extends Persistencia implements Serializable {
         try {
 //            System.out.println("Turno : " + turno);
             this.getConecion().con = this.getConecion().dataSource.getConnection();
-//            this.getConecion().cstmt = this.getConecion().con.prepareCall("{call ListaDetXturno (?)}");
-//            this.getConecion().cstmt.setInt(1, turno);
-//            ResultSet rs = turno.super.getConecion().cstmt.executeQuery();
-//            while (rs.next()) {
-//                System.out.println("Cargo");
-//                turnoDetalle t = new turnoDetalle();
-//                t.setNombre(rs.getString(1));
-//                t.setCodigo(rs.getInt(2));
-//                t.setDocumento(rs.getString(3));
-//                t.setNombreCompleto(rs.getString(4));
-//                t.setFechaRegistro(rs.getDate(5));
-//                t.setFechaEntrega(rs.getDate(6));
-//
-//                listDetalle.add(t);
-//            }
+            this.getConecion().cstmt = this.getConecion().con.prepareCall("{call ListaDetXturno (?)}");
+            this.getConecion().cstmt.setInt(1, turno);
+            ResultSet rs = turno.super.getConecion().cstmt.executeQuery();
+            while (rs.next()) {
+                System.out.println("Cargo");
+                turnoDetalle t = new turnoDetalle();
+                t.setNombre(rs.getString(1));
+                t.setCodigo(rs.getInt(2));
+                t.setDocumento(rs.getString(3));
+                t.setNombreCompleto(rs.getString(4));
+                t.setFechaRegistro(rs.getDate(5));
+                t.setFechaEntrega(rs.getDate(6));
+
+                listDetalle.add(t);
+            }
         } catch (SQLException ex) {
             System.out.println("Error Producto : " + ex.toString());
         } finally {

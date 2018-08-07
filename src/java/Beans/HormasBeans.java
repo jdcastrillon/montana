@@ -58,8 +58,8 @@ public class HormasBeans implements Serializable {
         return condicion == 1 ? "hormasEdit" : "hormasDelete";
     }
 
-    public void home() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("hormasList.xhtml");
+    public String home() throws IOException {
+        return "hormasList";
     }
 
     private void listaHormas() throws SQLException {

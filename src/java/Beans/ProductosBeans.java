@@ -44,6 +44,9 @@ public class ProductosBeans implements Serializable {
     private producto objProducto;
     private insumos objInsumo;
     private producto selectionProducto;
+    private Mcolor colores;
+
+    private String nombrecolor;
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
     SimpleDateFormat format2 = new SimpleDateFormat("yyyy-M-dd");
@@ -75,10 +78,32 @@ public class ProductosBeans implements Serializable {
     public void parametrosIniciales() {
         getObjInsumo();
         getObjProducto();
+        getColores();
         listHormas = objProducto.getObjHorma().List();
         listInsumos = objInsumo.List();
         ListTallas = objProducto.getObjTallas().List();
+        listColores = colores.List();
 
+    }
+
+    public String eliminarObjTabla(insumos insu) {
+        for (insumos obj : listInsumos) {
+            if (obj.getIdInsumo().intValue() == insu.getIdInsumo().intValue()) {
+                obj.setSeleccion(false);
+            }
+        }
+        objProducto.getListInsumos().remove(insu);
+        return "productosCrearP2";
+    }
+
+    public String eliminarObjTablaHorma(hormas horma) {
+        for (hormas obj : listHormas) {
+            if (obj.getIdHorma().intValue() == horma.getIdHorma().intValue()) {
+                obj.setSeleccion(false);
+            }
+        }
+        objProducto.getListHormas().remove(horma);
+        return "productosCrearP2";
     }
 
     public String objSeleccion(producto insu, int condicion) {
@@ -200,13 +225,13 @@ public class ProductosBeans implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se debe seleccionar al menos un insumo"));
             r = true;
         }
-        for (insumos objecto : objProducto.getListInsumos()) {
-            if (objecto.getCantidadAUtilizar().intValue() <= 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Las cantidades deben ser mayores a cero"));
-                r = true;
-                break;
-            }
-        }
+//        for (insumos objecto : objProducto.getListInsumos()) {
+//            if (objecto.getCantidadAUtilizar().intValue() <= 0) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Las cantidades deben ser mayores a cero"));
+//                r = true;
+//                break;
+//            }
+//        }
         //Hormas
         if (objProducto.getListHormas().size() <= 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Se debe seleccionar al menos una horma"));
@@ -220,6 +245,13 @@ public class ProductosBeans implements Serializable {
 
     public String nuevoproducto() {
         System.out.println("-- " + objProducto.toString());
+        for (Mcolor obj : listColores) {
+            if (obj.getNombre().trim().equalsIgnoreCase(nombrecolor)) {
+                objProducto.setIdColor(obj.getIdClor().intValue());
+                break;
+            }
+        }
+
         if (objProducto.create() > 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Producto Creado"));
             try {
@@ -268,7 +300,10 @@ public class ProductosBeans implements Serializable {
             System.out.println("Creo Objecto Insumo desde prepare");
             objProducto = new producto();
         }
-
+        objProducto.getListHormas().clear();
+        objProducto.getListInsumos().clear();
+        objProducto.setNombreProducto("");
+        objProducto.setIdTalla(null);
         return "productosCrearP1";
     }
 
@@ -384,6 +419,33 @@ public class ProductosBeans implements Serializable {
 
     public void setListTallas(List<MTallas> ListTallas) {
         this.ListTallas = ListTallas;
+    }
+
+    public List<Mcolor> getListColores() {
+        return listColores;
+    }
+
+    public void setListColores(List<Mcolor> listColores) {
+        this.listColores = listColores;
+    }
+
+    public Mcolor getColores() {
+        if (colores == null) {
+            colores = new Mcolor();
+        }
+        return colores;
+    }
+
+    public void setColores(Mcolor colores) {
+        this.colores = colores;
+    }
+
+    public String getNombrecolor() {
+        return nombrecolor;
+    }
+
+    public void setNombrecolor(String nombrecolor) {
+        this.nombrecolor = nombrecolor;
     }
 
 }

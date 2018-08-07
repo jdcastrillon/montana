@@ -234,7 +234,7 @@ public class producto extends Persistencia implements Serializable {
     public int create() {
         int transaccion = -1;
 
-        idColor = objColor.buscarColor(color).getCurrent();
+//        idColor = objColor.buscarColor(color).getCurrent();
 
         String prepareInsertProducto = "insert into producto (idProducto,idCategoria,idTalla,idColor,nombreProducto,Cantidad,estado)"
                 + " values (?,?,?,?,?,?,?)";
@@ -251,7 +251,7 @@ public class producto extends Persistencia implements Serializable {
             //Guardamos Producto
             PreparedStatement preparedStatement = this.getConecion().con.prepareStatement(prepareInsertProducto);
             preparedStatement.setBigDecimal(1, idProducto);
-            preparedStatement.setBigDecimal(2, idCategoria);
+            preparedStatement.setBigDecimal(2, new BigDecimal(1));
             preparedStatement.setBigDecimal(3, idTalla);
             preparedStatement.setInt(4, idColor);
             preparedStatement.setString(5, nombreProducto);
@@ -265,7 +265,7 @@ public class producto extends Persistencia implements Serializable {
             for (hormas objeto : ListHormas) {
 
                 preparedStatement2.setBigDecimal(1, idProducto);
-                preparedStatement2.setBigDecimal(2, idCategoria);
+                preparedStatement2.setBigDecimal(2, new BigDecimal(1));
                 preparedStatement2.setBigDecimal(3, objeto.getIdHorma());
 
                 transaccion = producto.this.getConecion().transaccion(preparedStatement2);
@@ -277,7 +277,7 @@ public class producto extends Persistencia implements Serializable {
                 System.out.println("--- : " + objeto.toString());
                 preparedStatement3.setBigDecimal(1, objeto.getIdInsumo());
                 preparedStatement3.setBigDecimal(2, idProducto);
-                preparedStatement3.setBigDecimal(3, idCategoria);
+                preparedStatement3.setBigDecimal(3, new BigDecimal(1));
                 preparedStatement3.setBigDecimal(4, objeto.getCantidadAUtilizar());
 
                 transaccion = producto.this.getConecion().transaccion(preparedStatement3);
