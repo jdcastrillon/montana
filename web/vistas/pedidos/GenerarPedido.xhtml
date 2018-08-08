@@ -41,7 +41,7 @@
 
                             <p:dataGrid var="caja" value="#{pedidoBeans.listCajas}" columns="3" layout="grid">
                
-                                <p:panel header="#{caja.nombreCaja} (#{caja.cantidad})" style="text-align:center">
+                                <p:panel header="#{caja.nombreCaja} (#{caja.cantidad})" style="text-align:center;background-color: #F3F2F1">
                                     <h:panelGrid columns="1" style="width:100%">                                        
                                         <ui:repeat var="productos" value="#{caja.listProductos}">
                                             #{productos.nombreProducto}<br></br>

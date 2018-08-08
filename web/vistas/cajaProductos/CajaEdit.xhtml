@@ -41,9 +41,7 @@
                                 <p:column headerText="Nombre Producto">
                                     <h:outputText value="#{producto.nombreProducto}" />
                                 </p:column>
-                                <p:column headerText="Cantidad Stock">
-                                    <h:outputText value="#{producto.cantidad}" />
-                                </p:column>     
+                     
                                 <p:column headerText="Talla">
                                     <h:outputText value="#{producto.objTallas.talla1}" />
                                 </p:column>   
@@ -88,20 +86,16 @@
                                     <p:column headerText="Nombre Producto">
                                         <h:outputText value="#{producto.nombreProducto}" />
                                     </p:column>
-                                    <p:column headerText="Cantidad Stock">
-                                        <h:outputText value="#{producto.cantidad}" />
-                                    </p:column>     
+
                                     <p:column headerText="Talla">
                                         <h:outputText value="#{producto.objTallas.talla1}" />
                                     </p:column>   
                                     <p:column headerText="Color">                                        
                                         <b:colorPicker value="#{producto.objColor.nombre}" opacity="false"   disabled="true" />
                                     </p:column>   
-                                    <p:column headerText="Cantidad">
-                                        <h:inputText value="#{producto.cantidadCaja}" style="width: 100px"/>
-                                    </p:column>   
-                                    <p:column headerText="Opciones">                                        
 
+                                    <p:column headerText="Opciones">                                        
+                                        <b:commandButton value="" icon="remove" look="danger" action="#{cajaProductos.eliminarObjTabla2(producto)}"></b:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </b:column>
@@ -114,10 +108,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.home()}" />                              
+                                <b:commandButton value="Cancelar"   icon="align-justify"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.home()}" />                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:commandButton value="Confirmar" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{cajaProductos.editproducto()}"></b:commandButton>
+                                <b:commandButton value="Confirmar"  icon="floppy-disk" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{cajaProductos.editproducto()}"></b:commandButton>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

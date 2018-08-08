@@ -67,12 +67,9 @@
                                     </p:column>     
                                     <p:column headerText="Talla">
                                         <h:outputText value="#{producto.objTallas.talla1}" />
-                                    </p:column>   
-                                    <p:column headerText="Color">                                        
-                                        <b:colorPicker value="#{producto.objColor.nombre}" opacity="false"   disabled="true" />
-                                    </p:column>                                      
+                                    </p:column>                                   
                                     <p:column headerText="Opciones">                                        
-                                        <b:commandButton value="" icon="remove" look="ranger" actionListener="#{cajaProductos.pasarProductosAtabla(producto,3)}"></b:commandButton>
+                                        <b:commandButton value="" icon="remove" look="danger" action="#{cajaProductos.eliminarObjTabla(producto)}"></b:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </b:column>
@@ -85,10 +82,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Anterior"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.procesoInicial()}" />                              
+                                <b:commandButton value="Anterior"  icon="menu-left"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.procesoInicial()}" />                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:commandButton value="Siguiente" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{cajaProductos.procesoDos()}" update=":formPro:growl"></b:commandButton>
+                                <b:commandButton value="Siguiente" icon="menu-right"  look="primary" tiny-screen="half" large-screen="two-thirds" action="#{cajaProductos.procesoDos()}" update=":formPro:growl"></b:commandButton>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

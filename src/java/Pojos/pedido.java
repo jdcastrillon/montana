@@ -165,7 +165,7 @@ public class pedido extends Persistencia implements Serializable {
     public int create() {
         int transaccion = -1;
         String prepareInsert = "insert into pedido (idCliente,idPersonacliente,FechaRegistro,FechaEntrega,"
-                + "idTurno,UsuarioTurno,Observacion,idPersonaTurno) "
+                + "idTurno,Usuario,Observacion,idPersonaTurno) "
                 + "values (?,?,?,?,?,?,?,?)";
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
