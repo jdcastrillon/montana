@@ -55,10 +55,7 @@ public class UsuariosBeans implements Serializable {
         }
     }
 
-    public void listarUsuariosLink() throws SQLException, IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/usuarios/UsuariosList.xhtml");
-    }
-
+    
     public void menuDinamico(String vista) {
         String menu = "";
         switch (vista) {
@@ -89,9 +86,7 @@ public class UsuariosBeans implements Serializable {
             case "bodega":
                 menu = "/montana/faces/vistas/bodega/pedidosPendientes.xhtml";
                 break;
-                
 
-                
         }
         try {
             if (menu.length() > 1) {
@@ -114,7 +109,8 @@ public class UsuariosBeans implements Serializable {
     }
 
     private void listarUsuarios() throws SQLException {
-        listUsuario = objUsuario.List();
+        listUsuario = getSelected().List();
+        objUsuario = null;
     }
 
     public usuario getSelected() {

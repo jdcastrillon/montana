@@ -77,36 +77,41 @@ public class usuario extends Persistencia implements Serializable {
             preparedStatement.setString(8, objpersona.Telefono2);
             preparedStatement.setInt(9, objpersona.idTipoDoc);
             transaccion = usuario.this.getConecion().transaccion(preparedStatement);
-            if (objrolxuser.idRol > 1) {
-                String sql = "Select LAST_INSERT_ID()";
-                ResultSet rs = usuario.super.getConecion().query(sql);
-                if (rs.absolute(1)) {
-                    Current = rs.getInt(1);
-                }
-                String prepareInsert = "insert into usuario (Usuario,idPersona,NickName,clave) values (?,?,?,?)";
-                preparedStatement = this.getConecion().con.prepareStatement(prepareInsert);
-                preparedStatement.setString(1, Usuario);
-                preparedStatement.setInt(2, Current);
-                preparedStatement.setString(3, objpersona.Nombre + " " + objpersona.Apellido);
-                preparedStatement.setString(4, clave);
-                transaccion = usuario.this.getConecion().transaccion(preparedStatement);
-
-                //RolxUser.
-                int next = 0;
-                String sql2 = "select case when max(idRolXUser) is null then 1 else (max(idRolXUser)+1) end as idRolXuser from rolxuser";
-                ResultSet rs2 = usuario.super.getConecion().query(sql2);
-                if (rs2.absolute(1)) {
-                    next = rs.getInt(1);
-                }
-                String pstmInsertRolxuser = "insert into rolxuser (Usuario,idPersona,idRol,idRolXUser) values (?,?,?,?)";
-                preparedStatement = this.getConecion().con.prepareStatement(pstmInsertRolxuser);
-                preparedStatement.setString(1, Usuario);
-                preparedStatement.setInt(2, Current);
-                preparedStatement.setInt(3, objrolxuser.idRol);
-                preparedStatement.setInt(4, next);
-                transaccion = usuario.this.getConecion().transaccion(preparedStatement);
-
+            String sql = "Select LAST_INSERT_ID()";
+            ResultSet rs = usuario.super.getConecion().query(sql);
+            if (rs.absolute(1)) {
+                Current = rs.getInt(1);
             }
+            if (objrolxuser.idRol == 2) {
+                Usuario = objpersona.Documento;
+                String pstmInsertCliente = "insert into cliente (idPersona,idempresa) values (?,?)";
+                preparedStatement = this.getConecion().con.prepareStatement(pstmInsertCliente);
+                preparedStatement.setInt(1, Current);
+                preparedStatement.setInt(2, 0);
+                transaccion = usuario.this.getConecion().transaccion(preparedStatement);
+            }
+            String prepareInsert = "insert into usuario (Usuario,idPersona,NickName,clave) values (?,?,?,?)";
+            preparedStatement = this.getConecion().con.prepareStatement(prepareInsert);
+            preparedStatement.setString(1, Usuario);
+            preparedStatement.setInt(2, Current);
+            preparedStatement.setString(3, objpersona.Nombre + " " + objpersona.Apellido);
+            preparedStatement.setString(4, clave);
+            transaccion = usuario.this.getConecion().transaccion(preparedStatement);
+            //RolxUser.
+            int next = 0;
+            String sql2 = "select case when max(idRolXUser) is null then 1 else (max(idRolXUser)+1) end as idRolXuser from rolxuser";
+            ResultSet rs2 = usuario.super.getConecion().query(sql2);
+            if (rs2.absolute(1)) {
+                next = rs2.getInt(1);
+            }
+            String pstmInsertRolxuser = "insert into rolxuser (Usuario,idPersona,idRol,idRolXUser) values (?,?,?,?)";
+            preparedStatement = this.getConecion().con.prepareStatement(pstmInsertRolxuser);
+            preparedStatement.setString(1, Usuario);
+            preparedStatement.setInt(2, Current);
+            preparedStatement.setInt(3, objrolxuser.idRol);
+            preparedStatement.setInt(4, next);
+            transaccion = usuario.this.getConecion().transaccion(preparedStatement);
+
         } catch (SQLException ex) {
             try {
                 this.getConecion().getconecion().rollback();
@@ -226,16 +231,16 @@ public class usuario extends Persistencia implements Serializable {
             ResultSet rs = usuario.super.getConecion().query(prepareQuery);
             while (rs.next()) {
                 usuario tabla = new usuario();
-                persona p=new persona();
+                persona p = new persona();
                 tabla.setUsuario(rs.getString(1));
                 tabla.setIdPersona(rs.getInt(2));
                 tabla.setNickName(rs.getString(3));
                 tabla.setClave(rs.getString(4));
-                
+
                 p.setDocumento(rs.getString(9));
                 p.setNombreCompleto(rs.getString(8));
                 tabla.setObjpersona(p);
-                
+
                 listusuario.add(tabla);
             }
         } catch (SQLException ex) {

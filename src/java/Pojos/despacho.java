@@ -164,16 +164,15 @@ public class despacho extends Persistencia implements Serializable {
                 transaccion += despacho.this.getConecion().transaccion(pstmVariable);
             }
 
-//            String queryUpdate = "update pedido_detalle pdetalle "
-//                    + "inner join pedidovariables p "
-//                    + "INNER join despacho d on d.idDespacho = p.idDespacho "
-//                    + "inner join despachoproducto dp on d.idDespacho = p.idDespacho "
-//                    + "set pdetalle.despachado = case when dp.cantidad <  pdetalle.cantidad then 'F' "
-//                    + "when dp.cantidad >  pdetalle.cantidad then 'A' "
-//                    + "else 'S' end "
-//                    + "where p.idDespacho = " + Current + " and p.idPedido = " + idPedido +" "
-//                    + "and  pdetalle.idPedido = p.idPedido "
-//                    + "and pdetalle.idTalla = dp.idTalla and pdetalle.idProducto = dp.idProducto";
+//            String queryUpdate = "update despachoproducto desp "
+//                    + "inner join pedido_detalle pd on pd.idProducto = desp.idProducto and pd.idTalla = desp.idTalla "
+//                    + "inner join pedidovariables pv on pv.idPedido = pd.idPedido "
+//                    + "inner join despacho d on d.idDespacho = pv.idDespacho "
+//                    + "inner join despachoproducto dp on d.idDespacho = pv.idDespacho  and dp.idProducto = pd.idProducto "
+//                    + "set desp.CantidadPedido = pd.cantidad "
+//                    + "where dp.idDespacho = " + Current + "  and pv.idPedido = " + idPedido + " "
+//                    + "and d.idTipoDespacho = 1";
+//            
 //            PreparedStatement pstUpdate = this.getConecion().con.prepareStatement(queryUpdate);
 //            transaccion += despacho.this.getConecion().transaccion(pstUpdate);
 
