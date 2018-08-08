@@ -38,7 +38,7 @@ public class pedido extends Persistencia implements Serializable {
     private int idProducto;
     private int idPersonaTurno;
     private String UsuarioTurno;
-
+    private int totalDespachado;
     private String clienteStr;
 
     private Mcolor color;
@@ -443,7 +443,7 @@ public class pedido extends Persistencia implements Serializable {
                 + "inner join cliente c on p.idCliente = c.idCliente "
                 + "inner join persona pe on c.idPersona = pe.idPersona "
                 + "inner join pedido_detalle pd on pd.idPedido = p.idPedido "
-                + "where pd.despachado not in ('S','A') and 1=1" + filtro + "";
+                + "where pd.despachado not in ('C','A') and 1=1" + filtro + "";
         System.out.println("prepareQuery pedido " + prepareQuery);
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
@@ -467,6 +467,7 @@ public class pedido extends Persistencia implements Serializable {
             }
             for (pedido object : listpedido) {
                 int Tot = 0;
+                int Tot2 = 0;
                 listpedidoDetalle = new ArrayList();
                 listpedidoDetalle.clear();
                 for (int i = 0; i < 11; i++) {
@@ -475,8 +476,12 @@ public class pedido extends Persistencia implements Serializable {
                     p.setCantidad(0);
                     listpedidoDetalle.add(p);
                 }
-                String prepareQueryDetalle = "select pd.*, concat_ws(' | ',t.med_in,t.med_amer,t.med_col,t.med_cm) from pedido_detalle pd "
+                String prepareQueryDetalle = "select pd.*, concat_ws(' | ',t.med_in,t.med_amer,t.med_col,t.med_cm), "
+                        + "despProd.cantidad from pedido_detalle pd "
                         + "inner join mtallas t on pd.idTalla = t.idTalla "
+                        + "inner join despacho desp on desp.idPedido = pd.idPedido "
+                        + "inner join despachoproducto despProd on despProd.idDespacho = desp.idDespacho and despProd.idTalla = pd.idTalla "
+                        + "and despProd.idProducto = pd.idProducto "
                         + "where pd.idPedido =" + object.getIdPedido() + " and pd.idProducto = " + object.getIdProducto();
                 ResultSet rs2 = pedido.super.getConecion().query(prepareQueryDetalle);
                 System.out.println(prepareQueryDetalle);
@@ -492,6 +497,7 @@ public class pedido extends Persistencia implements Serializable {
                             listpedidoDetalle.get(i).setDespachado(rs2.getString(7));
                             listpedidoDetalle.get(i).setDescTalla(rs2.getString(8));
                             Tot += rs2.getInt(6);
+                            Tot2 += rs2.getInt(9);
                         }
                     }
                 }
@@ -512,8 +518,10 @@ public class pedido extends Persistencia implements Serializable {
                     object.setReferencia(rs3.getString(3));
                 }
                 object.setTotalPedido(Tot);
+                object.setTotalDespachado(Tot2);
                 object.setListdetallePedido(listpedidoDetalle);
                 Tot = 0;
+                Tot2 = 0;
             }
 
         } catch (SQLException ex) {
@@ -685,7 +693,9 @@ public class pedido extends Persistencia implements Serializable {
         }
         return totalPedido;
     }
-
+    
+    
+   
     public void setTotalPedido(int totalPedido) {
         this.totalPedido = totalPedido;
     }
@@ -756,6 +766,16 @@ public class pedido extends Persistencia implements Serializable {
 
     public void setUsuarioTurno(String UsuarioTurno) {
         this.UsuarioTurno = UsuarioTurno;
+    }
+
+    public int getTotalDespachado() {
+        return totalDespachado;
+    }
+
+    public void setTotalDespachado(int totalDespachado) {
+        this.totalDespachado = totalDespachado;
+        
+        
     }
 
 }

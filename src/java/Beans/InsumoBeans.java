@@ -94,7 +94,7 @@ public class InsumoBeans implements Serializable {
     }
     
         public String editinsumo() {
-        System.out.println("-- " + objInsumo.toString());
+        System.out.println("-- " + selectionInsumo.toString());
         if (selectionInsumo.edit()> 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Insumo Modificado"));
             try {
