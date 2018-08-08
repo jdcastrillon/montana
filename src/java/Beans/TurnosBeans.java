@@ -90,6 +90,7 @@ public class TurnosBeans implements Serializable {
 
         if (Miturno == null) {
             System.out.println("Caja abierta-----");
+            listTurnosDet.clear();
             this.objTurno = Miturno;
             this.mnsTurno = "Abrir Turno";
             this.mnsDialogTurno = "¿Seguro Que Desea Abrir el Turno?";

@@ -60,18 +60,12 @@
                                 <p:dataTable id="tacInsumo" var="producto" value="#{cajaProductos.selectionCaja.listProductos}">
                                     <p:column headerText="Nombre Producto">
                                         <h:outputText value="#{producto.nombreProducto}" />
-                                    </p:column>
-                                    <p:column headerText="Cantidad Stock">
-                                        <h:outputText value="#{producto.cantidad}" />
-                                    </p:column>     
+                                    </p:column> 
                                     <p:column headerText="Talla">
                                         <h:outputText value="#{producto.objTallas.talla1}" />
                                     </p:column>   
                                     <p:column headerText="Color">
                                         <h:outputText value="#{producto.objColor.nombre}" />
-                                    </p:column>   
-                                    <p:column headerText="Cantidad">
-                                        <h:outputText value="#{producto.cantidadCaja}" />
                                     </p:column>   
                                 </p:dataTable>
                             </b:column>
@@ -81,10 +75,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.home()}" />                              
+                                <b:commandButton value="Cancelar" icon="align-justify"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{cajaProductos.home()}" />                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:button value="Aceptar"  look="primary"  onclick="$('.modalDelete').modal()"></b:button>
+                                <b:button value="Aceptar"  icon="floppy-disk" look="primary"  tiny-screen="half" large-screen="two-thirds"  onclick="$('.modalDelete').modal()"></b:button>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

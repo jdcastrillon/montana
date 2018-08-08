@@ -32,7 +32,7 @@
                     <p:dataTable id="tacHormas" var="caja" value="#{cajaProductos.listcajas}" rows="14"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15"
+                                 rowsPerPageTemplate="5,10,15"  selectionMode="single"
                                  selection="#{cajaProductos.selectionCaja}" rowKey="#{caja.idCaja}">
                         <p:column headerText="Codigo">
                             <h:outputText value="#{caja.idCaja}" />
@@ -44,21 +44,12 @@
                             <h:outputText value="#{caja.cantidad}"  style="width: 100px"/>
                         </p:column>
                         <p:column headerText="Opciones" style="width:140px;text-align: center">
-                            <b:row>
-                                <b:column medium-screen="3">
-                                    <b:commandButton value="" icon="edit"  action="#{cajaProductos.objSeleccion(caja,1)}"></b:commandButton>
-                                </b:column>
-                                <b:column medium-screen="3" >                                
-                                    <b:column medium-screen="3" >                                                                    
-                                        <b:commandButton value="" icon="remove"  action="#{cajaProductos.objSeleccion(caja,2)}"></b:commandButton>
-                                    </b:column>
-                                </b:column>                                
-                            </b:row>
-
+                            <b:commandButton value="" icon="pencil" styleClass="iconS" look="primary" action="#{cajaProductos.objSeleccion(caja,1)}"></b:commandButton>
+                            <b:commandButton value="" styleClass="iconS2" look="danger" action="#{cajaProductos.objSeleccion(caja,2)}"><b:iconAwesome name="eraser" /></b:commandButton>
                         </p:column>
                     </p:dataTable>
                     <br/>              
-                    <b:commandButton value="Nueva Caja" action="#{cajaProductos.prepareCreate()}"></b:commandButton>
+                    <b:commandButton value="Nueva Caja"  icon="floppy-disk" look="primary" action="#{cajaProductos.prepareCreate()}"></b:commandButton>
                 </h:form>              
 
             </b:panel>
