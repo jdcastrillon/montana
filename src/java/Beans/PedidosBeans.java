@@ -141,72 +141,19 @@ public class PedidosBeans implements Serializable {
         getMisCajas();
         listProductos = p.ListSingle();
         listColores = colores.List();
-        ListCajas=MisCajas.List();
+        ListCajas = MisCajas.List();
         System.out.println("Relleno los colores : " + listColores.size());
         System.out.println("Cajas : " + ListCajas.size());
     }
 
-    public String nuevoTurno() {
-//        LoginBean l = new LoginBean();
-//        getSelected();
-//        objTurno.setFechaTurno(new Date());
-//        objTurno.setUsuario(l.getDatosUser().getUsuario());
-//        objTurno.setEstado("A");
-//        objTurno.setIdPersona(l.getDatosUser().getIdPersona());
-//        System.out.println("-- " + objTurno.toString());
-//        if (objTurno.create() > 0) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Turno abierto correctamente..!"));
-//            try {
-//                listarTurnos();
-//            } catch (SQLException ex) {
-//                System.out.println("error " + ex);
-//            }
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al abrir turno"));
-//        }
-//        objTurno = null;
-        return "TurnosList";
-    }
 
-    public String editarUsuario() {
-////        System.out.println("-- " + objUsuario.toString());
-//        if (selectionTurno.edit() > 0) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Usuario Modificado con exito..!"));
-//            selectionTurno = null;
-//            try {
-//                listarTurnos();
-//            } catch (SQLException ex) {
-//                System.out.println("error " + ex);
-//            }
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al Modificar usuario"));
-//        }
-////        context.update(":form:tacInsumo");
-        return "UsuariosList";
-    }
 
-    public String prepareCreate() {
-//        if (objTurno == null) {
-//            System.out.println("Creo Objecto usuario desde prepare");
-//            objTurno = new turno();
-//        }
-//        objTurno.ResetValores();
-        return "TurnosCrear";
-    }
-
-    public void deleteusuario() throws IOException {
-//        if (selectionTurno.remove() > 0) {
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/usuarios/UsuariosList.xhtml");
-//            try {
-//                listarTurnos();
-//            } catch (SQLException ex) {
-//                System.out.println("error " + ex);
-//            }
-//        } else {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error Eliminando usuario"));
-//        }
-    }
-
+//    public String prepareCreate() {
+//        getObjPedido();
+//        objPedido.getListPedido().clear();
+//        objPedido.getListdetallePedido().clear();
+//        return "GenerarPedido";
+//    }
     public List<producto> completeProductos(String query) {
         List<producto> listProducts = getListProductos();
         List<producto> filteredproductos = new ArrayList();
@@ -310,7 +257,7 @@ public class PedidosBeans implements Serializable {
         System.out.println("selectprod " + selectProducto);
         getMicolor();
         if (selectProducto.length() > 1) {
-            turno Miturno=(turno) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("turno");
+            turno Miturno = (turno) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("turno");
             listarClientes();
             ListarProductos();
             boolean add = true;
@@ -352,11 +299,11 @@ public class PedidosBeans implements Serializable {
             } else {
                 System.out.println("no se agrego pedido");
             }
-            for (int i = 0; i < listPedidos.size(); i++) {
-                for (int j = 0; j < listPedidos.get(i).getListdetallePedido().size(); j++) {
-                    System.out.println("productos " + listPedidos.get(i).getListdetallePedido().get(j).getIdProducto());
-                }
-            }
+//            for (int i = 0; i < listPedidos.size(); i++) {
+//                for (int j = 0; j < listPedidos.get(i).getListdetallePedido().size(); j++) {
+//                    System.out.println("productos " + listPedidos.get(i).getListdetallePedido().get(j).getIdProducto());
+//                }
+//            }
             resetPedido();
             p = null;
             setObjPedido(null);
@@ -467,10 +414,9 @@ public class PedidosBeans implements Serializable {
                     p.setEstado(1);
                     p.setUsuario(obj.getUsuario());
                     p.setObservacion(obj.getObservacion());
-                    p.setTotalPedido(obj.getTotalPedido());    
+                    p.setTotalPedido(obj.getTotalPedido());
                     p.setIdTurno(obj.getIdTurno());
                     p.setIdPersonaTurno(obj.getIdPersonaTurno());
-                    
 
                     for (pedido pedido : listPedidos) {
                         for (pedido_detalle object : pedido.getListdetallePedido()) {
@@ -865,8 +811,8 @@ public class PedidosBeans implements Serializable {
     }
 
     public cajas getMisCajas() {
-        if(MisCajas==null){
-            MisCajas=new cajas();
+        if (MisCajas == null) {
+            MisCajas = new cajas();
         }
         return MisCajas;
     }
@@ -882,6 +828,5 @@ public class PedidosBeans implements Serializable {
     public void setListCajas(List<cajas> ListCajas) {
         this.ListCajas = ListCajas;
     }
-    
 
 }

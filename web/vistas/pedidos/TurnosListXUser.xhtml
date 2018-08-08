@@ -79,7 +79,7 @@
 
 
                         <p:column headerText="Opciones">
-                            <b:commandButton styleClass="iconS" look="primary" value="" tooltip="Modificar"  action="#{usuariosBeans.objSeleccion(user.usuario, user.idPersona, 1)}"><b:icon name="pencil" /></b:commandButton>
+                            <b:commandButton styleClass="iconS" look="primary" value="" tooltip="Modificar"  action="#{turnosBeans.editarPedido(turno)}"><b:icon name="pencil" /></b:commandButton>
                             <b:commandButton styleClass="iconS2" look="danger" value="" tooltip="Eliminar" action="#{usuariosBeans.objSeleccion(user.usuario, user.idPersona, 2)}" ><b:iconAwesome name="eraser" /></b:commandButton>
                         </p:column>
                     </p:dataTable>

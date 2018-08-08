@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import Pojos.pedido;
 import Pojos.turno;
 import Pojos.turnoDetalle;
 import Pojos.usuario;
@@ -131,6 +132,19 @@ public class TurnosBeans implements Serializable {
                 break;
 
         }
+        return menu;
+    }
+
+    public String editarPedido(turnoDetalle p) {
+        PedidosBeans ped=new PedidosBeans();
+        String menu="";
+        if(p.getNombre().equalsIgnoreCase("pedido")){
+            System.out.println("Pedido : " + p.getCodigo());
+            pedido pedido=new pedido();
+            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));            
+            menu="GenerarPedido";
+        }
+        
         return menu;
     }
 
