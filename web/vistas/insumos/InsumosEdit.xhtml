@@ -28,7 +28,7 @@
                             <h:outputText value="Nombre :" />
                             <b:inputText value="#{insumoBeans.selectionInsumo.nombreInsumo}" tooltip="Ingrese Nombre de Insumo" id="N_nombre" required="true"
                                          required-message="Ingrese Nombre"/>
-                            <h:message for="nit" style="color: red"></h:message> 
+                            <h:message for="N_nombre" style="color: red"></h:message> 
 
                             <h:outputText value="Cantidad :" />
                             <b:inputText value="#{insumoBeans.selectionInsumo.cantidad}" tooltip="Ingrese Cantidad" id="N_cantidad" required="true"
@@ -47,7 +47,7 @@
                                                itemValue="#{unidad}"></f:selectItems>
 
                             </b:selectOneMenu>     
-                            <h:message for="nit" style="color: red"></h:message>   
+                            <h:message for="N_Unidad" style="color: red"></h:message>   
                         </b:panelGrid>
                         <br/> 
                         <b:panelGrid colSpans="4,2,2,4">

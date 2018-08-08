@@ -118,7 +118,7 @@ public class insumos extends Persistencia implements Serializable {
             PreparedStatement preparedStatement = this.getConecion().con.prepareStatement(prepareEdit);
             preparedStatement.setString(1, NombreInsumo);
             preparedStatement.setBigDecimal(2, Cantidad);
-            preparedStatement.setBigDecimal(3, idUnidad);
+            preparedStatement.setBigDecimal(3, unidad.getIdUnidad());
             preparedStatement.setBigDecimal(4, idInsumo);
             transaccion = insumos.this.getConecion().transaccion(preparedStatement);
         } catch (SQLException ex) {

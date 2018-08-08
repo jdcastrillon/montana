@@ -87,17 +87,17 @@
                             <h:message for="rol" style="color: red"></h:message>
 
 
-                            <h:outputText id="lbluser" value="Usuario" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}" />
-                            <b:inputText value="#{usuariosBeans.selectionUsuario.usuario}" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}"
+                            <h:outputText id="lbluser" value="Usuario" style="display: #{(usuariosBeans.selected.objrolxuser.idRol==1) ? 'block' : 'none'}" />
+                            <b:inputText value="#{usuariosBeans.selectionUsuario.usuario}" style="display: #{(usuariosBeans.selected.objrolxuser.idRol==1) ? 'block' : 'none'}"
                                          tooltip="Ingrese Usuario" id="user" required="false"
                                          required-message="Ingrese Usuario" >                
                             </b:inputText>
                             <h:message for="user" style="color: red" ></h:message> 
 
-                            <h:outputText value="Contraseña" id="lblpass" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}"/>
+                            <h:outputText value="Contraseña" id="lblpass" style="display: #{(usuariosBeans.selected.objrolxuser.idRol==1) ? 'block' : 'none'}" />
                             <b:inputText value="#{usuariosBeans.selectionUsuario.clave}" 
                                          tooltip="Ingrese Usuario" id="pass" required="false"
-                                         required-message="Ingrese Usuario" style="display: #{(usuariosBeans.selectionUsuario.objrolxuser.idRol>1) ? 'block' : 'none'}">                
+                                         required-message="Ingrese Usuario" style="display: #{(usuariosBeans.selected.objrolxuser.idRol==1) ? 'block' : 'none'}">                
                             </b:inputText>
                             <h:message for="pass" style="color: red"></h:message> 
 
@@ -107,7 +107,7 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{insumoBeans.home()}" />                              
+                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{usuariosBeans.home()}" immediate="true"/>                              
                             </b:column>
                             <b:column medium-screen="3" >                                
                                 <b:commandButton value="Guardar" tiny-screen="half" large-screen="two-thirds" action="#{usuariosBeans.editarUsuario()}"></b:commandButton>
