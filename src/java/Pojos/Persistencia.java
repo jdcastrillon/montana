@@ -12,7 +12,7 @@ abstract class Persistencia {
     poolConecciones pool;
 
     public Persistencia() {
-        pool = GetConecion.getControllerpool(1);
+        pool = GetConecion.getControllerpool(2);
     }
 
     public abstract int create();
