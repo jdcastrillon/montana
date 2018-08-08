@@ -32,7 +32,7 @@
                     <p:dataTable id="tacHormas" var="horma" value="#{hormasBeans.listHormas}" rows="14"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15"
+                                 rowsPerPageTemplate="5,10,15" selectionMode="single"
                                  selection="#{hormasBeans.selectionhorma}" rowKey="#{horma.descripcion}">
                         <p:column headerText="Codigo">
                             <h:outputText value="#{horma.idHorma}" />
@@ -42,21 +42,12 @@
                         </p:column>
 
                         <p:column headerText="Opciones" style="width:140px;text-align: center">
-                            <b:row>
-                                <b:column medium-screen="3">
-                                    <b:commandButton value="" icon="edit"  action="#{hormasBeans.objSeleccion(horma,1)}"></b:commandButton>
-                                </b:column>
-                                <b:column medium-screen="3" >                                
-                                    <b:column medium-screen="3" >                                                                    
-                                        <b:commandButton value="" icon="remove"  action="#{hormasBeans.objSeleccion(horma,2)}"></b:commandButton>
-                                    </b:column>
-                                </b:column>                                
-                            </b:row>
-
+                            <b:commandButton value="" icon="pencil" styleClass="iconS" look="primary"  action="#{hormasBeans.objSeleccion(horma,1)}"></b:commandButton>
+                            <b:commandButton value="" styleClass="iconS2" look="danger"  action="#{hormasBeans.objSeleccion(horma,2)}"><b:iconAwesome name="eraser" /></b:commandButton>                                    
                         </p:column>
                     </p:dataTable>
                     <br/>              
-                    <b:commandButton value="Nueva Horma" action="#{hormasBeans.prepareCreate()}"></b:commandButton>
+                    <b:commandButton icon="floppy-disk" look="primary"  value="Nueva Horma" action="#{hormasBeans.prepareCreate()}"></b:commandButton>
                 </h:form>              
 
             </b:panel>

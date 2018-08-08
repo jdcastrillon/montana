@@ -1,0 +1,3 @@
+SELECT "Pedido" concepto,idPedido codigo,B.Documento,B.NombreCompleto,A.FechaRegistro,A.FechaEntrega FROM pedido A, persona B where A.idPersonacliente=B.idPersona and   idTurno=turno
+union ALL
+SELECT "Despacho" concepto ,A.idDespacho codigo,C.documento,C.NombreCompleto,B.FechaRegistro,A.FechaEntrega FROM despacho A, pedido B,persona C  WHERE A.idPedido=B.idpedido and B.idPersonacliente=C.idpersona and A.idTurno=turno

@@ -32,7 +32,7 @@
                     <p:dataTable id="tacHormas" var="producto" value="#{productosBeans.listProductos}" rows="14"
                                  paginator="true"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15"
+                                 rowsPerPageTemplate="5,10,15" selectionMode="single"
                                  selection="#{productosBeans.selectionProducto}" rowKey="#{producto.nombreProducto}">
                         <p:column headerText="Codigo">
                             <h:outputText value="#{producto.idProducto}" />
@@ -44,25 +44,16 @@
                             <h:outputText value="#{producto.cantidad}" />
                         </p:column>
                         <p:column headerText="Color">
-                            <b:colorPicker value="#{producto.objColor.refcolor}" opacity="false"   disabled="true" />
+                            <h:outputText value="#{producto.objColor.nombre}"  />
                         </p:column>
 
-                        <p:column headerText="Opciones" style="width:140px;text-align: center">
-                            <b:row>
-                                <b:column medium-screen="3">
-                                    <b:commandButton value="" icon="edit"  action="#{productosBeans.objSeleccion(producto,1)}"></b:commandButton>
-                                </b:column>
-                                <b:column medium-screen="3" >                                
-                                    <b:column medium-screen="3" >                                                                    
-                                        <b:commandButton value="" icon="remove"  action="#{productosBeans.objSeleccion(producto,2)}"></b:commandButton>
-                                    </b:column>
-                                </b:column>                                
-                            </b:row>
-
+                        <p:column headerText="Opciones">
+                            <b:commandButton value="" icon="pencil" styleClass="iconS" look="primary" action="#{productosBeans.objSeleccion(producto,1)}"></b:commandButton>
+                            <b:commandButton value="" styleClass="iconS2" look="danger" action="#{productosBeans.objSeleccion(producto,2)}"><b:iconAwesome name="eraser" /></b:commandButton>
                         </p:column>
                     </p:dataTable>
                     <br/>              
-                    <b:commandButton value="Nuevo Producto" action="#{productosBeans.prepareCreate()}"></b:commandButton>
+                    <b:commandButton icon="floppy-disk" look="primary"  value="Nuevo Producto" action="#{productosBeans.prepareCreate()}"></b:commandButton>
                 </h:form>              
 
             </b:panel>

@@ -92,7 +92,7 @@ public class cajas extends Persistencia implements Serializable {
 
         String prepareInsertProductos = "insert into cajaproducto (idCaja,idProducto,idtalla,idColor,idCategoria,Cantidad) values (?,?,?,?,?,?)";
 
-        String prepareUpdateProductos = "update producto set cantidad=(cantidad-?) where idProducto=? and idTalla=? and idColor=?";
+//        String prepareUpdateProductos = "update producto set cantidad=(cantidad-?) where idProducto=? and idTalla=? and idColor=?";
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             this.getConecion().con.setAutoCommit(false);
@@ -119,13 +119,13 @@ public class cajas extends Persistencia implements Serializable {
 
                 transaccion = cajas.this.getConecion().transaccion(preparedStatement2);
                 //update
-                PreparedStatement preparedStatement3 = this.getConecion().con.prepareStatement(prepareUpdateProductos);
-                preparedStatement3.setInt(1, obj.getCantidadCaja());
-                preparedStatement3.setBigDecimal(2, obj.getIdProducto());
-                preparedStatement3.setBigDecimal(3, obj.getIdTalla());
-                preparedStatement3.setInt(4, obj.getIdColor());
-
-                transaccion = cajas.this.getConecion().transaccion(preparedStatement3);
+//                PreparedStatement preparedStatement3 = this.getConecion().con.prepareStatement(prepareUpdateProductos);
+//                preparedStatement3.setInt(1, obj.getCantidadCaja());
+//                preparedStatement3.setBigDecimal(2, obj.getIdProducto());
+//                preparedStatement3.setBigDecimal(3, obj.getIdTalla());
+//                preparedStatement3.setInt(4, obj.getIdColor());
+//
+//                transaccion = cajas.this.getConecion().transaccion(preparedStatement3);
 
             }
         } catch (SQLException ex) {

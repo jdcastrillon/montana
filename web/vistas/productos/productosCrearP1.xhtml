@@ -37,23 +37,8 @@
 
                             <h:message for="N_cantidad" style="color: red"></h:message> 
 
-                            <h:outputText value="Cantidad :" />
-                            <b:inputText value="#{productosBeans.selected.cantidad}"  id="N_cantidad" required="true"
-                                         required-message="Ingrese Cantidad" >                
-                            </b:inputText>
 
-                            <h:message for="N_cantidad" style="color: red"></h:message> 
 
-                            <h:outputText value="Categoria :" />
-                            <b:selectOneMenu value="#{productosBeans.selected.idCategoria}" 
-                                             colMd="0" required="true" id="N_Categoria">                                 
-                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
-                                <f:selectItems value="#{productosBeans.listCategoria}" 
-                                               var="categoria" itemLabel="#{categoria.descripcion}" 
-                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
-
-                            </b:selectOneMenu>     
-                            <h:message for="nit" style="color: red"></h:message>  
 
                             <h:outputText value="Talla :" />
                             <b:selectOneMenu value="#{productosBeans.selected.idTalla}" 
@@ -66,8 +51,18 @@
                             </b:selectOneMenu>     
                             <h:message for="nit" style="color: red"></h:message>   
 
-                            <h:outputText value="Color :" />                            
-                            <b:colorPicker value="#{productosBeans.selected.color}" opacity="false" format="hex"   />
+                            <h:outputText value="Color :" />                                                        
+                            <b:selectOneMenu value="#{productosBeans.nombrecolor}" style="white:15px"
+                                             colMd="0" required="true" id="idcolor">                                            
+                                <f:selectItem itemLabel="Seleccione" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listColores}" var="color" 
+                                               itemLabel="#{color.nombre}" itemValue="#{color.nombre}"  >                                                                                                  
+                                </f:selectItems>                                                   
+                                <f:ajax event="change" execute="@this" render="idcolor" ></f:ajax>
+
+
+
+                            </b:selectOneMenu>     
                             <h:message for="nit" style="color: red"></h:message>   
 
                         </b:panelGrid>
@@ -76,10 +71,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.home()}" />                              
+                                <b:commandButton value="Cancelar" icon="align-justify"   offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.home()}" immediate="true"/>                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:commandButton value="Siguiente" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.procesoUno(1)}"></b:commandButton>
+                                <b:commandButton value="Siguiente"  icon="menu-right" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.procesoUno(1)}"></b:commandButton>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

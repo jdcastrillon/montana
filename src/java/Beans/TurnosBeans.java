@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import Pojos.pedido;
 import Pojos.turno;
 import Pojos.turnoDetalle;
 import Pojos.usuario;
@@ -79,7 +80,7 @@ public class TurnosBeans implements Serializable {
 
     private void listarTurnos() throws SQLException {
         listTurnos.clear();
-        listTurnos = objTurno.List();
+//        listTurnos = objTurno.List();
     }
 
     public void MiCaja() {
@@ -102,7 +103,6 @@ public class TurnosBeans implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("turno", Miturno);
             }
         }
-        
     }
 
     public turno getSelected() {
@@ -135,6 +135,19 @@ public class TurnosBeans implements Serializable {
         return menu;
     }
 
+    public String editarPedido(turnoDetalle p) {
+        PedidosBeans ped=new PedidosBeans();
+        String menu="";
+        if(p.getNombre().equalsIgnoreCase("pedido")){
+            System.out.println("Pedido : " + p.getCodigo());
+            pedido pedido=new pedido();
+            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));            
+            menu="GenerarPedido";
+        }
+        
+        return menu;
+    }
+
     public void homeList() throws IOException {
         usuario user = (usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         turno Miturno = objTurno.getMiturno(user.getUsuario());
@@ -164,6 +177,21 @@ public class TurnosBeans implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al abrir turno"));
             }
             objTurno = null;
+        } else if (this.mnsTurno.equalsIgnoreCase("Cerrar Turno")) {
+            objTurno = (turno) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("turno");
+            if (objTurno.CerrarCaja() > 0) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Turno cerrado correctamente..!"));
+                this.mnsTurno = "Abrir Turno";
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("turno");
+
+                try {
+                    listarTurnos();
+                } catch (SQLException ex) {
+                    System.out.println("error " + ex);
+                }
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al cerrar turno"));
+            }
         }
         MiCaja();
 

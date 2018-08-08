@@ -48,7 +48,7 @@
                                     <h:outputText value="#{producto.objTallas.talla1}" />
                                 </p:column>   
                                 <p:column headerText="Color">
-                                    <h:outputText value="#{producto.objColor.refcolor}" />
+                                    <h:outputText value="#{producto.objColor.nombre}" />
                                 </p:column>   
                             </p:dataTable>
 
@@ -95,7 +95,7 @@
                                         <h:outputText value="#{producto.objTallas.talla1}" />
                                     </p:column>   
                                     <p:column headerText="Color">                                        
-                                        <b:colorPicker value="#{producto.objColor.refcolor}" opacity="false"   disabled="true" />
+                                        <b:colorPicker value="#{producto.objColor.nombre}" opacity="false"   disabled="true" />
                                     </p:column>   
                                     <p:column headerText="Cantidad">
                                         <h:inputText value="#{producto.cantidadCaja}" style="width: 100px"/>

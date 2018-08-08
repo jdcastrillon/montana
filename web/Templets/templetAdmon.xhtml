@@ -287,14 +287,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li>
                                     <h:form>
                                         <div class="separated"></div>
-                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('hormas')}" >Listar Cajas</a> 
+                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('cajas')}" >Listar Cajas</a> 
                                         <div class="separated"></div>
                                     </h:form>
                                 </li> 
                             </ul>
                         </li>                        
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-clock-o"></i> <span>Turnos</span>
+                            <a href="#"><i class="fa fa-list-ol"></i> <span>Turnos</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -303,14 +303,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li>
                                     <h:form>
                                         <div class="separated"></div>
-                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('pedido')}" >Pedidos</a> 
+                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('turno')}" >Mi Turno</a> 
                                         <div class="separated"></div>
                                     </h:form> 
                                 </li>
                             </ul>
                         </li>
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-list-ol"></i> <span>Pedidos</span>
+                            <a href="#"><i class="fa fa-clock-o"></i> <span>Bodega</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -319,30 +319,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li>
                                     <h:form>
                                         <div class="separated"></div>
-                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{pedidoBeans.pedidosListLink()}">Listado de pedidos</a>
+                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('bodega')}">Lista Pendientes</a>
                                         <div class="separated"></div>
                                     </h:form> 
                                 </li>
                             </ul>
                         </li>
 
-
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-bus"></i> <span>Despachos</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li>
-                                    <h:form>
-                                        <div class="separated"></div>
-                                        <a class="itemMenu" href="javascript:void(0)" jsf:action="#{usuariosBeans.menuDinamico('despacho')}">Despachar</a>
-                                        <div class="separated"></div>
-                                    </h:form> 
-                                </li>
-                            </ul>
-                        </li>
 
                         <li class="treeview">
                             <a href="#"><i class="fa fa-gears"></i> <span>Configuración</span>
