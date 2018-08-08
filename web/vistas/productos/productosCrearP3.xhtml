@@ -36,28 +36,11 @@
                             </b:inputText>
 
                             <h:message for="N_cantidad" style="color: red"></h:message> 
-
-                            <h:outputText value="Cantidad :" />
-                            <b:inputText value="#{productosBeans.selected.cantidad}"  id="N_cantidad" required="true"
-                                         required-message="Ingrese Cantidad" disabled="true" >                
-                            </b:inputText>
-
-                            <h:message for="N_cantidad" style="color: red"></h:message> 
-
-                            <h:outputText value="Categoria :" />
-                            <b:selectOneMenu value="#{productosBeans.selected.idCategoria}" 
-                                             colMd="0" required="true" id="N_Categoria" disabled="true">                                 
-                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
-                                <f:selectItems value="#{productosBeans.listCategoria}" 
-                                               var="categoria" itemLabel="#{categoria.descripcion}" 
-                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
-
-                            </b:selectOneMenu>     
-                            <h:message for="nit" style="color: red"></h:message>  
+                                 
 
                             <h:outputText value="Talla :" />
                             <b:selectOneMenu value="#{productosBeans.selected.idTalla}" 
-                                             colMd="0" required="true" id="N_idTalla" disabled="true">                                                                 
+                                             colMd="0" required="true" id="N_idTalla" >                                                                 
                                 <f:selectItem itemLabel="Seleccione una Talla" itemValue="0"></f:selectItem>
                                 <f:selectItems value="#{productosBeans.listTallas}" 
                                                var="talla" itemLabel="#{talla.talla1}" 
@@ -67,8 +50,17 @@
                             <h:message for="nit" style="color: red"></h:message>   
 
                             <h:outputText value="Color :" />                            
-                            <b:colorPicker value="#{productosBeans.selected.color}" opacity="true"
-                                           format="rgb" label="Choose an RBB color" disabled="true" />
+                            <b:selectOneMenu value="#{productosBeans.nombrecolor}" style="white:15px"
+                                             colMd="0" required="true" id="idcolor">                                            
+                                <f:selectItem itemLabel="Seleccione" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listColores}" var="color" 
+                                               itemLabel="#{color.nombre}" itemValue="#{color.nombre}"  >                                                                                                  
+                                </f:selectItems>                                                   
+                                <f:ajax event="change" execute="@this" render="idcolor" ></f:ajax>
+
+
+
+                            </b:selectOneMenu>     
                             <h:message for="nit" style="color: red"></h:message>   
 
 
@@ -79,17 +71,11 @@
                             <p:column headerText="Nombre Insumo">
                                 <h:outputText value="#{insumo.nombreInsumo}" />
                             </p:column>
-                            <p:column headerText="Stock">
-                                <h:outputText value="#{insumo.cantidad}" />
-                            </p:column>
+
                             <p:column headerText="Unidad">
                                 <h:outputText value="#{insumo.unidad.descripcion}" />
                             </p:column>   
-                            <p:column headerText="Cantidad">
-                                <center>
-                                    <h:outputText value="#{insumo.cantidadAUtilizar}"/>                                   
-                                </center>
-                            </p:column>
+
 
                         </p:dataTable>
                         <br></br>
@@ -103,10 +89,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Anterior"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.procesoUno(1)}" />                              
+                                <b:commandButton value="Anterior"   icon="menu-left"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.procesoUno(1)}" />                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:commandButton value="Confirmar" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.nuevoproducto()}"></b:commandButton>
+                                <b:commandButton value="Confirmar" icon="floppy-disk"  look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.nuevoproducto()}"></b:commandButton>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

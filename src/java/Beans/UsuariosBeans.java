@@ -83,6 +83,15 @@ public class UsuariosBeans implements Serializable {
             case "despacho":
                 menu = "/montana/faces/vistas/despachos/GenerarDespacho.xhtml";
                 break;
+            case "turno":
+                menu = "/montana/faces/vistas/pedidos/TurnosListXUser.xhtml";
+                break;
+            case "bodega":
+                menu = "/montana/faces/vistas/bodega/pedidosPendientes.xhtml";
+                break;
+                
+
+                
         }
         try {
             if (menu.length() > 1) {

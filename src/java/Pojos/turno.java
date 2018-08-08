@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class turno extends Persistencia implements Serializable {
 
@@ -191,9 +193,11 @@ public class turno extends Persistencia implements Serializable {
                 t.setIdTurno(rs.getInt(1));
                 t.setUsuario(rs.getString(2));
                 t.setIdPersona(rs.getInt(3));
-                t.setFechaTurno(rs.getDate(4));                 
+                t.setFechaTurno(rs.getDate(4));
+            }else{
+               t=null; 
             }
-           
+
         } catch (SQLException ex) {
             System.out.println("Error Consulta : " + ex.toString());
         } finally {
@@ -209,7 +213,7 @@ public class turno extends Persistencia implements Serializable {
     public java.util.List<turnoDetalle> ListXUser(int turno) {
         ArrayList<turnoDetalle> listDetalle = new ArrayList();
         try {
-            System.out.println("Turno : " + turno);
+//            System.out.println("Turno : " + turno);
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             this.getConecion().cstmt = this.getConecion().con.prepareCall("{call ListaDetXturno (?)}");
             this.getConecion().cstmt.setInt(1, turno);
@@ -258,6 +262,38 @@ public class turno extends Persistencia implements Serializable {
             }
         }
         return IdTurno;
+    }
+
+    public int CerrarCaja() {
+        int transaccion = -1;
+        String prepareEdit = "update turno set estado='C' where idTurno=? and Usuario=?";
+        try {
+            System.out.println("idturno : " +idTurno);
+            System.out.println("Usuario : " +Usuario);
+            this.getConecion().con = this.getConecion().dataSource.getConnection();
+            this.getConecion().con.setAutoCommit(false);//    
+            PreparedStatement preparedStatement = this.getConecion().con.prepareStatement(prepareEdit);
+            preparedStatement.setInt(1, idTurno);
+            preparedStatement.setString(2, Usuario);
+
+            transaccion = turno.this.getConecion().transaccion(preparedStatement);
+        } catch (SQLException ex) {
+            System.out.println("Error SQL : " + ex.toString());
+            try {
+                this.getConecion().getconecion().rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(turno.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                this.getConecion().getconecion().commit();
+                this.getConecion().getconecion().setAutoCommit(true);
+                this.getConecion().con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+        return transaccion;
     }
 
     public void ResetValores() {

@@ -39,12 +39,9 @@
                                 </p:column>
                                 <p:column headerText="Nombre Insumo">
                                     <h:outputText value="#{insumo.nombreInsumo}" />
-                                </p:column>
-                                <p:column headerText="Cantidad Stock">
-                                    <h:outputText value="#{insumo.cantidad}" />
-                                </p:column>      
+                                </p:column>                     
                                 <p:column headerText="Unidad">
-                                    <h:outputText value="#{insumo.unidad.siglas}" />
+                                    <h:outputText value="#{insumo.unidad.descripcion}" />
                                 </p:column>   
                             </p:dataTable>
 
@@ -58,20 +55,12 @@
                                 <p:dataTable id="tacInsumo" var="insumo" value="#{productosBeans.objProducto.listInsumos}">
                                     <p:column headerText="Nombre Insumo">
                                         <h:outputText value="#{insumo.nombreInsumo}" />
-                                    </p:column>
-                                    <p:column headerText="Stock">
-                                        <h:outputText value="#{insumo.cantidad}" />
-                                    </p:column>
+                                    </p:column>                               
                                     <p:column headerText="Unidad">
                                         <h:outputText value="#{insumo.unidad.descripcion}" />
-                                    </p:column>   
-                                    <p:column headerText="Cantidad">
-                                        <center>
-                                            <h:inputText value="#{insumo.cantidadAUtilizar}"></h:inputText>                                    
-                                        </center>
-                                    </p:column>
+                                    </p:column>                             
                                     <p:column headerText="Opciones">                                        
-                                        <b:commandButton value="" icon="remove" look="ranger"  action="#{insumoBeans.objSeleccion(insumo,2)}"></b:commandButton>
+                                        <b:commandButton value="" icon="remove" look="ranger"  action="#{productosBeans.eliminarObjTabla(insumo)}"></b:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </b:column>
@@ -109,7 +98,7 @@
                                         <h:outputText value="#{horma.descripcion}" />
                                     </p:column>     
                                     <p:column headerText="Opciones">                                        
-                                        <b:commandButton value="" icon="remove"  look="ranger"   action="#{insumoBeans.objSeleccion(insumo,2)}"></b:commandButton>
+                                        <b:commandButton value="" icon="remove"  look="ranger"   action="#{productosBeans.eliminarObjTablaHorma(horma)}"></b:commandButton>
                                     </p:column>
                                 </p:dataTable>
                             </b:column>
@@ -123,10 +112,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Anterior"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.procesoInicial()}" />                              
+                                <b:commandButton value="Anterior"  icon="menu-left" offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{productosBeans.procesoInicial()}" />                              
                             </b:column>
                             <b:column medium-screen="3" >                                
-                                <b:commandButton value="Siguiente" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.procesoDos()}" update=":formPro:growl"></b:commandButton>
+                                <b:commandButton value="Siguiente" icon="menu-right" look="primary" tiny-screen="half" large-screen="two-thirds" action="#{productosBeans.procesoDos()}" update=":formPro:growl"></b:commandButton>
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>

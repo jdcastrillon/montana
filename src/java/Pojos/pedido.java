@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class pedido extends Persistencia implements Serializable {
 
     public int idPedido;
@@ -38,12 +37,12 @@ public class pedido extends Persistencia implements Serializable {
     private boolean pedidoPasado;
     private int idProducto;
     private int idPersonaTurno;
+    private String UsuarioTurno;
 
     private String clienteStr;
 
     private Mcolor color;
     private String nombrecolor;
-
 
     private persona objPersona;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -175,7 +174,7 @@ public class pedido extends Persistencia implements Serializable {
             preparedStatement.setInt(1, idCliente);
             preparedStatement.setInt(2, idPersona);
             preparedStatement.setString(3, sdf.format(FechaRegistro));
-            preparedStatement.setString(4, null);            
+            preparedStatement.setString(4, null);
             preparedStatement.setInt(5, idTurno);
             preparedStatement.setString(6, Usuario);
             preparedStatement.setString(7, Observacion);
@@ -387,11 +386,11 @@ public class pedido extends Persistencia implements Serializable {
                 Tot = 0;
 
             }
-              for (pedido object : listpedido) {
-                  System.out.println("INFORMACION");
-                  System.out.println("Pedido : " + object.getIdPedido());
-                  System.out.println("Cant : " + object.getListdetallePedido().size());
-              }
+            for (pedido object : listpedido) {
+                System.out.println("INFORMACION");
+                System.out.println("Pedido : " + object.getIdPedido());
+                System.out.println("Cant : " + object.getListdetallePedido().size());
+            }
 
         } catch (SQLException ex) {
             System.out.println("Error Consulta : " + ex.toString());
@@ -578,6 +577,56 @@ public class pedido extends Persistencia implements Serializable {
         }
     }
 
+    public pedido ListPedidosXId(int codigo) {
+        pedido objpedido = new pedido();
+        ArrayList<pedido_detalle> detPedido = new ArrayList();
+        String prepareQuery = "select * from pedido where idpedido=" + codigo;
+        String prepareQueryDet = "select idproducto,idtalla,idcolor,cantidad from pedido_detalle where idpedido=" + codigo;
+        try {
+            this.getConecion().con = this.getConecion().dataSource.getConnection();
+            ResultSet rs = pedido.super.getConecion().query(prepareQuery);
+            if (rs.next()) {
+
+                objpedido.setIdPedido(rs.getInt(1));
+                objpedido.setIdCliente(rs.getInt(2));
+                objpedido.setIdPedido(rs.getInt(3));
+                objpedido.setFechaRegistro(rs.getDate(4));
+                objpedido.setFechaEntrega(rs.getDate(5));
+                objpedido.setIdTurno(rs.getInt(6));
+                objpedido.setUsuario(rs.getString(7));
+                objpedido.setObservacion(rs.getString(8));
+                objpedido.setTotalPedido(rs.getInt(9));
+                objpedido.setUsuarioTurno(rs.getString(10));
+                objpedido.setIdPersonaTurno(rs.getInt(11));
+            } else {
+                objpedido = null;
+            }
+
+            if (objpedido != null) {
+                ResultSet r2s = pedido.super.getConecion().query(prepareQueryDet);
+                while (r2s.next()) {
+                    pedido_detalle det = new pedido_detalle();
+                    det.setIdProducto(rs.getInt(1));
+                    det.setIdTalla(rs.getInt(2));
+                    det.setIdColor(rs.getInt(3));
+                    det.setCantidad(rs.getInt(4));
+                    detPedido.add(det);
+                }
+                objpedido.setListdetallePedido(detPedido);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error Consulta : " + ex.toString());
+        } finally {
+            try {
+                this.getConecion().con.close();
+            } catch (SQLException ex) {
+                System.out.println("error " + ex);
+            }
+        }
+        return objpedido;
+    }
+
     public List<pedido> getListPedido() {
         return listPedido;
     }
@@ -665,7 +714,6 @@ public class pedido extends Persistencia implements Serializable {
         this.control = control;
     }
 
-
     public String getClienteStr() {
         return clienteStr;
     }
@@ -673,7 +721,6 @@ public class pedido extends Persistencia implements Serializable {
     public void setClienteStr(String clienteStr) {
         this.clienteStr = clienteStr;
     }
-
 
     public Mcolor getColor() {
         if (color == null) {
@@ -702,6 +749,13 @@ public class pedido extends Persistencia implements Serializable {
     public void setIdPersonaTurno(int idPersonaTurno) {
         this.idPersonaTurno = idPersonaTurno;
     }
-    
+
+    public String getUsuarioTurno() {
+        return UsuarioTurno;
+    }
+
+    public void setUsuarioTurno(String UsuarioTurno) {
+        this.UsuarioTurno = UsuarioTurno;
+    }
 
 }
