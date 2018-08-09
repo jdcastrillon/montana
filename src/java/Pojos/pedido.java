@@ -461,8 +461,9 @@ public class pedido extends Persistencia implements Serializable {
                 tabla.setObservacion(rs.getString(8));
                 tabla.setPedidoPasado(true);
                 tabla.setTotalPedido(rs.getInt(9));
-                tabla.setClienteStr(rs.getString(10));
-                tabla.setIdProducto(rs.getInt(11));
+                tabla.setIdPersonaTurno(rs.getInt(10));
+                tabla.setClienteStr(rs.getString(11));
+                tabla.setIdProducto(rs.getInt(12));
                 listpedido.add(tabla);
             }
             for (pedido object : listpedido) {

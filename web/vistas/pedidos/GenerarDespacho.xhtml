@@ -42,7 +42,7 @@
                             </b:selectOneMenu> 
                             <f:facet name="footer">
                                 <b:button value="Cerrar" dismiss="modal" id="closeModal" />
-                                <b:commandButton value="Confirmar" look="primary" id="GPedido" oncomplete="$('.modalPseudoClass').modal('hide');">
+                                <b:commandButton value="Si" look="primary" id="GPedido" oncomplete="$('.modalPseudoClass').modal('hide');">
                                     <b:iconAwesome name="save" size="1x" />
                                     <f:ajax event="click"  listener="#{despachosBean.guardarDespacho()}" render="growl fpedido idPedido documentof MP HR RF total fdespacho formUsuarionuevo:detallePedido"/>
                                 </b:commandButton>
