@@ -73,7 +73,6 @@ public class CajaProductos implements Serializable {
 
     public String prepareCreate() {
         if (ObjCaja == null) {
-            System.out.println("Creo Objecto Insumo desde prepare");
             ObjCaja = new cajas();
         }
 
@@ -82,6 +81,26 @@ public class CajaProductos implements Serializable {
 
     public void home() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("CajasList.xhtml");
+    }
+
+    public String eliminarObjTabla(producto pro) {
+        for (producto obj : listProductos) {
+            if (obj.getIdProducto().intValue() == pro.getIdProducto().intValue()) {
+                obj.setSeleccion(false);
+            }
+        }
+        ObjCaja.getListProductos().remove(pro);
+        return "CajasCrearP2";
+    }
+
+    public String eliminarObjTabla2(producto pro) {
+        for (producto obj : listProductos) {
+            if (obj.getIdProducto().intValue() == pro.getIdProducto().intValue()) {
+                obj.setSeleccion(false);
+            }
+        }
+        selectionCaja.getListProductos().remove(pro);
+        return "CajaEdit";
     }
 
     public void pasarProductosAtabla(producto pro, int condicion) throws IOException {
@@ -148,17 +167,17 @@ public class CajaProductos implements Serializable {
 
     public void procesoDos() throws IOException {
 //        if (ValidacionCantidades(1) == false) {  //Valida las cantidades de los productos 
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CajasCrearP3.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("CajasCrearP3.xhtml");
 //        }
     }
 
     public String nuevoproducto() {
         System.out.println("-- " + ObjCaja.toString());
         if (ObjCaja.create() > 0) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Insumo Creado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Caja Creada"));
             parametrosIniciales();
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al crear Insumo"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al crear Caja"));
         }
         return "CajasList";
     }
@@ -234,17 +253,17 @@ public class CajaProductos implements Serializable {
     }
 
     public String editproducto() {
-        if (ValidacionCantidades(2) == false) {
+//        if (ValidacionCantidades(2) == false) {
             if (selectionCaja.edit() > 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Insumo Modificado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Caja Modificada"));
                 parametrosIniciales();
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al Modificado Insumo"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Error al Modificado Caja"));
             }
             return "CajasList";
-        } else {
-            return "CajaEdit";
-        }
+//        } else {
+//            return "CajaEdit";
+//        }
 
     }
 //
