@@ -27,22 +27,22 @@
                     <b:row>
                         <b:column medium-screen="1"/>
                         <b:column medium-screen="3">                            
-                            <b:datepicker value="Fecha Inicial" tooltip="Ingrese Fecha Inicial" />
+                            <b:datepicker value="#{bodegaBeans.selected.fechaRegistro}" tooltip="Ingrese Fecha Inicial" />
                         </b:column>
                         <b:column medium-screen="3" >                                
-                            <b:datepicker value="Fecha Final" tooltip="Ingrese Fecha Final" />
+                            <b:datepicker value="#{bodegaBeans.selected.fechaEntrega}" tooltip="Ingrese Fecha Final" />
                         </b:column>
                         <b:column medium-screen="2" >             
                             <b:selectOneMenu value="#{bodegaBeans.condicion}"
-                                colMd="0" required="true" id="N_Categoria">                                 
-                                <f:selectItem itemLabel="Ingreso" itemValue="0"></f:selectItem>
-                                <f:selectItem itemLabel="Entrega" itemValue="0"></f:selectItem>
+                                             colMd="0" required="true" id="N_Categoria">                                 
+                                <f:selectItem itemLabel="Ingreso" itemValue="Ingreso"></f:selectItem>
+                                <f:selectItem itemLabel="Entrega" itemValue="Entrega"></f:selectItem>
                             </b:selectOneMenu> 
                         </b:column> 
 
                         <b:column medium-screen="2" >                                
                             <b:commandButton value="Buscar" look="primary" actionListener="#{bodegaBeans.buscarXfecha()}"></b:commandButton>
-                                
+
                         </b:column>
                         <b:column medium-screen="1"/>
                     </b:row>
@@ -67,16 +67,8 @@
                         </p:column>
 
                         <p:column headerText="Opciones" style="width:140px;text-align: center">
-                            <b:row>
-                                <b:column medium-screen="3">
-                                    <b:commandButton value="" icon="edit"  action="#{productosBeans.objSeleccion(producto,1)}"></b:commandButton>
-                                </b:column>
-                                <b:column medium-screen="3" >                                
-                                    <b:column medium-screen="3" >                                                                    
-                                        <b:commandButton value="" icon="remove"  action="#{productosBeans.objSeleccion(producto,2)}"></b:commandButton>
-                                    </b:column>
-                                </b:column>                                
-                            </b:row>
+
+                            <b:commandButton value="" icon="eye-open"  action="#{productosBeans.objSeleccion(producto,1)}"></b:commandButton>
 
                         </p:column>
                     </p:dataTable>

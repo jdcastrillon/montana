@@ -554,7 +554,7 @@ public class pedido extends Persistencia implements Serializable {
     }
 
     public void ListaPedidosXfechas(String condicion) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
         String prepareQuery = "";
         Date f1 = null;
         Date f2 = null;
@@ -563,30 +563,33 @@ public class pedido extends Persistencia implements Serializable {
                     + "A.idCliente=B.idCliente and B.idPersona=C.idPersona and \n"
                     + "FechaRegistro between ? and ?";
             f1 = FechaRegistro;
-            f2 = FechaRegistro;
+            f2 = FechaEntrega;
         } else if (condicion.equalsIgnoreCase("Entrega")) {
             prepareQuery = "select A.idPedido, A.idCliente, C.NombreCompleto,A.FechaRegistro,A.FechaEntrega from pedido A , cliente B , persona C where \n"
                     + "A.idCliente=B.idCliente and B.idPersona=C.idPersona and \n"
                     + "FechaEntrega between ? and ?";
-            f1 = FechaEntrega;
+            f1 = FechaRegistro;
             f2 = FechaEntrega;
         }
-
+        System.out.println("F1 : " + f1);
+        System.out.println("F2 : " + f2);
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             PreparedStatement preparedStatement = this.getConecion().con.prepareStatement(prepareQuery);
-            preparedStatement.setDate(1, (java.sql.Date) f1);
-            preparedStatement.setDate(2, (java.sql.Date) f2);
+            preparedStatement.setString(1, sdf.format(f1));
+            preparedStatement.setString(2, sdf.format(f2));
             ResultSet rs = pedido.super.getConecion().queryprepared(preparedStatement);
 
             while (rs.next()) {
+                System.out.println("----------");
                 pedido tabla = new pedido();
                 persona p = new persona();
 
                 tabla.setIdPedido(rs.getInt(1));
-                p.setNombreCompleto(rs.getString(2));
-                tabla.setFechaRegistro(rs.getDate(3));
-                tabla.setFechaEntrega(rs.getDate(4));
+                tabla.setIdCliente(rs.getInt(2));
+                p.setNombreCompleto(rs.getString(3));
+                tabla.setFechaRegistro(rs.getDate(4));
+                tabla.setFechaEntrega(rs.getDate(5));
 
                 tabla.setObjPersona(p);
                 listPedido.add(tabla);
