@@ -33,6 +33,12 @@ public class BodegaBeans implements Serializable {
     public void buscarXfecha() {
         objpedido.ListaPedidosXfechas(condicion);
     }
+    
+    public String detallePedido(pedido p){
+        PedidosBeans pedido=new PedidosBeans();
+        pedido.setSelectionPedido(p);
+        return "pedidoDetalle";
+    }
 
     public pedido getSelected() {
         if (objpedido == null) {
