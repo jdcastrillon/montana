@@ -13,10 +13,10 @@
             <h:outputText value="Crear Producto"></h:outputText>
         </ui:define>
         <ui:define name="user">
-            <h:outputText value="Juan"></h:outputText>
+            <h:outputText value="#{loginBean.datosUser.nickName}"></h:outputText>
         </ui:define>
         <ui:define name="title">
-            <h:outputText value="Crear Producto Paso 3"></h:outputText>
+            <h:outputText value="Editar Producto"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <center>
@@ -35,10 +35,7 @@
                                 </p:column>
                                 <p:column headerText="Nombre Insumo">
                                     <h:outputText value="#{insumo.nombreInsumo}" />
-                                </p:column>
-                                <p:column headerText="Cantidad Stock">
-                                    <h:outputText value="#{insumo.cantidad}" />
-                                </p:column>      
+                                </p:column>                            
                                 <p:column headerText="Unidad">
                                     <h:outputText value="#{insumo.unidad.siglas}" />
                                 </p:column>   
@@ -92,21 +89,10 @@
 
                             <h:message for="N_cantidad" style="color: red"></h:message> 
 
-                            <h:outputText value="Categoria :" />
-                            <b:selectOneMenu value="#{productosBeans.selectionProducto.objCategoria.idCategoria}" 
-                                             colMd="0" required="true" id="N_Categoria"  disabled="true">                                 
-                                <f:selectItem itemLabel="Seleccione una Categoria" itemValue="0"></f:selectItem>
-                                <f:selectItems value="#{productosBeans.listCategoria}" 
-                                               var="categoria" itemLabel="#{categoria.descripcion}" 
-                                               itemValue="#{categoria.idCategoria}"></f:selectItems>
-
-                            </b:selectOneMenu>     
-                            <h:message for="nit" style="color: red"></h:message>  
 
                             <h:outputText value="Talla :" />
                             <b:selectOneMenu value="#{productosBeans.selectionProducto.idTalla}" 
                                              colMd="0" required="true" id="N_idTalla" disabled="true">                                                                 
-                                <f:selectItem itemLabel="Seleccione una Talla" itemValue="0"></f:selectItem>
                                 <f:selectItems value="#{productosBeans.listTallas}" 
                                                var="talla" itemLabel="#{talla.talla1}" 
                                                itemValue="#{talla.idTalla}"></f:selectItems>
@@ -115,8 +101,14 @@
                             <h:message for="nit" style="color: red"></h:message>   
 
                             <h:outputText value="Color :" />                            
-                            <b:colorPicker value="#{productosBeans.selectionProducto.objColor.refcolor}" opacity="true"
-                                           format="rgb" label="Choose an RBB color" disabled="true" />
+                            <b:selectOneMenu value="#{productosBeans.nombrecolor}" style="white:15px"
+                                             colMd="0" required="true" id="idcolor">                                            
+                                <f:selectItem itemLabel="Seleccione" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{productosBeans.listColores}" var="color" 
+                                               itemLabel="#{color.nombre}" itemValue="#{color.nombre}"  >                                                                                                  
+                                </f:selectItems>                                                   
+                                <f:ajax event="change" execute="@this" render="idcolor" ></f:ajax>
+                            </b:selectOneMenu>   
                             <h:message for="nit" style="color: red"></h:message>   
 
 
@@ -132,11 +124,7 @@
                                     <p:column headerText="Unidad">
                                         <h:outputText value="#{insumo.unidad.descripcion}" />
                                     </p:column>   
-                                    <p:column headerText="Cantidad">
-                                        <center>
-                                            <h:inputText value="#{insumo.cantidadAUtilizar}"></h:inputText>                                         
-                                        </center>
-                                    </p:column>
+                      
 
                                 </p:dataTable>
                             </b:column>

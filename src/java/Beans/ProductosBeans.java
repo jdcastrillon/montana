@@ -107,8 +107,9 @@ public class ProductosBeans implements Serializable {
     }
 
     public String objSeleccion(producto insu, int condicion) {
-
+        
         this.selectionProducto = insu;
+        System.out.println("Codigo de tallas : " + this.selectionProducto.getIdTalla());
         if (condicion == 1) {
             for (hormas objecto1 : selectionProducto.getListHormas()) {
                 for (hormas objecto2 : listHormas) {
@@ -127,8 +128,8 @@ public class ProductosBeans implements Serializable {
                     }
                 }
             }
-
         }
+        
         return condicion == 1 ? "productoEditP1" : "productoDelete";
     }
 
@@ -304,6 +305,13 @@ public class ProductosBeans implements Serializable {
         objProducto.getListInsumos().clear();
         objProducto.setNombreProducto("");
         objProducto.setIdTalla(null);
+        for (insumos obj : listInsumos) {
+            obj.setSeleccion(false);
+        }
+        for (hormas listHorma : listHormas) {
+            listHorma.setSeleccion(false);
+        }
+        
         return "productosCrearP1";
     }
 
