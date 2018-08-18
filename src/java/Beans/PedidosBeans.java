@@ -82,23 +82,36 @@ public class PedidosBeans implements Serializable {
     private int pedidos;
 
     public PedidosBeans() {
+        System.out.println("gato volador");
+//             growl.setLife(5000);
+//        listPedidos.clear();
+//        listColores.clear();
+//        ListCajas.clear();
+//        System.out.println("***************************");
+//        try {
+//            getObjPedido();
+//            listarClientes();
+//            ListarProductos();
+//        } catch (SQLException ex) {
+//            System.out.println("Error : " + ex.toString());
+//        }
     }
 
-    @PostConstruct
-    public void init() {
-        growl.setLife(5000);
-        listPedidos.clear();
-        listColores.clear();
-        ListCajas.clear();
-        System.out.println("***************************");
-        try {
-            getObjPedido();
-            listarClientes();
-            ListarProductos();
-        } catch (SQLException ex) {
-            System.out.println("Error : " + ex.toString());
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        growl.setLife(5000);
+//        listPedidos.clear();
+//        listColores.clear();
+//        ListCajas.clear();
+//        System.out.println("***************************");
+//        try {
+//            getObjPedido();
+//            listarClientes();
+//            ListarProductos();
+//        } catch (SQLException ex) {
+//            System.out.println("Error : " + ex.toString());
+//        }
+//    }
 
     public void pedidosListLink() throws SQLException, IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/pedidos/GenerarPedido.xhtml");
@@ -145,8 +158,6 @@ public class PedidosBeans implements Serializable {
         System.out.println("Relleno los colores : " + listColores.size());
         System.out.println("Cajas : " + ListCajas.size());
     }
-
-
 
 //    public String prepareCreate() {
 //        getObjPedido();
