@@ -58,8 +58,8 @@ public class HormasBeans implements Serializable {
         return condicion == 1 ? "hormasEdit" : "hormasDelete";
     }
 
-    public String home() throws IOException {
-        return "hormasList";
+    public void home() throws IOException {        
+        FacesContext.getCurrentInstance().getExternalContext().redirect("hormasList.xhtml");
     }
 
     private void listaHormas() throws SQLException {
@@ -96,7 +96,7 @@ public class HormasBeans implements Serializable {
         home();
     }
 
-    public String editHorma() {        
+    public String editHorma() {
         if (selectionhorma.edit() > 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Horma Modificado"));
             try {

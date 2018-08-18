@@ -48,12 +48,10 @@
                         <b:row>
                             <b:column medium-screen="3"/>
                             <b:column medium-screen="3">
-                                <b:commandButton value="Cancelar"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{usuariosBeans.home()}" />                              
+                                <b:commandButton value="Cancelar"  icon="align-justify" offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{usuariosBeans.home()}" />                              
                             </b:column>
-                            <b:column medium-screen="3" >                                
-                                <b:column medium-screen="3" >                                                                    
-                                    <b:button value="Aceptar"  onclick="$('.modalPseudoClass').modal()"></b:button>
-                                </b:column>
+                            <b:column medium-screen="3" >                                                                
+                                <b:button value="Aceptar" look="primary" icon="floppy-disk" tiny-screen="half" large-screen="two-thirds"  onclick="$('.modalPseudoClass').modal()"></b:button>                                
                             </b:column>
                             <b:column medium-screen="3"/>
                         </b:row>
