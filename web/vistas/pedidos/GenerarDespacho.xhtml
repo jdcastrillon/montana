@@ -11,10 +11,10 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="../../Templets/templetAdmon.xhtml">
         <ui:define name="titleapp">
-            <h:outputText value="Crear Usuarios"></h:outputText>
+            <h:outputText value="Consultar Pedidos"></h:outputText>
         </ui:define>
         <ui:define name="user">
-            <h:outputText value="Juan"></h:outputText>
+            <h:outputText value="#{loginBean.datosUser.nickName}"></h:outputText>
         </ui:define>
         <ui:define name="title">
             <h:outputText value="Consultar Pedidos"></h:outputText>

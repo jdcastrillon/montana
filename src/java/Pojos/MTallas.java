@@ -24,6 +24,7 @@ public class MTallas extends Persistencia implements Serializable {
     private String talla2;
     private String talla3;
     private String estado;
+    private String tallaFinal;
 
     public MTallas() {
         super();
@@ -84,48 +85,48 @@ public class MTallas extends Persistencia implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public String getTallaFinal() {
+        return tallaFinal;
+    }
+
+    public void setTallaFinal(String tallaFinal) {
+        this.tallaFinal = tallaFinal;
+    }
+
     @Override
     public java.util.List List() {
-        ArrayList<MTallas> listTallas = new ArrayList();
-         MTallas tabla = new MTallas();
-         tabla.setIdTalla(new BigDecimal(1));
-         tabla.setTalla1("1");
-         tabla.setTalla1("10");
-         tabla.setTalla1("10/2");
-         
-         MTallas tabla2 = new MTallas();
-         tabla2.setIdTalla(new BigDecimal(2));
-         tabla2.setTalla1("12");
-         tabla2.setTalla1("20");
-         tabla2.setTalla1("20/2");
-         
-         listTallas.add(tabla);
-         listTallas.add(tabla2);
-         
-//        String prepareQuery = "select * from mtallas";
-//        try {
-//            this.getConecion().con = this.getConecion().dataSource.getConnection();
-//            ResultSet rs = MTallas.super.getConecion().query(prepareQuery);
-//            while (rs.next()) {
-//                MTallas tabla = new MTallas();
-//                tabla.setIdTalla(rs.getBigDecimal(1));
-//                tabla.setTalla1(rs.getString(2));
-//                tabla.setTalla2(rs.getString(3));
-//                tabla.setTalla3(rs.getString(4));
-//                tabla.setEstado(rs.getString(5));
-//
-//                listTallas.add(tabla);
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println("Error Consulta : " + ex.toString());
-//        } finally {
-//            try {
-//                this.getConecion().con.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(hormas.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+        ArrayList<MTallas> listTallas = new ArrayList();        
+        String prepareQuery = "select * from mtallas";
+        try {
+            this.getConecion().con = this.getConecion().dataSource.getConnection();
+            ResultSet rs = MTallas.super.getConecion().query(prepareQuery);
+            while (rs.next()) {
+                MTallas tabla = new MTallas();
+                tabla.setIdTalla(rs.getBigDecimal(1));
+                tabla.setTalla1(rs.getString(2));
+                tabla.setTalla2(rs.getString(3));
+                tabla.setTalla3(rs.getString(4));
+                tabla.setEstado(rs.getString(5));
+
+                listTallas.add(tabla);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error Consulta : " + ex.toString());
+        } finally {
+            try {
+                this.getConecion().con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(hormas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return listTallas;
     }
+
+    @Override
+    public String toString() {
+        return talla1;
+    }
+    
+
 
 }

@@ -167,6 +167,14 @@ public class pedido extends Persistencia implements Serializable {
         String prepareInsert = "insert into pedido (idCliente,idPersonacliente,FechaRegistro,FechaEntrega,"
                 + "idTurno,Usuario,Observacion,idPersonaTurno) "
                 + "values (?,?,?,?,?,?,?,?)";
+
+        String prepareInsertD = "insert into pedido_detalle "
+                + "(idPedido,idProducto,idTalla,idColor,cantidad,despachado,observacion) "
+                + "values (?,?,?,?,?,?,?)";
+
+        String prepareInsertVariable = "insert into pedidovariables "
+                + "(idPedido, idCliente, idPersona, id_variables, Estado, fecha, idDespacho) "
+                + "values (?,?,?,?,?,?,?)";
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             this.getConecion().con.setAutoCommit(false);
@@ -187,9 +195,7 @@ public class pedido extends Persistencia implements Serializable {
             }
             for (pedido_detalle detalle : listdetallePedido) {
                 if (detalle.getCantidad() > 0) {
-                    String prepareInsertD = "insert into pedido_detalle "
-                            + "(idPedido,idProducto,idTalla,idColor,cantidad,despachado,observacion) "
-                            + "values (?,?,?,?,?,?,?)";
+
                     PreparedStatement insertDetallestm = this.getConecion().con.prepareStatement(prepareInsertD);
                     insertDetallestm.setInt(1, Current);
                     insertDetallestm.setInt(2, detalle.getIdProducto());
@@ -202,6 +208,17 @@ public class pedido extends Persistencia implements Serializable {
                     System.out.println(detalle.toString());
                 }
             }
+
+            PreparedStatement preparedStatement2 = this.getConecion().con.prepareStatement(prepareInsertVariable);
+            preparedStatement2.setInt(1, Current);
+            preparedStatement2.setInt(2, idCliente);
+            preparedStatement2.setInt(3, idPersona);
+            preparedStatement2.setInt(4, 1);
+            preparedStatement2.setString(5, "A");
+            preparedStatement2.setString(6, sdf.format(FechaRegistro));
+            preparedStatement2.setInt(7, 0);
+
+            transaccion = pedido.this.getConecion().transaccion(preparedStatement2);
 
         } catch (SQLException ex) {
             try {
@@ -538,39 +555,42 @@ public class pedido extends Persistencia implements Serializable {
     }
 
     public void ListaPedidosXfechas(String condicion) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
         String prepareQuery = "";
         Date f1 = null;
         Date f2 = null;
         if (condicion.equalsIgnoreCase("Ingreso")) {
-            prepareQuery = "select A.`idPedido`, A.`idCliente`, C.NombreCompleto,A.FechaRegistro,A.FechaEntrega from pedido A , cliente B , persona C where \n"
+            prepareQuery = "select A.idPedido, A.idCliente, C.NombreCompleto,A.FechaRegistro,A.FechaEntrega from pedido A , cliente B , persona C where \n"
                     + "A.idCliente=B.idCliente and B.idPersona=C.idPersona and \n"
                     + "FechaRegistro between ? and ?";
             f1 = FechaRegistro;
-            f2 = FechaRegistro;
+            f2 = FechaEntrega;
         } else if (condicion.equalsIgnoreCase("Entrega")) {
-            prepareQuery = "select A.`idPedido`, A.`idCliente`, C.NombreCompleto,A.FechaRegistro,A.FechaEntrega from pedido A , cliente B , persona C where \n"
+            prepareQuery = "select A.idPedido, A.idCliente, C.NombreCompleto,A.FechaRegistro,A.FechaEntrega from pedido A , cliente B , persona C where \n"
                     + "A.idCliente=B.idCliente and B.idPersona=C.idPersona and \n"
                     + "FechaEntrega between ? and ?";
-            f1 = FechaEntrega;
+            f1 = FechaRegistro;
             f2 = FechaEntrega;
         }
-
+        System.out.println("F1 : " + f1);
+        System.out.println("F2 : " + f2);
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             PreparedStatement preparedStatement = this.getConecion().con.prepareStatement(prepareQuery);
-            preparedStatement.setDate(1, (java.sql.Date) f1);
-            preparedStatement.setDate(2, (java.sql.Date) f2);
+            preparedStatement.setString(1, sdf.format(f1));
+            preparedStatement.setString(2, sdf.format(f2));
             ResultSet rs = pedido.super.getConecion().queryprepared(preparedStatement);
 
             while (rs.next()) {
+                System.out.println("----------");
                 pedido tabla = new pedido();
                 persona p = new persona();
 
                 tabla.setIdPedido(rs.getInt(1));
-                p.setNombreCompleto(rs.getString(2));
-                tabla.setFechaRegistro(rs.getDate(3));
-                tabla.setFechaEntrega(rs.getDate(4));
+                tabla.setIdCliente(rs.getInt(2));
+                p.setNombreCompleto(rs.getString(3));
+                tabla.setFechaRegistro(rs.getDate(4));
+                tabla.setFechaEntrega(rs.getDate(5));
 
                 tabla.setObjPersona(p);
                 listPedido.add(tabla);
@@ -694,9 +714,7 @@ public class pedido extends Persistencia implements Serializable {
         }
         return totalPedido;
     }
-    
-    
-   
+
     public void setTotalPedido(int totalPedido) {
         this.totalPedido = totalPedido;
     }
@@ -775,8 +793,7 @@ public class pedido extends Persistencia implements Serializable {
 
     public void setTotalDespachado(int totalDespachado) {
         this.totalDespachado = totalDespachado;
-        
-        
+
     }
 
 }

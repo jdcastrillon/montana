@@ -14,7 +14,7 @@
             <h:outputText value="Listado de Hormas">aa</h:outputText>
         </ui:define>
         <ui:define name="user">
-            <h:outputText value="Usario"></h:outputText>
+            <h:outputText value="#{loginBean.datosUser.nickName}"></h:outputText>
         </ui:define>
         <ui:define name="title">
             <h:outputText value="Listado de Productos"></h:outputText>
@@ -39,10 +39,7 @@
                         </p:column>
                         <p:column headerText="Nombre">
                             <h:outputText value="#{producto.nombreProducto}" />
-                        </p:column>
-                        <p:column headerText="Cantidad">
-                            <h:outputText value="#{producto.cantidad}" />
-                        </p:column>
+                        </p:column>                  
                         <p:column headerText="Color">
                             <h:outputText value="#{producto.objColor.nombre}"  />
                         </p:column>
