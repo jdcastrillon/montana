@@ -414,7 +414,7 @@ public class pedido extends Persistencia implements Serializable {
             String value = entry.getValue();
             switch (key) {
                 case "idCliente":
-                    filtro += " AND p.idPersona = " + value;
+                    filtro += " AND pe.idPersona = " + value;
                     break;
                 case "fechaPedido":
                     filtro += " AND p.FechaRegistro between '" + value + " 00:00:00' AND '" + value + " 23:59:59'";
