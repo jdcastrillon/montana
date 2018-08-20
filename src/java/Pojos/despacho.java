@@ -121,6 +121,8 @@ public class despacho extends Persistencia implements Serializable {
         String prepareInsert = "insert into despacho (idTurno,Usuario,idPersona,idPedido,factura,"
                 + "FechaEntrega,idCiudad,NumeroGuia,idTipoDespacho) values (?,?,?,?,?,?,?,?,?)";
         System.out.println("Usuario = " + Usuario);
+        System.out.println("estado pedido = " + estadoPedido);
+
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();
             this.getConecion().con.setAutoCommit(false);
@@ -142,12 +144,13 @@ public class despacho extends Persistencia implements Serializable {
             }
             for (int i = 0; i < getList_despachoproducto().size(); i++) {
                 String prepareInsertD = "insert into despachoproducto "
-                        + "(idDespacho,idProducto,idTalla,cantidad) values (?,?,?,?)";
+                        + "(idDespacho,idProducto,idTalla,cantidad,CantidadPedido) values (?,?,?,?,?)";
                 PreparedStatement insertDetallestm = this.getConecion().con.prepareStatement(prepareInsertD);
                 insertDetallestm.setInt(1, Current);
                 insertDetallestm.setInt(2, getList_despachoproducto().get(i).getIdProducto());
                 insertDetallestm.setInt(3, getList_despachoproducto().get(i).getIdTalla());
                 insertDetallestm.setInt(4, getList_despachoproducto().get(i).getCantidad());
+                insertDetallestm.setInt(5, 0);
                 transaccion += despacho.this.getConecion().transaccion(insertDetallestm);
             }
             if (estadoPedido > 0) {
@@ -164,17 +167,19 @@ public class despacho extends Persistencia implements Serializable {
                 transaccion += despacho.this.getConecion().transaccion(pstmVariable);
             }
 
-//            String queryUpdate = "update despachoproducto desp "
-//                    + "inner join pedido_detalle pd on pd.idProducto = desp.idProducto and pd.idTalla = desp.idTalla "
-//                    + "inner join pedidovariables pv on pv.idPedido = pd.idPedido "
-//                    + "inner join despacho d on d.idDespacho = pv.idDespacho "
-//                    + "inner join despachoproducto dp on d.idDespacho = pv.idDespacho  and dp.idProducto = pd.idProducto "
-//                    + "set desp.CantidadPedido = pd.cantidad "
-//                    + "where dp.idDespacho = " + Current + "  and pv.idPedido = " + idPedido + " "
-//                    + "and d.idTipoDespacho = 1";
-//            
-//            PreparedStatement pstUpdate = this.getConecion().con.prepareStatement(queryUpdate);
-//            transaccion += despacho.this.getConecion().transaccion(pstUpdate);
+            String queryUpdate = "update despachoproducto desp "
+                    + "inner join pedido_detalle pd on pd.idProducto = desp.idProducto and pd.idTalla = desp.idTalla "
+                    + "inner join pedidovariables pv on pv.idPedido = pd.idPedido "
+                    + "inner join despacho d on d.idDespacho = pv.idDespacho "
+                    + "inner join despachoproducto dp on d.idDespacho = pv.idDespacho  and dp.idProducto = pd.idProducto "
+                    + "set desp.CantidadPedido = pd.cantidad "
+                    + "where dp.idDespacho = " + Current + "  and pv.idPedido = " + idPedido + " "
+                    + "and d.idTipoDespacho = 1";
+
+//            System.out.println(queryUpdate);
+
+            PreparedStatement pstUpdate = this.getConecion().con.prepareStatement(queryUpdate);
+            transaccion += despacho.this.getConecion().transaccion(pstUpdate);
 
         } catch (SQLException ex) {
             System.out.println("Error SQL : " + ex.toString());

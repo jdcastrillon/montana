@@ -39,17 +39,25 @@
 
 
                     <b:row>
-                        <b:column medium-screen="3" >
-                            <b:button value="#{turnosBeans.mnsTurno}" look="primary" offset-sm='4' tiny-screen="half" large-screen="two-thirds" onclick="$('.modalCaja').modal()" style="height: 60px;" icon="credit-card" ></b:button>                                                          
+                        
+                        <b:column medium-screen="2" >
+                            <b:button value="#{turnosBeans.mnsTurno}" look="primary" offset-sm='3' tiny-screen="half" large-screen="two-thirds" onclick="$('.modalCaja').modal()" style="height: 60px;" icon="credit-card" ></b:button>                                                          
                         </b:column>
-                        <b:column medium-screen="3">
-                            <b:commandButton value="Pedido"  offset-sm='4' tiny-screen="half" large-screen="two-thirds"  action="#{turnosBeans.redireccion('pedidos')}" style="height: 60px;color: #ffffff;background-color: #E37F3C" icon="floppy-save"  ></b:commandButton>                              
+                        <b:column medium-screen="2" >
+                            <b:button value="Consultar" offset-sm='2' large-screen="two-thirds"  tiny-screen="half" icon="search"
+                                      style="height: 60px;color: #ffffff;background-color: #15AAE3" ></b:button>                                                          
                         </b:column>
-                        <b:column medium-screen="3" > 
-                            <b:commandButton value="Despacho" offset-sm='4' tiny-screen="half" large-screen="two-thirds"  style="height: 60px;;color: #ffffff;background-color: #59D147" icon="floppy-open" action="#{turnosBeans.redireccion('despacho')}"  />                                                          
+                        <b:column medium-screen="2">
+                            <b:commandButton value="Pedido"  offset-sm='2' tiny-screen="half" large-screen="two-thirds"  action="#{turnosBeans.redireccion('pedidos')}" style="height: 60px;color: #ffffff;background-color: #E37F3C" icon="floppy-save"  ></b:commandButton>                              
                         </b:column>
-                        <b:column medium-screen="3" >
-                            <b:button value="Venta Directa" offset-sm='4' tiny-screen="half" large-screen="two-thirds"  style="height: 60px;color: #ffffff;background-color: #C2C4C1" icon="send" />                                                          
+                        <b:column medium-screen="2" > 
+                            <b:commandButton value="Despacho" offset-sm='2' tiny-screen="half" large-screen="two-thirds"  style="height: 60px;;color: #ffffff;background-color: #59D147" icon="floppy-open" action="#{turnosBeans.redireccion('despacho')}"  />                                                          
+                        </b:column>
+                        <b:column medium-screen="2" >
+                            <b:button value="Venta Directa" offset-sm='2' tiny-screen="half" large-screen="two-thirds"  style="height: 60px;color: #ffffff;background-color: #C2C4C1" icon="send" />                                                          
+                        </b:column>
+                         <b:column medium-screen="2" >
+                           
                         </b:column>
                     </b:row>
                     <br/>

@@ -132,38 +132,42 @@ public class DespachosBean implements Serializable {
 //        }
 ////        System.out.println("");
 //    }
-    public String validarDespacho() {
+    public String validarDespacho(int opc) {
         System.out.println("validando despaho");
         //validar los despachos listpedidos contra lispedidostemp
-        int countErrors = 0;
-        List<pedido> listPedidostTemp = new ArrayList();
-        listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros);
-        listVariables.clear();
-        mvariables v = new mvariables();
-        listVariables = v.List();
-        System.out.println(listPedidos.size() + " " + listPedidostTemp.size());
-        if (listPedidos.size() != listPedidostTemp.size()) {
-            countErrors += 1;
-        } else {
-            for (int i = 0; i < listPedidostTemp.size(); i++) {
-                for (int j = 0; j < listPedidostTemp.get(i).getListdetallePedido().size(); j++) {
-                    if (listPedidostTemp.get(i).getListdetallePedido().get(j).getCantidad()
-                            != listPedidos.get(i).getListdetallePedido().get(j).getCantidad()) {
-                        countErrors += 1;
+        if (opc == 1) {
+            int countErrors = 0;
+            List<pedido> listPedidostTemp = new ArrayList();
+            listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros);
+            listVariables.clear();
+            mvariables v = new mvariables();
+            listVariables = v.List();
+            System.out.println(listPedidos.size() + " " + listPedidostTemp.size());
+            if (listPedidos.size() != listPedidostTemp.size()) {
+                countErrors += 1;
+            } else {
+                for (int i = 0; i < listPedidostTemp.size(); i++) {
+                    for (int j = 0; j < listPedidostTemp.get(i).getListdetallePedido().size(); j++) {
+                        if (listPedidostTemp.get(i).getListdetallePedido().get(j).getCantidad()
+                                != listPedidos.get(i).getListdetallePedido().get(j).getCantidad()) {
+                            countErrors += 1;
+                        }
                     }
                 }
             }
-        }
-        setObjPedido(null);
-        if (countErrors > 0) {
-            showSelect = true;
-            Mensaje = "El pedido ha cambiado, por favor seleccione el estado en que desea dejar el pedido, si no selecciona ninguna opcion el sistema "
-                    + "lo dejara en pie..!";
+            setObjPedido(null);
+            if (countErrors > 0) {
+                showSelect = true;
+                Mensaje = "El pedido ha cambiado, por favor seleccione el estado en que desea dejar el pedido, si no selecciona ninguna opcion el sistema "
+                        + "lo dejara en pie..!";
+            } else {
+                showSelect = false;
+                Mensaje = "";
+            }
+            System.out.println("errores " + countErrors + " " + showSelect);
         } else {
-            showSelect = false;
-            Mensaje = "";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "No has consultado pedidos"));
         }
-        System.out.println("errores " + countErrors + " " + showSelect);
         return "Generardespacho";
     }
 

@@ -44,7 +44,7 @@
                                 <b:button value="Cerrar" dismiss="modal" id="closeModal" />
                                 <b:commandButton value="Si" look="primary" id="GPedido" oncomplete="$('.modalPseudoClass').modal('hide');">
                                     <b:iconAwesome name="save" size="1x" />
-                                    <f:ajax event="click"  listener="#{despachosBean.guardarDespacho()}" render="growl fpedido idPedido documentof MP HR RF total formUsuarionuevo:detallePedido confirmard confirmard2"/>
+                                    <f:ajax event="click"  listener="#{despachosBean.guardarDespacho()}" render="growl fpedido idPedido documentof MP HR RF total fdespacho formUsuarionuevo:detallePedido"/>
                                 </b:commandButton>
                             </f:facet>
                         </b:modal>    
@@ -94,22 +94,14 @@
                                             <tr>
                                                 <td>
                                                     <b:commandButton styleClass="consultar" look="primary" value="Consultar" >   
-                                                        <f:ajax event="click" listener="#{despachosBean.listarPedidos()}" render="formUsuarionuevo:detallePedido confirmard confirmard2" />
+                                                        <f:ajax event="click" listener="#{despachosBean.listarPedidos()}" render="formUsuarionuevo:detallePedido" />
                                                     </b:commandButton>
                                                 </td>
                                                 <td>  
-                                                    <b:commandButton id="confirmard" styleClass="despachar" look="success" value="Confirmar Despachos"
-                                                                     oncomplete="$('.modalPseudoClass').modal()" 
-                                                                     style="#{despachosBean.listPedidos.size()>0 ? 'display: block' : 'display: none'}"> 
-                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho(1)}" render="@this confirmard2"/>
+                                                    <b:commandButton styleClass="despachar" look="success" value="Confirmar Despachos"
+                                                                     oncomplete="$('.modalPseudoClass').modal()"> 
+                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho()}"/>
                                                     </b:commandButton> 
-
-
-                                                    <b:commandButton id="confirmard2" styleClass="despachar" look="success" value="Confirmar Despachos"                                                                     
-                                                                     style="#{despachosBean.listPedidos.size()==0 ? 'display: block' : 'display: none'}"> 
-                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho(2)}" render="@this growl confirmard"/>
-                                                    </b:commandButton> 
-
                                                 </td>
                                             </tr>
                                         </table>
@@ -128,8 +120,8 @@
                                 </tr>
                                 <tr class="tblHeader">
                                     <td class="tblHeaderF"># Pedido:</td>
-                                    <td class="tblHeader2" style="padding-left: 5px;">
-                                        <b:inputText styleClass="tblFilterInput" value="#{despachosBean.idPedido}" id="idPedido">
+                                    <td class="tblHeader2">
+                                        <b:inputText class="tblFilterInput" value="#{despachosBean.idPedido}" id="idPedido">
                                             <f:ajax event="blur" render="@this" listener="@this" />
                                         </b:inputText>
                                     </td>
@@ -176,12 +168,31 @@
                                 </tr>
                                 <tr class="tblHeader">
                                     <td class="tblHeaderF">Total:</td>
-                                    <td class="tblHeader" style="padding-left: 5px;">
+                                    <td class="tblHeader">
                                         <b:inputText class="tblFilterInput" value="#{despachosBean.total}" id="total">
                                             <f:ajax event="blur" render="@this" listener="@this" />
                                         </b:inputText>
                                     </td>
-                                </tr>                                                 
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Fecha despacho:</td>
+                                    <td class="tblHeader">
+                                        <p:calendar alt="Seleccione fecha"
+                                                    styleClass="tblFilterInput" value="#{despachosBean.fdespacho}" 
+                                                    id="fdespacho" navigator="true" pattern="dd/MM/yy" autocomplete="off" >
+                                            <f:ajax event="dateSelect" render="@this" listener="@this" />
+                                        </p:calendar>
+                                    </td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">% De Cumplimiento:</td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+                                <tr class="tblHeader">
+                                    <td class="tblHeaderF">Tiempo Transcurrido:</td>
+                                    <td class="tblHeader"></td>
+                                </tr>
+
                             </table>
                         </b:panelGrid>
 
