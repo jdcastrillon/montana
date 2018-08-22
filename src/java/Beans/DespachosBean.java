@@ -220,9 +220,7 @@ public class DespachosBean implements Serializable {
         if (!estadoStr.equals("")) {
             filtros.put("estado", estadoStr);
         }
-
         listPedidos = getObjPedido().ListPedidoByFilters(filtros, opc);
-
         setObjPedido(null);
 //        System.out.println("tot pedidos pend = " + listPedidos.size());
 //        System.out.println("select user " + selectUser);

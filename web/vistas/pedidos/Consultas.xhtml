@@ -117,7 +117,7 @@
                                 </tr>
                                 <tr class="tblHeader">
                                     <td class="tblHeaderF"># Pedido:</td>
-                                    <td class="tblHeader2" style="padding-left: 5px;">
+                                    <td class="tblHeader2" style="padding-left: 4px;">
                                         <b:inputText styleClass="tblFilterInput" value="#{despachosBean.idPedido}" id="idPedido">
                                             <f:ajax event="blur" render="@this" listener="@this" />
                                         </b:inputText>
@@ -165,7 +165,7 @@
                                 </tr>
                                 <tr class="tblHeader">
                                     <td class="tblHeaderF">Total:</td>
-                                    <td class="tblHeader" style="padding-left: 5px;">
+                                    <td class="tblHeader" style="padding-left: 4px;">
                                         <b:inputText class="tblFilterInput" value="#{despachosBean.total}" id="total">
                                             <f:ajax event="blur" render="@this" listener="@this" />
                                         </b:inputText>
@@ -203,7 +203,7 @@
                                             <f:selectItem itemLabel="-- Seleccione --" itemValue=""></f:selectItem>                         
                                             <f:selectItems value="#{despachosBean.listestados}" 
                                                            var="estado" itemLabel="#{estado.descripcion}" 
-                                                           itemValue="#{estado.descripcion}"></f:selectItems>
+                                                           itemValue="#{estado.nombre}"></f:selectItems>
                                             <f:ajax event="change" execute="@this" render="@this" ></f:ajax>
                                         </b:selectOneMenu>   
                                     </td>

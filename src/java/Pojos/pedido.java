@@ -202,7 +202,7 @@ public class pedido extends Persistencia implements Serializable {
                     insertDetallestm.setInt(3, detalle.getIdTalla());
                     insertDetallestm.setInt(4, detalle.getIdColor());
                     insertDetallestm.setInt(5, detalle.getCantidad());
-                    insertDetallestm.setString(6, "N");
+                    insertDetallestm.setString(6, detalle.getDespachado());
                     insertDetallestm.setString(7, detalle.getDetalle());
                     transaccion = pedido.this.getConecion().transaccion(insertDetallestm);
                     System.out.println(detalle.toString());
@@ -426,7 +426,10 @@ public class pedido extends Persistencia implements Serializable {
         ArrayList<pedido_detalle> listpedidoDetalle;
         String filtro = "";
         String filtro3 = "";
-        String festados = "pd.despachado not in ('DC','CAN') and 1=1 ";
+        int validador1 = 0;
+        int validador2 = 0;
+        String festados = " pd.despachado not in ('DC','CAN') ";
+        String festados2 = " pd.despachado not in ('DC','CAN') ";
         for (Map.Entry<String, String> entry : filtros.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -460,6 +463,7 @@ public class pedido extends Persistencia implements Serializable {
                     break;
                 case "estado":
                     filtro += " AND pd.despachado = '" + value + "'";
+                    festados2 = " pd.despachado = '" + value + "' ";
                     break;
             }
         }
@@ -515,7 +519,7 @@ public class pedido extends Persistencia implements Serializable {
                         + "left join despacho desp on desp.idPedido = pd.idPedido "
                         + "left join despachoproducto despProd on despProd.idDespacho = desp.idDespacho "
                         + "and despProd.idTalla = pd.idTalla and despProd.idProducto = pd.idProducto "
-                        + "where pd.despachado not in ('DC','A') and pd.idPedido =" + object.getIdPedido() + " and pd.idProducto = " + object.getIdProducto();
+                        + "where " + festados2 + " and pd.idPedido =" + object.getIdPedido() + " and pd.idProducto = " + object.getIdProducto();
 
                 ResultSet rs2 = pedido.super.getConecion().query(prepareQueryDetalle);
                 System.out.println(prepareQueryDetalle);
@@ -534,6 +538,7 @@ public class pedido extends Persistencia implements Serializable {
                             Tot2 += rs2.getInt(10);
                         }
                     }
+                    validador1 += 1;
                 }
 
                 String selectDatos = "select h.descripcion, i.NombreInsumo,  prod.nombreProducto from pedido p "
@@ -550,12 +555,17 @@ public class pedido extends Persistencia implements Serializable {
                     object.setHorma(rs3.getString(1));
                     object.setMateriap(rs3.getString(2));
                     object.setReferencia(rs3.getString(3));
+                    validador2 += 1;
                 }
                 object.setTotalPedido(Tot);
                 object.setTotalDespachado(Tot2);
                 object.setListdetallePedido(listpedidoDetalle);
                 Tot = 0;
                 Tot2 = 0;
+            }
+
+            if (validador1 == 0 || validador2 == 0) {
+                listpedido.clear();
             }
 
         } catch (SQLException ex) {

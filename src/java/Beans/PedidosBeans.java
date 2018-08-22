@@ -420,6 +420,7 @@ public class PedidosBeans implements Serializable {
                         for (pedido_detalle object : pedido.getListdetallePedido()) {
                             if (object.getCantidad() > 0) {
                                 object.setDetalle(pedido.getObservacion());
+                                object.setDespachado("EP");
                                 listPedidosDet.add(object);
                             }
                         }
