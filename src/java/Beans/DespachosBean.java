@@ -54,6 +54,15 @@ public class DespachosBean implements Serializable {
     private pedido objPedido;
     private producto referencia;
     private pedido selectionPedido;
+    private pedido selectionDetalle;
+
+    public pedido getSelectionDetalle() {
+        return selectionDetalle;
+    }
+
+    public void setSelectionDetalle(pedido selectionDetalle) {
+        this.selectionDetalle = selectionDetalle;
+    }
     private usuario selectionCliente;
     private String horma;
     private String insumo;
@@ -467,6 +476,9 @@ public class DespachosBean implements Serializable {
         this.selectionPedido = null;
     }
 
+   
+
+   
     public usuario getSelectionCliente() {
         if (selectionCliente == null) {
             selectionCliente = new usuario();
@@ -862,5 +874,13 @@ public class DespachosBean implements Serializable {
 
     public void setListestados(List<mestados> listestados) {
         this.listestados = listestados;
+    }
+
+    public List<pedido_detalle> getListdetallePedido() {
+        return listdetallePedido;
+    }
+
+    public void setListdetallePedido(List<pedido_detalle> listdetallePedido) {
+        this.listdetallePedido = listdetallePedido;
     }
 }

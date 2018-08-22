@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.util.Date;
 
 public class pedido_detalle extends Persistencia implements Serializable {
 
@@ -23,6 +24,8 @@ public class pedido_detalle extends Persistencia implements Serializable {
     private boolean seleccion;
     private String materia;
     private String horma;
+    private Date fechaEntrega;
+    
 
     private String descTalla;
 
@@ -331,6 +334,14 @@ public class pedido_detalle extends Persistencia implements Serializable {
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
 }

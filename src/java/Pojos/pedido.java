@@ -40,6 +40,7 @@ public class pedido extends Persistencia implements Serializable {
     private String UsuarioTurno;
     private int totalDespachado;
     private String clienteStr;
+    private Date fechaDespacho;
 
     private Mcolor color;
     private String nombrecolor;
@@ -510,7 +511,8 @@ public class pedido extends Persistencia implements Serializable {
                     p.setCantidad(0);
                     listpedidoDetalle.add(p);
                 }
-                String prepareQueryDetalle = "select pd.idPedido, pd.idPedidoDespacho,pd.idProducto,pd.idTalla,pd.idColor, "
+                String prepareQueryDetalle = "select pd.idPedido, pd.idPedidoDespacho,"
+                        + "pd.idProducto,pd.idTalla,pd.idColor, "
                         + "case when despProd.cantidad is null then pd.cantidad else pd.cantidad - despProd.cantidad end cantidad1,"
                         + "pd.despachado,pd.observacion, concat_ws(' | ',t.med_in,t.med_amer,t.med_col,t.med_cm),"
                         + "case when despProd.cantidad is null then 0 else despProd.cantidad end cantidad2 "
@@ -541,13 +543,15 @@ public class pedido extends Persistencia implements Serializable {
                     validador1 += 1;
                 }
 
-                String selectDatos = "select h.descripcion, i.NombreInsumo,  prod.nombreProducto from pedido p "
+                String selectDatos = "select h.descripcion, i.NombreInsumo,  prod.nombreProducto, desp.FechaEntrega from pedido p "
                         + "inner JOIN pedido_detalle pd on p.idPedido = pd.idPedido "
                         + "inner join hormasprod hp on hp.idProducto = pd.idProducto "
                         + "inner join hormas h on h.idHorma = hp.idHorma "
                         + "inner join insumoproducto ip on ip.idProducto = pd.idProducto "
                         + "inner join insumos i on ip.idInsumo = i.idInsumo "
                         + "inner join producto prod on prod.idProducto = pd.idProducto "
+                        + "left join despacho desp on p.idPedido = desp.idPedido "
+                        + "left join despachoproducto despp on desp.idDespacho = despp.idDespacho and despp.idProducto = " + object.getIdProducto() + " "
                         + "where p.idPedido = " + object.getIdPedido() + " and pd.idProducto = " + object.getIdProducto() + " " + filtro3 + " limit 1";
                 ResultSet rs3 = pedido.super.getConecion().query(selectDatos);
                 System.out.println(selectDatos);
@@ -555,6 +559,7 @@ public class pedido extends Persistencia implements Serializable {
                     object.setHorma(rs3.getString(1));
                     object.setMateriap(rs3.getString(2));
                     object.setReferencia(rs3.getString(3));
+                    object.setFechaDespacho(rs3.getDate(4));
                     validador2 += 1;
                 }
                 object.setTotalPedido(Tot);
@@ -820,6 +825,14 @@ public class pedido extends Persistencia implements Serializable {
     public void setTotalDespachado(int totalDespachado) {
         this.totalDespachado = totalDespachado;
 
+    }
+
+    public Date getFechaDespacho() {
+        return fechaDespacho;
+    }
+
+    public void setFechaDespacho(Date fechaDespacho) {
+        this.fechaDespacho = fechaDespacho;
     }
 
 }

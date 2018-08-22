@@ -77,7 +77,7 @@
 
                         <p:contextMenu>
                             <p:menuitem value="Eliminar" actionListener="#{despachosBean.liberarpedido()}" icon="ui-icon-disk" immediate="true"
-                                        update="formUsuarionuevo:pedidos" />
+                                        update="@form:pedidos" />
                             <p:menuitem value="Modificar" onclick="$('.modalPseudoClass2').modal()" icon="ui-icon-pencil" 
                                         update="@form:tallast"/>
                         </p:contextMenu>
@@ -217,115 +217,107 @@
                         <table jsf:id="detallePedidoC" class="tbl">
                             <thead clas="bgcolor">
                                 <tr class="bgcolor tblHeader">
-                                    <th class="tblHeader" colspan="17">Pedidos</th>                                                                     
+                                    <th class="tblHeader" colspan="19">Pedidos</th>                                                                     
                                 </tr>
                             </thead>
                         </table>
 
 
+
+
                         <p:dataTable id="pedidos" var="objs" value="#{despachosBean.listPedidos}" 
                                      selectionMode="single" selection="#{despachosBean.selectionPedido}" 
-                                     rowKey="#{objs.idProducto}"
+                                     rowKey="#{objs.idProducto}" 
                                      styleClass="tbl">                            
                             <p:ajax event="rowSelect" listener="#{despachosBean.onRowSelect}" update="@this" />
-                            <p:ajax event="rowUnselect" listener="#{despachosBean.onRowUnselect}" update="@this" />
+                            <p:ajax event="rowUnselect" listener="#{despachosBean.onRowUnselect}" update="@this" />              
 
-                            <p:column headerText="Id">
+
+                            <p:column headerText="Fecha Pedido" styleClass="tblHeader" width="90">
+                                <h:outputText value="#{objs.fechaRegistroStr}" />
+                            </p:column>   
+
+                            <p:column headerText="# Pedido" styleClass="tblHeader" width="90">
                                 <h:outputText value="#{objs.idPedido}" />
-                            </p:column>                          
+                            </p:column>   
 
-                            <p:column headerText="Fecha Pedido">
-                                <h:outputText value="#{objs.fechaRegistro}" />
-                            </p:column>
-
-
-                            <p:column headerText="Fecha Estimada De Entrega">
-                                <h:outputText value="#{objs.fechaRegistro}" />
-                            </p:column>
-
-
-                            <p:column headerText="Cliente">
+                            <p:column headerText="Cliente" styleClass="tblHeader" width="150">
                                 <h:outputText value="#{objs.clienteStr}" />
-                            </p:column>
-
-                        </p:dataTable>
-
-
-                        <!--<p:dataTable id="detallePedido" var="objs" value="{despachosBean.listPedidos}" 
-                                     selectionMode="single" selection="{despachosBean.selectionPedido}" 
-                                     rowKey="{objs.idProducto}"
-                                     styleClass="tbl">                            
-                            <p:ajax event="rowSelect" listener="{despachosBean.onRowSelect}" update="@this" />
-                            <p:ajax event="rowUnselect" listener="{despachosBean.onRowUnselect}" update="@this" />
+                            </p:column>   
 
                             <p:column headerText="MP" styleClass="tblHeader" width="70">
-                                <h:outputText value="{objs.materiap}" />
+                                <h:outputText value="#{objs.materiap}" />
                             </p:column>     
                             <p:column headerText="HR" styleClass="tblHeader" width="70">
-                                <h:outputText value="{objs.horma}" />
-                            </p:column>    
-                            <p:column headerText="REFERENCIA" styleClass="tblHeader" width="250">
-                                <b:badge value="Info." 
-                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"
-                                         tooltip="Fecha Pedido: {objs.fechaRegistroStr} 
-                                         Cliente: {objs.clienteStr} 
-                                         #Pedido: {objs.idPedido}" tooltip-position="left"
-                                         />
-                                <h:outputText value="{objs.referencia}" />
+                                <h:outputText value="#{objs.horma}" />
+                            </p:column>  
+
+                            <p:column headerText="REFERENCIA" styleClass="tblHeader" width="150">                                
+                                <h:outputText value="#{objs.referencia}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="51" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(0).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(0).cantidad}" rendered="#{objs.listdetallePedido.get(0).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(0).cantidad}" rendered="#{objs.listdetallePedido.get(0).cantidad==0}"  />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="52" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(1).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(1).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="53" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(2).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(2).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="54" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(3).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(3).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="55" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(4).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(4).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="56" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(5).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(5).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="57" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(6).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(6).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="58" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(7).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(7).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="59" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(8).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(8).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="60" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(9).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(9).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="61" width="55">
-                                <h:outputText value="{objs.listdetallePedido.get(10).cantidad}" />
+                                <h:outputText value="#{objs.listdetallePedido.get(10).cantidad}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader inputPedido"  headerText="TOTAL PEDIDO" width="100">
-                                <h:outputText value="{objs.totalPedido+objs.totalDespachado}" />
+                                <h:outputText value="#{objs.totalPedido+objs.totalDespachado}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader inputPedido"  headerText="TOTAL DESPACHO" width="100">
-                                <h:outputText value="{objs.totalDespachado}" />
+                                <h:outputText value="#{objs.totalDespachado}" />
                             </p:column> 
-                        </p:dataTable>-->
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Fecha Despachado" width="100">
+                                <h:outputText value="#{objs.fechaDespacho}" />
+                            </p:column> 
+
+                        </p:dataTable>
+
                         <br/> 
 
                         <b:row>
