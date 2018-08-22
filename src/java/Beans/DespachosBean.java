@@ -90,7 +90,7 @@ public class DespachosBean implements Serializable {
     private int total;
     private int cumplimiento;
     private int estadopedido = 0;
-    private String estadoStr;
+    private String estadoStr = "";
     private boolean showSelect = false;
     Map<String, String> filtros = new HashMap<>();
     private List<mestados> listestados = new ArrayList();
@@ -217,7 +217,7 @@ public class DespachosBean implements Serializable {
         if (cumplimiento > 0) {
             filtros.put("cumplimiento", Integer.toString(cumplimiento));
         }
-        if (estadoStr != null) {
+        if (!estadoStr.equals("")) {
             filtros.put("estado", estadoStr);
         }
 
