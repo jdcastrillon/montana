@@ -421,11 +421,12 @@ public class pedido extends Persistencia implements Serializable {
         return listpedido;
     }
 
-    public java.util.List<pedido> ListPedidoByFilters(Map<String, String> filtros) {
+    public java.util.List<pedido> ListPedidoByFilters(Map<String, String> filtros, int opc) {
         ArrayList<pedido> listpedido = new ArrayList();
         ArrayList<pedido_detalle> listpedidoDetalle;
         String filtro = "";
         String filtro3 = "";
+        String festados = "pd.despachado not in ('DC','CAN') and 1=1 ";
         for (Map.Entry<String, String> entry : filtros.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -454,13 +455,24 @@ public class pedido extends Persistencia implements Serializable {
                 case "total":
                     filtro += " AND p.total_pedido = " + value;
                     break;
+                case "cumplimiento":
+                    filtro += "";
+                    break;
+                case "estado":
+                    filtro += " AND pd.despachado = '" + value + "'";
+                    break;
             }
         }
+
+        if (opc == 2) {
+            festados = "1=1";
+        }
+
         String prepareQuery = "select DISTINCT p.*, pe.NombreCompleto, pd.idProducto from pedido p "
                 + "inner join cliente c on p.idCliente = c.idCliente "
                 + "inner join persona pe on c.idPersona = pe.idPersona "
                 + "inner join pedido_detalle pd on pd.idPedido = p.idPedido "
-                + "where pd.despachado not in ('DC','A') and 1=1" + filtro + "";
+                + "where " + festados + " " + filtro + "";
         System.out.println("prepareQuery pedido " + prepareQuery);
         try {
             this.getConecion().con = this.getConecion().dataSource.getConnection();

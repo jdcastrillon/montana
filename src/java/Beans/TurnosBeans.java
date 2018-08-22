@@ -131,21 +131,24 @@ public class TurnosBeans implements Serializable {
             case "home":
                 menu = "TurnosListXUser";
                 break;
+            case "consultas":
+                menu = "Consultas";
+                break;
 
         }
         return menu;
     }
 
     public String editarPedido(turnoDetalle p) {
-        PedidosBeans ped=new PedidosBeans();
-        String menu="";
-        if(p.getNombre().equalsIgnoreCase("pedido")){
+        PedidosBeans ped = new PedidosBeans();
+        String menu = "";
+        if (p.getNombre().equalsIgnoreCase("pedido")) {
             System.out.println("Pedido : " + p.getCodigo());
-            pedido pedido=new pedido();
-            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));            
-            menu="GenerarPedido";
+            pedido pedido = new pedido();
+            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));
+            menu = "GenerarPedido";
         }
-        
+
         return menu;
     }
 

@@ -9,6 +9,7 @@ import Pojos.despacho;
 import Pojos.despachoproducto;
 import Pojos.hormas;
 import Pojos.insumos;
+import Pojos.mestados;
 import Pojos.mvariables;
 import Pojos.pedido;
 import Pojos.pedido_detalle;
@@ -44,7 +45,6 @@ import org.primefaces.event.UnselectEvent;
 public class DespachosBean implements Serializable {
 
     private List<pedido> listPedidos = new ArrayList();
-
     private List<pedido_detalle> listdetallePedido;
     private List<usuario> listUsersClientes = new ArrayList();
     private List<producto> listProductos = new ArrayList();
@@ -88,9 +88,12 @@ public class DespachosBean implements Serializable {
     private Date fdespacho;
     private int idPedido;
     private int total;
+    private int cumplimiento;
     private int estadopedido = 0;
+    private String estadoStr;
     private boolean showSelect = false;
     Map<String, String> filtros = new HashMap<>();
+    private List<mestados> listestados = new ArrayList();
 
     public DespachosBean() {
     }
@@ -106,6 +109,7 @@ public class DespachosBean implements Serializable {
             ListarProductos();
             listarMP();
             listarHormas();
+            listaEstados();
         } catch (SQLException ex) {
             System.out.println("Error : " + ex.toString());
         }
@@ -138,7 +142,7 @@ public class DespachosBean implements Serializable {
         if (opc == 1) {
             int countErrors = 0;
             List<pedido> listPedidostTemp = new ArrayList();
-            listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros);
+            listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros, 1);
             listVariables.clear();
             mvariables v = new mvariables();
             listVariables = v.List();
@@ -171,12 +175,14 @@ public class DespachosBean implements Serializable {
         return "Generardespacho";
     }
 
-    public void listarPedidos() throws SQLException {
+    public void listarPedidos(int opc) throws SQLException {
         System.out.println("listando");
+        System.out.println("estadoStr " + estadoStr);
         listarClientes();
         ListarProductos();
         listarMP();
         listarHormas();
+        listaEstados();
         listPedidos.clear();
         String[] partesUser = selectUser.split(" ");
         String[] partesMP = selectMP.split(" ");
@@ -208,8 +214,14 @@ public class DespachosBean implements Serializable {
         if (fdespacho != null) {
             filtros.put("fechadespacho", format2.format(fdespacho));
         }
+        if (cumplimiento > 0) {
+            filtros.put("cumplimiento", Integer.toString(cumplimiento));
+        }
+        if (estadoStr != null) {
+            filtros.put("estado", estadoStr);
+        }
 
-        listPedidos = getObjPedido().ListPedidoByFilters(filtros);
+        listPedidos = getObjPedido().ListPedidoByFilters(filtros, opc);
 
         setObjPedido(null);
 //        System.out.println("tot pedidos pend = " + listPedidos.size());
@@ -236,6 +248,13 @@ public class DespachosBean implements Serializable {
         hormas h = new hormas();
         listHormas = h.List();
         System.out.println("listUsersClientes " + listHormas.size());
+    }
+
+    private void listaEstados() throws SQLException {
+        listestados.clear();
+        mestados e = new mestados();
+        listestados = e.List();
+        System.out.println("listestados " + listestados.size());
     }
 
     private void ListarProductos() {
@@ -821,5 +840,29 @@ public class DespachosBean implements Serializable {
         total = 0;
         estadopedido = 0;
         showSelect = false;
+    }
+
+    public int getCumplimiento() {
+        return cumplimiento;
+    }
+
+    public void setCumplimiento(int cumplimiento) {
+        this.cumplimiento = cumplimiento;
+    }
+
+    public String getEstadoStr() {
+        return estadoStr;
+    }
+
+    public void setEstadoStr(String estadoStr) {
+        this.estadoStr = estadoStr;
+    }
+
+    public List<mestados> getListestados() {
+        return listestados;
+    }
+
+    public void setListestados(List<mestados> listestados) {
+        this.listestados = listestados;
     }
 }
