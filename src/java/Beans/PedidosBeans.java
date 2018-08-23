@@ -25,7 +25,10 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import org.primefaces.component.growl.Growl;
 import org.primefaces.context.RequestContext;
 
@@ -33,6 +36,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author JuanDavid
  */
+@ManagedBean
 @Named(value = "pedidoBeans")
 @SessionScoped
 public class PedidosBeans implements Serializable {
@@ -80,38 +84,46 @@ public class PedidosBeans implements Serializable {
     private String idProductoP = "";
     private int gtalla;
     private int pedidos;
+    private int borrar;
 
     public PedidosBeans() {
         System.out.println("gato volador");
-//             growl.setLife(5000);
-//        listPedidos.clear();
-//        listColores.clear();
-//        ListCajas.clear();
-//        System.out.println("***************************");
-//        try {
-//            getObjPedido();
-//            listarClientes();
-//            ListarProductos();
-//        } catch (SQLException ex) {
-//            System.out.println("Error : " + ex.toString());
-//        }
+        System.out.println("borro : " + borrar);
     }
 
-//    @PostConstruct
-//    public void init() {
-//        growl.setLife(5000);
-//        listPedidos.clear();
-//        listColores.clear();
-//        ListCajas.clear();
-//        System.out.println("***************************");
-//        try {
-//            getObjPedido();
-//            listarClientes();
-//            ListarProductos();
-//        } catch (SQLException ex) {
-//            System.out.println("Error : " + ex.toString());
-//        }
-//    }
+    @PostConstruct
+    public void init() {
+        growl.setLife(5000);
+        listPedidos.clear();
+        listColores.clear();
+        ListCajas.clear();
+        System.out.println("***************************");
+        try {
+            getObjPedido();
+            listarClientes();
+            ListarProductos();
+        } catch (SQLException ex) {
+            System.out.println("Error : " + ex.toString());
+        }
+    }
+
+    public void constructorPost() {
+        System.out.println("**************************************  POS ");
+        growl.setLife(5000);
+        listPedidos.clear();
+        listColores.clear();
+        ListCajas.clear();
+        try {
+            getObjPedido();
+            listarClientes();
+            ListarProductos();
+            this.listPedidos.clear();
+            this.listPedidosPendientes.clear();
+            this.selectUser = "";
+        } catch (SQLException ex) {
+            System.out.println("Error : " + ex.toString());
+        }
+    }
 
     public void pedidosListLink() throws SQLException, IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/pedidos/GenerarPedido.xhtml");
@@ -138,6 +150,8 @@ public class PedidosBeans implements Serializable {
         System.out.println("tot pedidos pend = " + listPedidos.size());
         System.out.println("select user " + selectUser);
         this.pedidos = listPedidosPendientes.size();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pedidodelete");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidodelete", 0);
     }
 
     private void listarClientes() throws SQLException {
@@ -187,6 +201,8 @@ public class PedidosBeans implements Serializable {
         setIdProducto(Integer.parseInt(detalle[2]));
         setDisabled("false");
         p = null;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pedidodelete");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidodelete", 0);
     }
 
     public List<usuario> completeClients(String query) {
@@ -322,6 +338,9 @@ public class PedidosBeans implements Serializable {
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Debe Primero seleccionar un producto"));
         }
+        this.borrar = 0;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pedidodelete");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidodelete", 0);
         return "GenerarPedido";
     }
 
@@ -390,7 +409,35 @@ public class PedidosBeans implements Serializable {
         talla10 = 0;
         talla11 = 0;
         this.nombrecolor = "Seleccione";
+    }
 
+    public void resetInicio() {
+        int variable = (int) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("pedidodelete");
+        System.out.println("variable : " + variable);
+        if (variable == 1) {
+            System.out.println("Inicio Borrado");
+            Mensaje = "";
+            selectProducto = "";
+            observacionPedido = "";
+            totalPedido = 0;
+            horma = "";
+            insumo = "";
+            disabled = "true";
+            talla1 = 0;
+            talla2 = 0;
+            talla3 = 0;
+            talla4 = 0;
+            talla5 = 0;
+            talla6 = 0;
+            talla7 = 0;
+            talla8 = 0;
+            talla9 = 0;
+            talla10 = 0;
+            talla11 = 0;
+            this.selectUser = "";
+            this.nombrecolor = "Seleccione";
+            this.listPedidos.clear();
+        }
     }
 
     public void selectionColor() {
@@ -838,6 +885,14 @@ public class PedidosBeans implements Serializable {
 
     public void setListCajas(List<cajas> ListCajas) {
         this.ListCajas = ListCajas;
+    }
+
+    public int getBorrar() {
+        return borrar;
+    }
+
+    public void setBorrar(int borrar) {
+        this.borrar = borrar;
     }
 
 }

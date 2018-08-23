@@ -40,6 +40,7 @@ public class TurnosBeans implements Serializable {
     private turno selectionTurno;
     private String mnsTurno;
     private String mnsDialogTurno;
+    private int pedidos;
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");
     SimpleDateFormat format2 = new SimpleDateFormat("yyyy-M-dd");
@@ -57,6 +58,7 @@ public class TurnosBeans implements Serializable {
             getSelected();
             MiCaja();
             listarTurnos();
+            this.pedidos = 0;
         } catch (SQLException ex) {
             System.out.println("Error : " + ex.toString());
         }
@@ -120,6 +122,13 @@ public class TurnosBeans implements Serializable {
         String menu = "";
         switch (vista) {
             case "pedidos":
+                if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("pedidodelete") == null) {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidodelete", 1);
+                } else {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("pedidodelete");
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("pedidodelete", 1);
+                }
+
                 menu = "GenerarPedido";
                 break;
             case "despacho":
@@ -137,15 +146,15 @@ public class TurnosBeans implements Serializable {
     }
 
     public String editarPedido(turnoDetalle p) {
-        PedidosBeans ped=new PedidosBeans();
-        String menu="";
-        if(p.getNombre().equalsIgnoreCase("pedido")){
+        PedidosBeans ped = new PedidosBeans();
+        String menu = "";
+        if (p.getNombre().equalsIgnoreCase("pedido")) {
             System.out.println("Pedido : " + p.getCodigo());
-            pedido pedido=new pedido();
-            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));            
-            menu="GenerarPedido";
+            pedido pedido = new pedido();
+            ped.setObjPedido(pedido.ListPedidosXId(p.getCodigo()));
+            menu = "GenerarPedido";
         }
-        
+
         return menu;
     }
 
@@ -315,6 +324,14 @@ public class TurnosBeans implements Serializable {
 
     public void setMnsDialogTurno(String mnsDialogTurno) {
         this.mnsDialogTurno = mnsDialogTurno;
+    }
+
+    public int getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(int pedidos) {
+        this.pedidos = pedidos;
     }
 
 }
