@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import Pojos.CajaModel;
 import Pojos.Mcolor;
 import Pojos.cajas;
 import Pojos.pedido;
@@ -85,6 +86,7 @@ public class PedidosBeans implements Serializable {
     private int gtalla;
     private int pedidos;
     private int borrar;
+    private CajaModel c;
 
     public PedidosBeans() {
         System.out.println("gato volador");
@@ -102,6 +104,8 @@ public class PedidosBeans implements Serializable {
             getObjPedido();
             listarClientes();
             ListarProductos();
+            getC();
+            this.c.llenado();
         } catch (SQLException ex) {
             System.out.println("Error : " + ex.toString());
         }
@@ -894,5 +898,18 @@ public class PedidosBeans implements Serializable {
     public void setBorrar(int borrar) {
         this.borrar = borrar;
     }
+
+    public CajaModel getC() {
+        if(c==null){
+            c=new CajaModel();
+        }
+        return c;
+    }
+
+    public void setC(CajaModel c) {
+        this.c = c;
+    }
+    
+    
 
 }

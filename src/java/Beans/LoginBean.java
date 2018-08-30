@@ -94,7 +94,7 @@ public class LoginBean implements Serializable {
             if (user.InicioSesion()) {
                 System.out.println("Conecto");
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/pedidos/TurnosListXUser.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/montana/faces/vistas/home.xhtml");
                 user = null;
 
             } else {

@@ -40,17 +40,30 @@
                                 event.returnValue = false;">
                         <b:modal id="modalCajas" title="Lista de Cajas" styleClass="modalCajas">
 
-                            <p:dataGrid var="caja" value="#{pedidoBeans.listCajas}" columns="3" layout="grid">
+                            <table jsf:id="detalleCaja" class="tbl">
+                                <thead clas="bgcolor">
+                                    <tr class="bgcolor tblHeader">
+                                        <th class="tblHeader" colspan="#{pedidoBeans.c.listaCajas.size()}">--</th>                                                                     
+                                    </tr>
+                                </thead>
+                                <tbody>                                                   
+                                    <tr class="tblHeader">   
+                                        <ui:repeat var="caja" value="#{pedidoBeans.c.listaCajas}">
+                                            <td class="tblHeader">#{caja}</td>
+                                        </ui:repeat>                            
+                                    </tr>
 
-                                <p:panel header="#{caja.nombreCaja} (#{caja.cantidad})" style="text-align:center;background-color: #F3F2F1">
-                                    <h:panelGrid columns="1" style="width:100%">                                        
-                                        <ui:repeat var="productos" value="#{caja.listProductos}">
-                                            #{productos.nombreProducto}<br></br>
+                                    <tr class="tblHeader">  
+                                        <ui:repeat var="ca" value="#{pedidoBeans.c.listacajaDet}">
+                                            <td class="tblHeader inputPedido"> 
+                                                #{ca}
+                                            </td>
                                         </ui:repeat>
-                                    </h:panelGrid>
-                                </p:panel>
+                                    </tr>
 
-                            </p:dataGrid>
+
+                                </tbody>
+                            </table>
 
                             <f:facet name="footer">                                
                                 <b:button value="Ok" look="primary" dismiss="modal" />
@@ -166,7 +179,7 @@
 
 
                         </b:panelGrid>
-                  
+
                         <br/>
 
                         <table class="tbl">
