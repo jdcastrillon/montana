@@ -55,6 +55,7 @@ public class DespachosBean implements Serializable {
     private producto referencia;
     private pedido selectionPedido;
     private pedido selectionDetalle;
+    private int countErrors = 0;
 
     public pedido getSelectionDetalle() {
         return selectionDetalle;
@@ -103,6 +104,7 @@ public class DespachosBean implements Serializable {
     private boolean showSelect = false;
     Map<String, String> filtros = new HashMap<>();
     private List<mestados> listestados = new ArrayList();
+    private int valCantDespachos = 0;
 
     public DespachosBean() {
     }
@@ -146,12 +148,13 @@ public class DespachosBean implements Serializable {
 ////        System.out.println("");
 //    }
     public String validarDespacho(int opc) {
+        countErrors = 0;
+        System.out.println("op = "+opc);
         System.out.println("validando despaho");
         //validar los despachos listpedidos contra lispedidostemp
+        List<pedido> listPedidostTemp = new ArrayList();
+        listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros, 1);
         if (opc == 1) {
-            int countErrors = 0;
-            List<pedido> listPedidostTemp = new ArrayList();
-            listPedidostTemp = getObjPedido().ListPedidoByFilters(filtros, 1);
             listVariables.clear();
             mvariables v = new mvariables();
             listVariables = v.List();
@@ -163,6 +166,7 @@ public class DespachosBean implements Serializable {
                     for (int j = 0; j < listPedidostTemp.get(i).getListdetallePedido().size(); j++) {
                         if (listPedidostTemp.get(i).getListdetallePedido().get(j).getCantidad()
                                 != listPedidos.get(i).getListdetallePedido().get(j).getCantidad()) {
+                            System.out.println("Comproobandio cantidades "+listPedidostTemp.get(i).getListdetallePedido().get(j).getCantidad() + " " + listPedidos.get(i).getListdetallePedido().get(j).getCantidad());
                             countErrors += 1;
                         }
                     }
@@ -192,7 +196,10 @@ public class DespachosBean implements Serializable {
         listarMP();
         listarHormas();
         listaEstados();
+
         listPedidos.clear();
+
+        System.out.println("listPedidos " + listPedidos.size());
         String[] partesUser = selectUser.split(" ");
         String[] partesMP = selectMP.split(" ");
         String[] partesHR = selectHR.split(" ");
@@ -476,9 +483,19 @@ public class DespachosBean implements Serializable {
         this.selectionPedido = null;
     }
 
-   
+    public void onRowSelect2(SelectEvent event) {
+        System.out.println("obj Selected m2" + " " + selectionPedido.toString());
+        this.selectionPedido = ((pedido) event.getObject());
+        despacho d = new despacho();
+        valCantDespachos = d.totalDespachosXPedido(this.selectionPedido.getIdPedido());
+    }
 
-   
+    public String updateFacturaPedido(pedido p) {
+        System.out.println("p = " + p.getFactura());
+
+        return "";
+    }
+
     public usuario getSelectionCliente() {
         if (selectionCliente == null) {
             selectionCliente = new usuario();
@@ -882,5 +899,119 @@ public class DespachosBean implements Serializable {
 
     public void setListdetallePedido(List<pedido_detalle> listdetallePedido) {
         this.listdetallePedido = listdetallePedido;
+    }
+
+    public int getValCantDespachos() {
+        return valCantDespachos;
+    }
+
+    public void setValCantDespachos(int valCantDespachos) {
+        this.valCantDespachos = valCantDespachos;
+    }
+
+    public void clearAll() {
+        if (listPedidos == null) {
+            listPedidos = new ArrayList();
+        } else {
+            listPedidos.clear();
+        }
+
+        if (listdetallePedido == null) {
+            listdetallePedido = new ArrayList();
+        } else {
+            listdetallePedido.clear();
+        }
+
+        if (listUsersClientes == null) {
+            listUsersClientes = new ArrayList();
+        } else {
+            listUsersClientes.clear();
+        }
+
+        if (listProductos == null) {
+            listProductos = new ArrayList();
+        } else {
+            listProductos.clear();
+        }
+
+        if (listMP == null) {
+            listMP = new ArrayList();
+        } else {
+            listMP.clear();
+        }
+
+        if (listHormas == null) {
+            listHormas = new ArrayList();
+        } else {
+            listHormas.clear();
+        }
+
+        if (listVariables == null) {
+            listVariables = new ArrayList();
+        } else {
+            listVariables.clear();
+        }
+
+        if (filtros == null) {
+            filtros = new HashMap<>();
+        } else {
+            filtros.clear();
+        }
+
+        if (listestados == null) {
+            listestados = new ArrayList();
+        } else {
+            listestados.clear();
+        }
+
+        objPedido = null;
+        referencia = null;
+        selectionPedido = null;
+        selectionDetalle = null;
+        selectionCliente = null;
+        horma = "";
+        insumo = "";
+        idProducto = 0;
+        observacionPedido = "";
+        totalPedido = 0;
+        contadorPedidos = 0;
+        selectUser = "";
+        selectMP = "";
+        selectHR = "";
+        selectProducto = "";
+        disabled = "true";
+        Mensaje = "";
+        idProductoP = "";
+        pedidos = 0;
+        fechaPedido = null;
+        fdespacho = null;
+        idPedido = 0;
+        total = 0;
+        cumplimiento = 0;
+        estadopedido = 0;
+        estadoStr = "";
+        showSelect = false;
+        valCantDespachos = 0;
+        countErrors = 0;
+        try {
+            getObjPedido();
+            listarClientes();
+            ListarProductos();
+            listarMP();
+            listarHormas();
+            listaEstados();
+        } catch (SQLException ex) {
+            System.out.println("Error : " + ex.toString());
+        }
+
+        System.out.println("limpiando");
+    }
+
+    public int getCountErrors() {
+        return countErrors;
+    }
+
+    public void setCountErrors(int countErrors) {
+        this.countErrors = countErrors;
     }
 }

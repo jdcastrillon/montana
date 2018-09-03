@@ -32,8 +32,8 @@
                         <b:modal id="amodal" styleClass="modalPseudoClass">
                             <h4>¿Confirma Despachar El Pedido?</h4>
                             <hr/>
-                            <h5>#{despachosBean.mensaje}</h5>
-                            <b:selectOneMenu rendered="#{despachosBean.showSelect}" id="estadop" h:name="estadop"
+                            <h5 jsf:id="ms">#{despachosBean.mensaje} #{despachosBean.countErrors}</h5>
+                            <b:selectOneMenu rendered="#{despachosBean.countErrors>0}" id="estadop" h:name="estadop"
                                              value="#{despachosBean.estadopedido}" colMd="0" required="true" > 
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue="0"></f:selectItem>
                                 <f:selectItems value="#{despachosBean.listVariables}" 
@@ -98,10 +98,10 @@
                                                     </b:commandButton>
                                                 </td>
                                                 <td>  
-                                                    <b:commandButton id="confirmard" styleClass="despachar" look="success" value="Confirmar Despachos"
+                                                    <b:commandButton id="confirmard" styleClass="despachar" look="success" value="Confirmar Despachos" 
                                                                      oncomplete="$('.modalPseudoClass').modal()" 
                                                                      style="#{despachosBean.listPedidos.size()>0 ? 'display: block' : 'display: none'}"> 
-                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho(1)}" render="@this confirmard2"/>
+                                                        <f:ajax event="click" listener="#{despachosBean.validarDespacho(1)}" render="@this confirmard2 @form"/>
                                                     </b:commandButton> 
 
 

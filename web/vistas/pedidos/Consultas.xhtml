@@ -51,24 +51,18 @@
 
 
                         <b:modal id="amodal2" styleClass="modalPseudoClass2">
-                            <h4>Modificar Cantidades del item seleccionado</h4>
+                            <h4>Actualizar Remisión o Factura</h4>
                             <hr/>
-                            <p:dataTable id="tallast" var="ob" value="#{despachosBean.selectionPedido.listdetallePedido}">
-                                <p:column headerText="Talla">
-                                    <h:outputText value="#{ob.noTalla}" />
-                                </p:column>
+                            <brow>
+                                <h:outputText value="No se puede asignar o modificar factura por que no se ha generado el despacho" 
+                                              rendered="#{despachosBean.valCantDespachos==0}" />
 
-                                <p:column headerText="Cantidad">
-                                    <h:outputText value="#{ob.cantidad}" rendered="#{ob.cantidad == 0}" />
+                                <b:inputText rendered="#{despachosBean.valCantDespachos>0}" 
+                                             value="#{despachosBean.selectionPedido.factura}" id="updfactura">
+                                    <f:ajax event="blur" render="@this" listener="#{despachosBean.updateFacturaPedido(despachosBean.selectionPedido)}" />
+                                </b:inputText>                                   
 
-                                    <b:inputText class="tblFilterInputUpdate" rendered="#{ob.cantidad > 0}" 
-                                                 value="#{ob.cantidad}" id="idPedido">
-                                        <f:ajax event="blur" render="@this" 
-                                                listener="@this" />
-                                    </b:inputText>                                   
-
-                                </p:column>
-                            </p:dataTable>
+                            </brow>
                             <f:facet name="footer">
                                 <b:commandButton value="Cerrar" look="primary"  id="closeModal2" update="@form:pedidos" 
                                                  oncomplete="$('.modalPseudoClass2').modal('hide');" />
@@ -78,8 +72,8 @@
                         <p:contextMenu>
                             <p:menuitem value="Eliminar" actionListener="#{despachosBean.liberarpedido()}" icon="ui-icon-disk" immediate="true"
                                         update="@form:pedidos" />
-                            <p:menuitem value="Modificar" onclick="$('.modalPseudoClass2').modal()" icon="ui-icon-pencil" 
-                                        update="@form:tallast"/>
+                            <p:menuitem value="Actualizar Factura" onclick="$('.modalPseudoClass2').modal()" icon="ui-icon-pencil" 
+                                        update="@form:pedidos"/>
                         </p:contextMenu>
 
 
@@ -222,14 +216,11 @@
                             </thead>
                         </table>
 
-
-
-
                         <p:dataTable id="pedidos" var="objs" value="#{despachosBean.listPedidos}" 
                                      selectionMode="single" selection="#{despachosBean.selectionPedido}" 
                                      rowKey="#{objs.idProducto}" 
                                      styleClass="tbl">                            
-                            <p:ajax event="rowSelect" listener="#{despachosBean.onRowSelect}" update="@this" />
+                            <p:ajax event="rowSelect" listener="#{despachosBean.onRowSelect2}" update="@this" />
                             <p:ajax event="rowUnselect" listener="#{despachosBean.onRowUnselect}" update="@this" />              
 
 
@@ -262,59 +253,128 @@
                                          style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
                                          /> 
                                 <h:outputText value="#{objs.listdetallePedido.get(0).cantidad}" rendered="#{objs.listdetallePedido.get(0).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="52" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(1).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(1).cantidad}" rendered="#{objs.listdetallePedido.get(1).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(1).cantidad}" rendered="#{objs.listdetallePedido.get(1).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="53" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(2).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(2).cantidad}" rendered="#{objs.listdetallePedido.get(2).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(2).cantidad}" rendered="#{objs.listdetallePedido.get(2).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="54" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(3).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(3).cantidad}" rendered="#{objs.listdetallePedido.get(3).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(3).cantidad}" rendered="#{objs.listdetallePedido.get(3).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="55" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(4).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(4).cantidad}" rendered="#{objs.listdetallePedido.get(4).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(4).cantidad}" rendered="#{objs.listdetallePedido.get(4).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="56" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(5).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(5).cantidad}" rendered="#{objs.listdetallePedido.get(5).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(5).cantidad}" rendered="#{objs.listdetallePedido.get(5).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="57" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(6).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(6).cantidad}" rendered="#{objs.listdetallePedido.get(6).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(6).cantidad}" rendered="#{objs.listdetallePedido.get(6).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="58" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(7).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(7).cantidad}" rendered="#{objs.listdetallePedido.get(7).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(7).cantidad}" rendered="#{objs.listdetallePedido.get(7).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="59" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(8).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(8).cantidad}" rendered="#{objs.listdetallePedido.get(8).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(8).cantidad}" rendered="#{objs.listdetallePedido.get(8).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="60" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(9).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(9).cantidad}" rendered="#{objs.listdetallePedido.get(9).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(9).cantidad}" rendered="#{objs.listdetallePedido.get(9).cantidad==0}"  />
+
                             </p:column> 
 
                             <p:column styleClass="tblHeader"  headerText="61" width="55">
-                                <h:outputText value="#{objs.listdetallePedido.get(10).cantidad}" />
+
+                                <b:badge value="#{objs.listdetallePedido.get(10).cantidad}" rendered="#{objs.listdetallePedido.get(10).cantidad>0}"
+                                         style="cursor:pointer;background-color: #d4edda;border-color: #c3e6cb;color:#155724;"                                         
+                                         /> 
+                                <h:outputText value="#{objs.listdetallePedido.get(10).cantidad}" rendered="#{objs.listdetallePedido.get(10).cantidad==0}"  />
+
                             </p:column> 
 
-                            <p:column styleClass="tblHeader inputPedido"  headerText="TOTAL PEDIDO" width="100">
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Total Pedido" width="100">
                                 <h:outputText value="#{objs.totalPedido+objs.totalDespachado}" />
                             </p:column> 
 
-                            <p:column styleClass="tblHeader inputPedido"  headerText="TOTAL DESPACHO" width="100">
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Total Despacho" width="100">
                                 <h:outputText value="#{objs.totalDespachado}" />
                             </p:column> 
 
                             <p:column styleClass="tblHeader inputPedido"  headerText="Fecha Despachado" width="100">
                                 <h:outputText value="#{objs.fechaDespacho}" />
                             </p:column> 
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Factura/Rem" width="100">
+                                <h:outputText value="#{objs.factura}" />
+                            </p:column> 
+
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="%Cumplimiento" width="130">
+                                <h:outputText value="#{objs.factura}" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Tiempo Trans" width="100">
+                                <h:outputText value="#{objs.tiempoTrans} Dia(s)" />
+                            </p:column> 
+
+                            <p:column styleClass="tblHeader inputPedido"  headerText="Estado" width="100">
+                                <h:outputText value="#{objs.despachado}" />
+                            </p:column> 
+
 
                         </p:dataTable>
 

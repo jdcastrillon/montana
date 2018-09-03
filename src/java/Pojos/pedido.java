@@ -41,6 +41,9 @@ public class pedido extends Persistencia implements Serializable {
     private int totalDespachado;
     private String clienteStr;
     private Date fechaDespacho;
+    private String factura;
+    private int tiempoTrans;
+    private String despachado;
 
     private Mcolor color;
     private String nombrecolor;
@@ -543,15 +546,20 @@ public class pedido extends Persistencia implements Serializable {
                     validador1 += 1;
                 }
 
-                String selectDatos = "select h.descripcion, i.NombreInsumo,  prod.nombreProducto, desp.FechaEntrega from pedido p "
+                String selectDatos = "select h.descripcion, i.NombreInsumo,  prod.nombreProducto, desp.FechaEntrega,"
+                        + "desp.factura, case when desp.FechaEntrega is null "
+                        + "then DATEDIFF(DATE_FORMAT(now(), '%Y-%m-%d'),DATE_FORMAT(p.FechaRegistro, '%Y-%m-%d')) "
+                        + "else  DATEDIFF(desp.FechaEntrega,DATE_FORMAT(p.FechaRegistro, '%Y-%m-%d')) end cant, "
+                        + "estado.descripcion from pedido p "
                         + "inner JOIN pedido_detalle pd on p.idPedido = pd.idPedido "
                         + "inner join hormasprod hp on hp.idProducto = pd.idProducto "
                         + "inner join hormas h on h.idHorma = hp.idHorma "
                         + "inner join insumoproducto ip on ip.idProducto = pd.idProducto "
                         + "inner join insumos i on ip.idInsumo = i.idInsumo "
                         + "inner join producto prod on prod.idProducto = pd.idProducto "
+                        + "inner join mestados estado on estado.nombre = pd.despachado "
                         + "left join despacho desp on p.idPedido = desp.idPedido "
-                        + "left join despachoproducto despp on desp.idDespacho = despp.idDespacho and despp.idProducto = " + object.getIdProducto() + " "
+                        + "left join despachoproducto despp on desp.idDespacho = despp.idDespacho and despp.idProducto = pd.idProducto  "
                         + "where p.idPedido = " + object.getIdPedido() + " and pd.idProducto = " + object.getIdProducto() + " " + filtro3 + " limit 1";
                 ResultSet rs3 = pedido.super.getConecion().query(selectDatos);
                 System.out.println(selectDatos);
@@ -560,6 +568,9 @@ public class pedido extends Persistencia implements Serializable {
                     object.setMateriap(rs3.getString(2));
                     object.setReferencia(rs3.getString(3));
                     object.setFechaDespacho(rs3.getDate(4));
+                    object.setFactura(rs3.getString(5));
+                    object.setTiempoTrans(rs3.getInt(6));
+                    object.setDespachado(rs3.getString(7));
                     validador2 += 1;
                 }
                 object.setTotalPedido(Tot);
@@ -833,6 +844,30 @@ public class pedido extends Persistencia implements Serializable {
 
     public void setFechaDespacho(Date fechaDespacho) {
         this.fechaDespacho = fechaDespacho;
+    }
+
+    public String getFactura() {
+        return factura;
+    }
+
+    public void setFactura(String factura) {
+        this.factura = factura;
+    }
+
+    public int getTiempoTrans() {
+        return tiempoTrans;
+    }
+
+    public void setTiempoTrans(int tiempoTrans) {
+        this.tiempoTrans = tiempoTrans;
+    }
+
+    public String getDespachado() {
+        return despachado;
+    }
+
+    public void setDespachado(String despachado) {
+        this.despachado = despachado;
     }
 
 }

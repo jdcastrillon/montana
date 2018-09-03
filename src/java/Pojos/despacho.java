@@ -177,7 +177,6 @@ public class despacho extends Persistencia implements Serializable {
                     + "and d.idTipoDespacho = 1";
 
 //            System.out.println(queryUpdate);
-
             PreparedStatement pstUpdate = this.getConecion().con.prepareStatement(queryUpdate);
             transaccion += despacho.this.getConecion().transaccion(pstUpdate);
 
@@ -284,8 +283,35 @@ public class despacho extends Persistencia implements Serializable {
             }
         } catch (SQLException ex) {
             System.out.println("Error Consulta : " + ex.toString());
+        } finally {
+            try {
+                this.getConecion().con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
         }
         return listdespacho;
+    }
+
+    public int totalDespachosXPedido(int id_pedido) {
+        int total = 0;
+        String prepareQuery = "select count(idDespacho) from despacho where idPedido =" + id_pedido;
+        try {
+            this.getConecion().con = this.getConecion().dataSource.getConnection();
+            ResultSet rs = despacho.super.getConecion().query(prepareQuery);
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error Consulta : " + ex.toString());
+        } finally {
+            try {
+                this.getConecion().con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+        return total;
     }
 
     public List<despachoproducto> getList_despachoproducto() {

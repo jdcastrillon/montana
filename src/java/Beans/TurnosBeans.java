@@ -124,6 +124,9 @@ public class TurnosBeans implements Serializable {
                 break;
             case "despacho":
                 menu = "GenerarDespacho";
+                DespachosBean db = new DespachosBean();
+                db.clearAll();
+                db = null;
                 break;
             case "hormas":
                 menu = "/montana/faces/vistas/hormas/hormasList.xhtml";
